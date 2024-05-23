@@ -1,0 +1,42 @@
+.encabezado-m{
+  background:#fff;
+  background-image:  url('../img/malla.png');
+  background-repeat: no-repeat;
+  height: 140px;
+  margin: 0 0 0 0;
+  padding: 2px;
+  width: 230px;
+  margin-left: -24px;
+  margin-top: -24px;
+  padding-top: 5px;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  
+}
+
+.ttxttbl{
+  font-size: 11px;
+}
+
+nav a:hover{
+  background-color: #27104D;
+}
+
+a.nav-link{
+  background-color:  #9672D1;
+}
+
+
+
+div .redesp a span i{
+  background: white;
+    border: 2px solid #ed275a;
+    color: #ed275a;
+    padding: 4px 8px;
+    height: 32px;
+    display: inline-block;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,198 @@
+.encabezado-m{
+  background:#fff;
+  background-image:  url('../img/malla.png');
+  background-repeat: no-repeat;
+  height: 140px;
+  margin: 0 0 0 0;
+  padding: 2px;
+  width: 230px;
+  margin-left: -24px;
+  margin-top: -24px;
+  padding-top: 5px;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  
+}
+
+nav a:hover{
+  background-color: #27104D;
+}
+
+a.nav-link{
+  background-color:  #9672D1;
+}
+
+
+
+div .redesp a span i{
+  background: white;
+    border: 2px solid #ed275a;
+    color: #ed275a;
+    padding: 4px 8px;
+    height: 32px;
+    display: inline-block;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+    margin-bottom: 10px;
+}
+
+.spCanalP1{
+  background-color: #523178;
+  border-radius: 0.8em;
+  -moz border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  color: #ffffff;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 1.6em;
+  margin-right: 15px;
+  text-emphasis: center;
+  width: 1.6em;
+  text-align: center;
+  font-size: 22px;
+}
+
+.spCanalP2{
+  background-color: #D9D4DE;
+  border-radius: 0.8em;
+  -moz border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  color: #ffffff;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 1.6em;
+  margin-right: 15px;
+  text-emphasis: center;
+  width: 1.6em;
+  text-align: center;  
+}
+
+/*menu*/
+.spCanalPM1{
+  background-color: #E51515;
+  border-radius: 0.8em;
+  -moz border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  color: #fff;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 1.6em;
+  margin-right: 15px;
+  text-emphasis: center;
+  width: 2.5em;
+  text-align: center;
+  font-size: 10px;
+  margin-top: -20px;
+  margin-right: -10px;
+}
+
+/*Tabla*/
+
+.spCanalPT1{
+  background-color: #E51515;
+  border-radius: 0.8em;
+  -moz border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  color: #fff;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 1.6em;
+  margin-right: 15px;
+  text-emphasis: center;
+  width: 2.5em;
+  text-align: center;
+  font-size: 10px;
+  margin-top: -15px;  
+  margin-right: -7px !important;
+}
+
+.contspan{
+  text-align: right;
+
+}
+
+.sgreen{
+  color: green;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.btable{
+  font-size: 12px !important;
+  padding: 3px !important;
+
+
+}
+
+.mestCDP{
+  display: inline-block;
+  text-align: center;
+  padding: 20px 5px;
+}
+
+.mestCDP span{
+  font-size: 9px;
+  font-weight: bold;
+  color: #007bff;
+  margin-top: 10px;
+}
+
+/*******/
+/*SWITCH BOTON*/
+/*******/
+
+.switchBtn {
+    position: relative;
+    display: inline-block;
+    width: 260px;
+    height: 34px;
+}
+.switchBtn input {display:none;}
+.slide {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    padding: 8px;
+    color: #4F4E4E;
+}
+.slide:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 220px;
+    bottom: 4px;
+    background-color: #523178;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+input:checked + .slide {
+    background-color: #8CE196;
+    padding-left: 40px;
+}
+input:focus + .slide {
+    box-shadow: 0 0 1px #01aeed;
+}
+input:checked + .slide:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    left: -20px;
+}
+.slide.round {
+    border-radius: 34px;
+}
+.slide.round:before {
+    border-radius: 50%;
+}
+
+/*******/
+/* FIN SWITCH BOTON*/
+/*******/

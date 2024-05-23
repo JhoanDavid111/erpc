@@ -1,0 +1,70 @@
+.encabezado-m{
+  background:#fff;
+  background-image:  url('../img/malla.png');
+  background-repeat: no-repeat;
+  height: 140px;
+  margin: 0 0 0 0;
+  padding: 2px;
+  width: 230px;
+  margin-left: -24px;
+  margin-top: -24px;
+  padding-top: 5px;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  
+}
+
+.btnblq i{
+  color: #523178;
+  text-shadow: -1px -1px 1px #fff, -1px 1px 1px #fff, 1px -1px 1px #fff, 1px 1px 1px #fff;
+}
+.btnblq i:hover{
+  color: #ffffff;
+  text-shadow: -1px -1px 1px #523178, -1px 1px 1px #523178, 1px -1px 1px #523178, 1px 1px 1px #523178;
+}
+
+
+nav a:hover{
+  background-color: #27104D;
+}
+
+a.nav-link{
+  background-color:  #9672D1;
+}
+
+.bcacnd{
+  color: #ff0000;
+  cursor: pointer;
+}
+.bcacnd:hover{
+  text-shadow: 0px 0px 3px #000000;
+}
+
+div .redesp a span i{
+  background: white;
+    border: 2px solid #ed275a;
+    color: #ed275a;
+    padding: 4px 8px;
+    height: 32px;
+    display: inline-block;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+    margin-bottom: 10px;
+}
+
+.fa-2x{
+  margin: 5px 5px 5px 5px;
+}
+
+.titdtact{
+  padding: 3px 0px 3px 45px;
+  border-radius: 20px 0px 0px 20px;
+  background-color: #523178;
+
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#523178+0,523178+100&0.5+0,0+100 */
+  background: -moz-linear-gradient(left,  rgba(82,49,120,0.3) 0%, rgba(82,49,120,0) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left,  rgba(82,49,120,0.3) 0%,rgba(82,49,120,0) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right,  rgba(82,49,120,0.3) 0%,rgba(82,49,120,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80523178', endColorstr='#00523178',GradientType=1 ); /* IE6-9 */
+}

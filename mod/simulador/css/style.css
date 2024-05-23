@@ -1,0 +1,120 @@
+.encabezado-m{
+  background:#fff;
+  background-image:  url('../img/malla.png');
+  background-repeat: no-repeat;
+  height: 140px;
+  margin: 0 0 0 0;
+  padding: 2px;
+  width: 230px;
+  margin-left: -24px;
+  margin-top: -24px;
+  padding-top: 5px;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  
+}
+
+
+
+nav a:hover{
+  background-color: #27104D;
+}
+
+a.nav-link{
+  background-color:  #9672D1;
+}
+
+
+
+div .redesp a span i{
+  background: white;
+    border: 2px solid #ed275a;
+    color: #ed275a;
+    padding: 4px 8px;
+    height: 32px;
+    display: inline-block;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+    margin-bottom: 10px;
+}
+
+
+[data-title]:hover:after {
+    opacity: 1;
+    transition: all 0.1s ease 0.5s;
+    visibility: visible;
+    width: 100%; 
+}
+
+[data-title]:after {
+    content: attr(data-title);
+    background-color: #FFFCF9;
+    color: #4B4949;
+    font-size: 12px;    
+    font-weight: normal;
+    text-align: left;
+    position: absolute;
+    padding: 3px 20px;
+    bottom: -1.6em;
+    left: 100%;
+    white-space: wrap;
+    border: 1px solid #111111;    
+    opacity: 0;    
+    z-index: 99999;
+    visibility: hidden;
+    border-radius: 6px;
+    width: 100%;
+    margin-left: -400px;    
+}
+[data-title] {
+    position: relative;
+    width: 100%; 
+}
+
+@media (max-width: 900px) {
+    .simulador {
+        max-width: 100% !important;
+        margin-top: 10px;
+        display: block;
+    }
+
+    .contsimul {
+        max-width: 100% !important;
+        margin-top: 10px;
+        display: block !important;
+
+    }
+
+    [data-title]:hover:after {
+        opacity: 1;
+        transition: all 0.1s ease 0.5s;
+        visibility: visible;
+        width: 70%; 
+    }
+
+    [data-title]:after {
+         content: attr(data-title);
+    background-color: #FFFCF9;
+    color: #4B4949;
+    font-size: 12px;    
+    font-weight: normal;
+    text-align: left;
+    position: absolute;
+    padding: 3px 20px;
+    bottom: -1.6em;
+    left: 100%;
+    white-space: wrap;
+    border: 1px solid #111111;    
+    opacity: 0;    
+    z-index: 99999;
+    visibility: hidden;
+    border-radius: 6px;
+    width: 100%;
+    margin-left: -200px;    
+    }
+    [data-title] {
+        position: relative;
+        width: 100%; 
+    }
+}

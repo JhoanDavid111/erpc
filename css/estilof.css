@@ -1,0 +1,198 @@
+/* open-sans-300 - latin */
+@font-face {
+  font-family: 'Open Sans Light';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../fonts/open-sans-v13-latin-300.eot'); /* IE9 Compat Modes */
+  src: local('Open Sans Light'), local('OpenSans-Light'),
+       url('../fonts/open-sans-v13-latin-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/open-sans-v13-latin-300.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/open-sans-v13-latin-300.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/open-sans-v13-latin-300.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/open-sans-v13-latin-300.svg#OpenSans') format('svg'); /* Legacy iOS */
+}
+
+.wrapper-header{
+  max-width: 1024px;
+    margin: auto;
+    padding-top: 10px;
+}
+
+.txtfoot{
+    font-size: 11px;
+    color: #f00;
+}
+
+.dpag {
+    display: inline-block;
+    width: 49%;
+    font-size: 12px;
+}
+
+@media (max-width: 399px){
+    .dpag {
+        font-size: 10px;
+    }
+}
+.encabezado-b-1{
+  padding-top: 5px;
+}
+
+
+/*redes*/
+.redesp a .icono {
+    background: white;
+    border: 2px solid #ed275a;
+    color: #ed275a;
+   padding: 4px 8px;
+   height: 32px;
+    display: inline-block;
+      -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+.redesp a .icono:hover{
+   background: #ed275a;
+   border: 2px solid  #ed275a;
+   color: #fff;
+   text-decoration: none;
+}
+.redesp a{
+  text-decoration: none;
+  padding: 5px 0;
+}
+.redesp a:hover{
+  text-decoration: none !important;
+}
+
+/* -- Etiquetas -- */
+/* --------------- */
+
+#encabezado .encabezado-a-1 .block {
+    float: left;
+    font-family: 'Open Sans Light';
+    font-size: 11px;
+    width: 50%;
+}
+
+a{
+  color: rgba(0,62,101,1);
+  text-decoration: underline;
+}
+
+a:hover{
+  color: rgb(0,62,101);;
+  text-decoration: underline;
+}
+
+/* -- ID'S -- */
+/* ---------- */ 
+#encabezado{
+  background:#fff;
+  background-image:  url('../img/malla.png');
+  background-repeat: no-repeat;
+  height: 180px;
+ 
+}
+
+#imaglog{
+  width: 100%;
+}
+
+.encabezado-a, .encabezado-b{
+/*  background-color: #ffffff;*/
+  padding: 0 30px 25px 30px;
+}
+
+.logo_entidad1{
+  display: inline-block;
+  float: left;
+}
+.logo_entidad2{
+  display: inline-block;
+  float: right;
+}
+
+#block-easy-social-easy-social-block-1{
+  float: right;
+    margin-right: 17px;
+}
+
+#encabezado .nombre-sitio span{
+  display: block;
+
+}
+
+#encabezado .encabezado-a-1 .block {
+    float: left;
+    width: 50%;
+}
+
+#colophon {
+  background-color: #1F1F1F;
+  padding: 10px 0;
+  color:#fff;
+  font-size: 12px;
+  
+  /* border-top: 1px solid #3A3A3A; */
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#24db9c+0,006aff+100 */
+  background: #24db9c; /* Old browsers */
+  background: -moz-linear-gradient(left, #f31465 0%,#f88518 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #f31465 0%,#f88518 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #f31465 0%,#f88518 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f31465', endColorstr='#f88518',GradientType=1 ); /* IE6-9 */
+}
+
+
+@media screen and (max-width: 35.5em) {
+  .encabezado-b{
+      position: relative;
+  }
+  .wrapper-header {
+      padding-left: 20px;
+      padding-right: 20px;
+  }
+  .logo_entidad2{
+    display: none;
+  }
+}
+@media (min-width: 35.5em)  and (max-width: 48em){
+  .wrapper-header {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+@media (min-width: 48em) and (max-width: 64em){
+  .wrapper-header {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+
+
+
+
+.btn-menu a{
+  background: green;
+  padding:10px;
+  border-radius: 5px;
+  color:white;
+}
+
+.btn-menu a:hover,
+.btn-menu a:focus{
+  text-decoration: none;
+  color:white;
+  background: gray;
+}
+
+
+.btn-menu.btn-login a{
+  background: green;
+}
+
+.btn-menu.btn-logout a{
+  background: darkred;
+}
+
