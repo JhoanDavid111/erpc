@@ -16,7 +16,7 @@ class usuarioController{
 	public function login(){
 		if(isset($_POST)){
 
-			$ip = $_SERVER["REMOTE_ADDR"];
+/*			$ip = $_SERVER["REMOTE_ADDR"];
      		$captcha = $_POST['g-recaptcha-response'];
    		    $secretKey = '6Lc6LCEfAAAAAAwvPU20257qXSfzkhO0dk8_lI7l';
 
@@ -32,7 +32,7 @@ class usuarioController{
 				echo "<script>location.href='https://intranet.canalcapital.gov.co/erp'</script>";
 				
 				//header("Location:".base_url);
-		   }else{
+		   }else{*/
 
 		   		$usuario = new Usuario();
 				$usuario->setEmail($_POST['email']);
@@ -80,7 +80,7 @@ class usuarioController{
 					header("Location:".base_url);
 				}
 
-		   }		
+		   //}		
 		
 		}
 	}

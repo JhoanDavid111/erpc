@@ -1,11 +1,7 @@
 <IfModule mod_rewrite.c>
 # Activar rewrite
 RewriteEngine on
-ErrorDocument 404 https://intranet.canalcapital.gov.co/erpc/
-
-RewriteEngine On
-RewriteCond %{SERVER_PORT} 80
-RewriteRule ^(.*)$ https://intranet.canalcapital.gov.co/erpc/$1 [R,L]
+ErrorDocument 404 http://192.168.1.45/erpc/
 
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f
