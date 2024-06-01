@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/login.css">
 
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<!--    <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
 
 </head>
 
@@ -81,9 +81,9 @@
                     
                     <input type="text" placeholder="Usuario" name="email" required="" />                  
                     <input type="password" placeholder="Password" name="password" required=""/>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <div class="g-recaptcha" data-sitekey="6Lc6LCEfAAAAAO9Cf9DaqJsDKkaH_eN4eALomycB"> </div>
-                    </div><br>
+                    </div><br> -->
                     <button class="btnlo">Ingresar</button>                    
                 </form>
             </div>

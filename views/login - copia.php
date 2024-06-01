@@ -18,11 +18,13 @@
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="http://intranet.canalcapital.gov.co/intranet/wp-content/uploads/2020/04/cropped-icocanal-32x32.png" sizes="32x32" />
-    <link rel="icon" href="http://intranet.canalcapital.gov.co/intranet/wp-content/uploads/2020/04/cropped-icocanal-192x192.png" sizes="192x192" />
+    <link rel="icon" href="https://intranet.canalcapital.gov.co/intranet/new_security_cc/wp-content/uploads/2020/04/cropped-icocanal-32x32.png" sizes="32x32" />
+    <link rel="icon" href="https://intranet.canalcapital.gov.co/intranet/new_security_cc/wp-content/uploads/2020/04/cropped-icocanal-32x32.png" sizes="32x32" />
     <link rel="stylesheet" type="text/css" href="css/estilo.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/login.css">
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </head>
 
@@ -63,7 +65,7 @@
                 </div>
                 <div class="logo_entidad2">
                     <a href="http://www.canalcapital.gov.co/">
-                        <img typeof="foaf:Image" src="https://intranet.canalcapital.gov.co/intranet/new_security_cc/wp-content/themes/dazzling/logomejor.png" width="154" height="55" alt="Logo Bogotá mejor para todos" title="Logo Bogotá mejor para todos">
+                        <img typeof="foaf:Image" src="https://intranet.canalcapital.gov.co/intranet/img/logomejor.png" width="154" height="55" alt="Logo Bogotá mejor para todos" title="Logo Bogotá mejor para todos">
                     </a>
                 </div>
         </section>
@@ -79,7 +81,10 @@
                     
                     <input type="text" placeholder="Usuario" name="email" required="" />                  
                     <input type="password" placeholder="Password" name="password" required=""/>
-                    <button class="btnlo">Ingresar</button>
+                    <div class="mb-3">
+                        <div class="g-recaptcha" data-sitekey="6Lc6LCEfAAAAAO9Cf9DaqJsDKkaH_eN4eALomycB"> </div>
+                    </div><br>
+                    <button class="btnlo">Ingresar</button>                    
                 </form>
             </div>
             <div class="form-container sign-in-container">    
@@ -144,6 +149,3 @@
 </body> -->
 
 </html>
- ?>
-
-
