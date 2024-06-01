@@ -1,6 +1,8 @@
 <?php
 session_start();
-include '../models/plamejpdf.php';
+require_once '../../../config/db.php';
+include '../models/plamej.php';
+// include '../models/plamejpdf.php';
 ini_set('memory_limit','512M');
 require_once '../../../dompdf/autoload.inc.php';
 use Dompdf\Dompdf;
@@ -10,6 +12,7 @@ $pdf = isset($_GET['pdf']) ? $_GET['pdf']:NULL;
 $fil1 = isset($_GET['fil1']) ? $_GET['fil1'] : false;
 $fil2 = isset($_GET['fil2']) ? $_GET['fil2'] : false;
 $fil3 = isset($_GET['fil3']) ? $_GET['fil3'] : false;
+$valid = isset($_REQUEST['valid']) ? $_REQUEST['valid']:3001;
 $ac = isset($_GET['ac']) ? $_GET['ac'] : false;
 if($fil1 && $fil2){
 	$plamej->setFil1($fil1);
@@ -19,7 +22,10 @@ if($fil3){
 	$plamej->setFil3($fil3);
 }
 
-$datAll = $plamej->getAll($ac);
+if($ac==2)
+	$datAll = $plamej->getAllcr($valid);
+else
+	$datAll = $plamej->getAll($valid);
 
 date_default_timezone_set('America/Bogota');
 $dia = array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");
@@ -75,7 +81,7 @@ $html .= '<head>';
 		    $html .= 'filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#80523178", endColorstr="#00523178",GradientType=1 );';
 		$html .= '}';
 	$html .= '</style>';
-	$html .= '<title>Planes de mejora</title>';
+	$html .= '<title>Planes</title>';
 $html .= '</head>';
 $html .= '<body>';
 	$html .= '<table width="'.$anchoja.'px" border="1" cellpadding="3px" cellspacing="0px">';
@@ -84,7 +90,8 @@ $html .= '<body>';
 			$html .= '<td rowspan="4" align="center" class="neg">';
 				$html .= '';
 				$html .= '<BR>';
-				$html .= 'PLANES DE MEJORA';
+				if($valid==3051) $html .= 'PLANES DE MEJORA';
+				else $html .= 'PLANES INSTITUCIONALES';
 				$html .= '<BR>';
 				$html .= '';
 			$html .= '</td>';

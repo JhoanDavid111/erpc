@@ -16,6 +16,7 @@ class Plamej{
 	private $feciepla;
 	private $fecautpla;
 	private $cargo;
+	private $valid;
 
 	// Tabla plaacc
 	private $noacc;
@@ -117,6 +118,9 @@ class Plamej{
 	}
 	function getCargo(){
 		return $this->cargo;
+	}
+	function getValid(){
+		return $this->valid;
 	}
 
 	// Tabla plaacc
@@ -287,6 +291,9 @@ class Plamej{
 	function setCargo($cargo){
 		$this->cargo = $cargo;
 	}
+	function setValid($valid){
+		$this->valid = $valid;
+	}
 
 	// Tabla plaacc
 	function setNoacc($noacc){
@@ -412,11 +419,14 @@ class Plamej{
 
 //Metodos CRUD
 //--Tabla plamej --------------------------------------------------
-	public function getAll(){
-		$sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla, a.perid AS apro FROM plamej AS l LEFT JOIN valor AS f ON l.fuepla=f.valid LEFT JOIN valor AS e ON l.estpla=e.valid LEFT JOIN valor AS c ON l.carlmej=c.valid LEFT JOIN persona AS p ON l.perid=p.perid LEFT JOIN persona AS a ON l.carlmej=a.cargo LEFT JOIN plaacc AS p1 ON l.nopla=p1.nopla LEFT JOIN plaact AS p2 ON p1.noacc=p2.noact LEFT JOIN plaava AS p3 ON p2.noact=p3.noact LEFT JOIN plaseg AS p4 ON p3.noava=p4.noava WHERE l.actpla=1";
-		if($_SESSION['pefid']==71)
+	public function getAll($valid=3001){
+		// $sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla, a.perid AS apro, l.valid FROM plamej AS l LEFT JOIN valor AS f ON l.fuepla=f.valid LEFT JOIN valor AS e ON l.estpla=e.valid LEFT JOIN valor AS c ON l.carlmej=c.valid LEFT JOIN persona AS p ON l.perid=p.perid LEFT JOIN persona AS a ON l.carlmej=a.cargo LEFT JOIN plaacc AS p1 ON l.nopla=p1.nopla LEFT JOIN plaact AS p2 ON p1.noacc=p2.noact LEFT JOIN plaava AS p3 ON p2.noact=p3.noact LEFT JOIN plaseg AS p4 ON p3.noava=p4.noava WHERE l.actpla=1";
+		$sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla, '' AS apro, l.valid FROM plamej AS l LEFT JOIN valor AS f ON l.fuepla=f.valid LEFT JOIN valor AS e ON l.estpla=e.valid LEFT JOIN valor AS c ON l.carlmej=c.valid LEFT JOIN persona AS p ON l.perid=p.perid LEFT JOIN persona AS a ON l.carlmej=a.cargo LEFT JOIN plaacc AS p1 ON l.nopla=p1.nopla LEFT JOIN plaact AS p2 ON p1.noacc=p2.noact LEFT JOIN plaava AS p3 ON p2.noact=p3.noact LEFT JOIN plaseg AS p4 ON p3.noava=p4.noava WHERE l.actpla=1";
+		if($valid==3051) $sql .= " AND l.valid=3051";
+		else $sql .= " AND l.valid!=3051";
+		if($_SESSION['pefid']==71 or $_SESSION['pefid']==75)
 			$sql .= " AND a.perid='".$_SESSION['perid']."'";
-		elseif($_SESSION['pefid']!=58 AND $_SESSION['pefid']!=70)
+		elseif($_SESSION['pefid']!=58 AND $_SESSION['pefid']!=70 AND $_SESSION['pefid']!=73 AND $_SESSION['pefid']!=74)
 			$sql .= " AND l.areapla LIKE '%".$_SESSION['depid']."%'";
 		
 
@@ -448,9 +458,11 @@ class Plamej{
 
 //;
 
-	public function getAllcr(){
-		$sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla, a.perid AS apro FROM plamej AS l LEFT JOIN valor AS f ON l.fuepla=f.valid LEFT JOIN valor AS e ON l.estpla=e.valid LEFT JOIN valor AS c ON l.carlmej=c.valid LEFT JOIN persona AS p ON l.perid=p.perid LEFT JOIN persona AS a ON l.carlmej=a.cargo LEFT JOIN plaacc AS p1 ON l.nopla=p1.nopla LEFT JOIN plaact AS p2 ON p1.noacc=p2.noact LEFT JOIN plaava AS p3 ON p2.noact=p3.noact LEFT JOIN plaseg AS p4 ON p3.noava=p4.noava WHERE l.actpla<>1";
-		if($_SESSION['pefid']!=58 AND $_SESSION['pefid']!=70)
+	public function getAllcr($valid=3001){
+		$sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla FROM plamej AS l LEFT JOIN valor AS f ON l.fuepla=f.valid LEFT JOIN valor AS e ON l.estpla=e.valid LEFT JOIN valor AS c ON l.carlmej=c.valid LEFT JOIN persona AS p ON l.perid=p.perid LEFT JOIN persona AS a ON l.carlmej=a.cargo LEFT JOIN plaacc AS p1 ON l.nopla=p1.nopla LEFT JOIN plaact AS p2 ON p1.noacc=p2.noact LEFT JOIN plaava AS p3 ON p2.noact=p3.noact LEFT JOIN plaseg AS p4 ON p3.noava=p4.noava WHERE l.actpla<>1";
+		if($valid==3051) $sql .= " AND l.valid=3051";
+		else $sql .= " AND l.valid!=3051";
+		if($_SESSION['pefid']!=58 AND $_SESSION['pefid']!=70 AND $_SESSION['pefid']!=73 AND $_SESSION['pefid']!=74)
 			$sql .= " AND l.areapla LIKE '%".$_SESSION['depid']."%'";
 			//$sql .= " WHERE l.areapla LIKE '%".$_SESSION['depid']."%'";
 		// 	$sql2 = " AND ";
@@ -478,7 +490,7 @@ class Plamej{
 	}
 
 	public function getOne(){
-		$sql ="SELECT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, l.porpla, l.carlmej, l.feciepla, l.perid, l.fecautpla FROM plamej AS l LEFT JOIN valor AS f ON l.fuepla=f.valid LEFT JOIN valor AS e ON l.estpla=e.valid WHERE l.nopla = ".$this->nopla;
+		$sql ="SELECT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, l.porpla, l.carlmej, l.feciepla, l.perid, l.fecautpla, l.valid FROM plamej AS l LEFT JOIN valor AS f ON l.fuepla=f.valid LEFT JOIN valor AS e ON l.estpla=e.valid WHERE l.nopla = ".$this->nopla;
 		$execute = $this->db->query($sql);
 		$save = $execute->fetchall(PDO::FETCH_ASSOC);
 
@@ -501,6 +513,14 @@ class Plamej{
 		// var_dump($save);
 		// $error= $this->db->errorInfo();
 		// die();
+		return $save;
+	}
+
+	public function getAllTiplan($parid, $valfijo="1"){
+		$sql ="SELECT * FROM valor WHERE parid = ".$parid." AND valfijo='".$valfijo."'";
+		$sql .=" ORDER BY valnom";
+		$execute = $this->db->query($sql);
+		$save = $execute->fetchall(PDO::FETCH_ASSOC);
 		return $save;
 	}
 
@@ -601,10 +621,11 @@ class Plamej{
 	}
 
 	public function save(){
-		//SELECT nopla, fsolpla, fuepla, detfue, fobspla, cappla, obspla FROM plamej
-		$sql= "INSERT INTO plamej(fsolpla, fuepla, detfue, fobspla, cappla, obspla, areapla, estpla, carlmej) VALUES (?,?,?,?,?,?,?,?,?)";
+		//SELECT nopla, fsolpla, fuepla, detfue, fobspla, cappla, obspla, areapla, estpla, carlmej, valid FROM plamej
+		// porpla, ocpla, feciepla, perid, fecautpla
+		$sql= "INSERT INTO plamej(fsolpla, fuepla, detfue, fobspla, cappla, obspla, areapla, estpla, carlmej, valid) VALUES (?,?,?,?,?,?,?,?,?,?)";
 		$insert = $this->db->prepare($sql);
-		$arrdata = array($this->getFsolpla(), $this->getFuepla(), $this->getDetfue(), $this->getFobspla(), $this->getCappla(), $this->getObspla(), $this->getAreapla(), $this->getEstpla(), $this->getCarlmej());
+		$arrdata = array($this->getFsolpla(), $this->getFuepla(), $this->getDetfue(), $this->getFobspla(), $this->getCappla(), $this->getObspla(), $this->getAreapla(), $this->getEstpla(), $this->getCarlmej(), $this->getValid());
 		// echo "<br>".$sql."<br>";;
 		// var_dump($arrdata);
 		// die();
@@ -614,11 +635,11 @@ class Plamej{
 
 	public function edit(){		
 
-		$sql = "UPDATE plamej SET fsolpla=?, fuepla=?, detfue=?, fobspla=?, cappla=?, obspla=?, areapla=?, estpla=?, carlmej=?";
+		$sql = "UPDATE plamej SET fsolpla=?, fuepla=?, detfue=?, fobspla=?, cappla=?, obspla=?, areapla=?, estpla=?, carlmej=?, valid=?";
 		$sql .= " WHERE nopla={$this->nopla};";	
 
 		$update= $this->db->prepare($sql);
-		$arrdata = array($this->getFsolpla(), $this->getFuepla(), $this->getDetfue(), $this->getFobspla(), $this->getCappla(), $this->getObspla(), $this->getAreapla(), $this->getEstpla(), $this->getCarlmej());
+		$arrdata = array($this->getFsolpla(), $this->getFuepla(), $this->getDetfue(), $this->getFobspla(), $this->getCappla(), $this->getObspla(), $this->getAreapla(), $this->getEstpla(), $this->getCarlmej(), $this->getValid());
 		$save=$update->execute($arrdata);
 		$result = false;
 		if($save){

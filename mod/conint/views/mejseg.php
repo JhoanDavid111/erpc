@@ -1,4 +1,4 @@
-<?php if($_SESSION['pefid']!=58 or $OCI){ ?>
+<?php if($_SESSION['pefid']!=58 or $_SESSION['pefid']!=73 or $OCI){ ?>
 	<!-- Insertar o Editar datos -->
 	<?php if($h!='t47kt'){ ?>
 		<?php echo Utils::tit("Acción","fas fa-restroom  mr-3","mejseg/index&nopla=".$nopla,"300px"); ?>
@@ -342,7 +342,7 @@ function mosArea($noAre){
 	            				<div class="titdtact">
 	            					<?php if($h!='t47kt'){ ?>
 		            					<?php if($va['aprpmj']==1){ ?>
-		            						<?php if(($_SESSION['pefid']==58 OR $_SESSION['pefid']==70)){ ?>
+		            						<?php if(($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74)){ ?>
 					            				<?php if($acti[$i]['bloact']==1){ ?>
 					            					<a href= "<?=base_url;?>mejseg/updBloq&bloact=2&noact=<?=$acti[$i]['noact'];?>&nopla=<?=$va['nopla'];?>" class="btnblq">
 				            							<i class="fas fa-lock" title="Haz click para desbloquear"></i>
@@ -387,13 +387,13 @@ function mosArea($noAre){
 								<?php $flag=true; ?>
 	            				<?php if($h!='t47kt'){ ?>
 		            				<?php if($va['aprpmj']==1){ ?>
-			            				<?php if(($_SESSION['pefid']!=58 or $OCI) AND !$datAva AND $acti[$i]['bloact']==2 AND $plamejs[0]['perid']){ ?>
+			            				<?php if(($_SESSION['pefid']!=58 or $_SESSION['pefid']!=73 or $OCI) AND !$datAva AND $acti[$i]['bloact']==2 AND $plamejs[0]['perid']){ ?>
 			            					<button class="btn btn-primary btn-sm btn2" style="background-color: #523178;margin: 2px;" data-toggle="modal" data-target="#myModtf<?=$acti[$i]['noact'];?>" type="button" title="Agregar Avance"><i class="fa fa-plus"></i></button>
 						                	<?php 
 						                		echo Utils::modalTextFile("myModtf", "Agregar Avance", $acti[$i]['noact'], "Relación de Avances", base_url."mejseg/saveAva", "comava", $nopla, ($i+1).". ".$acti[$i]['accmej'],"Evidencias y/o soportes de la ejecución de la acción", "eviava", "Si va a subir más de una evidencia, <br>súbelo en un archivo *.zip")
 						                	?>
 
-						                	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70){ ?>
+						                	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
 						                		<button class="btn btn-primary btn-sm btn2" style="background-color: #523178;padding: 0px 4px;margin-bottom: 2px;" type="button" data-toggle="modal" data-target="#myModSegSA<?=$acti[$i]['noact'];?>"><i class="fa fa-plus"></i> Agregar Seguimiento Sin Avances</button>
 
 						                		<?php 
@@ -449,7 +449,7 @@ function mosArea($noAre){
 								            		$EjeSgAcc = isset($EjeSgAcc[$CtnSgAcc-1]['ejesep']) ? $EjeSgAcc[$CtnSgAcc-1]['ejesep']:0;
 								            		?>
 								            		<?php if($h!='t47kt' and ($r==count($datAva)-1 or $r==$CtnSgAcc)){ ?>
-									            		<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70){ ?>
+									            		<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
 									            		<button class="btn btn-primary btn-sm btn2" style="background-color: #523178;padding: 0px 4px;margin-bottom: 2px;" type="button" data-toggle="modal" data-target="#myModSeguE<?=$dta['noava'];?>" title="Editar Seguimiento"><i class="fa fa-pencil-square-o"></i></button>
 									                	<?php 
 								                			echo Utils::modalTextComboEdi("myModSeguE", "Editar Seguimiento", $dta['noava'], "Análisis del seguimiento <small>(Información del análisis adelantado por el auditor que realizó el seguimiento - OCI)</small>", base_url."mejseg/saveSegu", "anaseg", $nopla, $dta['comava'],substr($acti[$i]['ffinmej'],0,10),"Fecha Entrega", "aleseg","Porcentaje Ejecución","ejesep", "",$sg['noplsg'],$sg['anaseg'],$sg['ejesep'],$EjeSgAcc);
@@ -476,7 +476,7 @@ function mosArea($noAre){
 								            			<strong>Auditor: </strong> <?=$sg['pernom']." ".$sg['perape'];?><br>
 								            		</small>
 											    <?php $p++; }}else{ ?>
-											    	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70){ ?>
+											    	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
 											    		<?php if($h!='t47kt'){ ?>
 															<button class="btn btn-primary btn-sm btn2" style="background-color: #523178;padding: 0px 4px;margin-bottom: 2px;" type="button" data-toggle="modal" data-target="#myModSegu<?=$dta['noava'];?>"><small><small><i class="fa fa-plus"></i> Agregar Seguimiento</small></small></button>
 										                	<?php 
@@ -496,7 +496,7 @@ function mosArea($noAre){
 						        <div class="form-group col-md-12 bpun">
 						        <?php if($h!='t47kt'){ ?>
 									<?php if($segui AND $va['aprpmj']==1){ ?>
-			            				<?php if(($_SESSION['pefid']!=58 or $OCI) AND $acti[$i]['bloact']==2){ ?>
+			            				<?php if(($_SESSION['pefid']!=58 or $_SESSION['pefid']!=73 or $OCI) AND $acti[$i]['bloact']==2){ ?>
 			            					<button class="btn btn-primary btn-sm btn2" style="background-color: #523178;margin: 2px;" data-toggle="modal" data-target="#myModtf<?=$acti[$i]['noact'];?>" type="button" title="Agregar Avance"><i class="fa fa-plus"></i></button>
 						                	<?php 
 						                		echo Utils::modalTextFile("myModtf", "Agregar Avance", $acti[$i]['noact'], "Relación de Avances", base_url."mejseg/saveAva", "comava", $nopla, ($i+1).". ".$acti[$i]['accmej'],"Evidencias y/o soportes de la ejecución de la acción", "eviava", "Si va a subir más de una evidencia, <br>súbelo en un archivo *.zip");
@@ -504,7 +504,7 @@ function mosArea($noAre){
 			            				<?php } ?>
 		            				<?php } ?>
 <!-- Inicio Agregar seguimiento sin avance -->
-		            				<?php if($flag==true AND ($_SESSION['pefid']==58 OR $_SESSION['pefid']==70)){ ?>
+		            				<?php if($flag==true AND ($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74)){ ?>
 						                		<button class="btn btn-primary btn-sm btn2" style="background-color: #523178;padding: 0px 4px;margin-bottom: 2px;" type="button" data-toggle="modal" data-target="#myModSegSA<?=$acti[$i]['noact'];?>"><i class="fa fa-plus"></i> Agregar Seguimiento Sin Avances</button>
 
 						                		<?php 
@@ -519,7 +519,7 @@ function mosArea($noAre){
 	            			<?php }} ?>
 	                </td>
 	                <td style="text-align: center;width: 140px;">
-	                	<?php if(($_SESSION['pefid']!=58 or $OCI) AND $va['aprpmj']!=1){ ?>
+	                	<?php if(($_SESSION['pefid']!=58 or $_SESSION['pefid']!=73 or $OCI) AND $va['aprpmj']!=1){ ?>
 	                		<div class="btnajupl">
 		                		<a href= "<?=base_url;?>mejseg/index&nopla=<?=$va['nopla'];?>&noacc=<?=$va['noacc'];?>">
 		                			<i class="fa fa-pencil-square-o fa-2x" aria-hidden="true" title="Editar" style="color: #523178;"></i>
@@ -530,7 +530,7 @@ function mosArea($noAre){
 
 	                	<div class="btnajupl">
 	                	<?php if($va['aprpmj']==1){ ?>
-	                		<?php if(($_SESSION['pefid']==58 OR $_SESSION['pefid']==70) AND $h!='t47kt' AND ($plamejs AND !$plamejs[0]['fecautpla'])){ ?>
+	                		<?php if(($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74) AND $h!='t47kt' AND ($plamejs AND !$plamejs[0]['fecautpla'])){ ?>
 		                		<a href= "<?=base_url;?>mejseg/updMej&nopla=<?=$va['nopla'];?>&at=2&noacc=<?=$va['noacc'];?>">
 		                			<i class="fa fa-check-circle fa-2x" title="Aprobado" style="color: #523178;"></i>
 		                			<br><span class="txtajupl">Aprobado</span>
@@ -541,7 +541,7 @@ function mosArea($noAre){
 	                		<?php } ?>
 	                	<?php }else{ ?>
 	                		
-	                		<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70){ ?>
+	                		<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
 	                			<?php if($plamejs AND $plamejs[0]['perid']){ ?>
 			                		<i class="fa fa-times-circle fa-2x" title="Falta la aprobación del lider a cargo" style="color: #f00;"></i>
 		                			<br><span class="txtajupl">Sin aprobar</span>
@@ -568,7 +568,7 @@ function mosArea($noAre){
 		                	$datos = NULL;
 	                	?>
 	                	<?php if($h!='t47kt'){ ?>
-		                	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70){ ?>
+		                	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
 		                		<div class="btnajupl">
 				                	<i class="fa fa-plus-circle fa-2x" data-toggle="modal" data-target="#myModCom<?=$va['noacc'];?>" title="Agregar Comentario" style="color: #523178;"></i>
 				                	<br><span class="txtajupl" data-toggle="modal" data-target="#myModCom<?=$va['noacc'];?>">+ Comentario</span>
@@ -600,7 +600,7 @@ function mosArea($noAre){
 	                	?>
 
 
-	                	<?php //if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70){ ?>
+	                	<?php //if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
 	                		<!-- <br>
 	                		<a href= "<?=base_url;?>mejseg/delMejo&nopla=<?=$va['nopla'];?>&noacc=<?=$va['noacc'];?>" onclick="return eliminar();">
 	                			<i class="fa fa-trash fa-2x" title="Eliminar" style="color: #523178;"></i>
@@ -608,7 +608,7 @@ function mosArea($noAre){
                 		<?php //} ?>
 
 
-	                	<?php if(($_SESSION['pefid']!=58 or $OCI) AND $va['aprpmj']!=1){ ?>
+	                	<?php if(($_SESSION['pefid']!=58 or $_SESSION['pefid']!=73 or $OCI) AND $va['aprpmj']!=1){ ?>
 	                	<div class="btnajupl">
 	                	<?php
 	                		$plamej->setNoacc($va['noacc']);
@@ -696,7 +696,7 @@ function mosArea($noAre){
 							            			<strong>Auditor: </strong> <?=$sg['pernom']." ".$sg['perape'];?><br>
 							            		</small>
 										    <?php }}else{ ?>
-										    	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70){ ?>
+										    	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
 													<button class="btn btn-primary btn-sm btn2" style="background-color: #523178;padding: 0px 4px;margin-bottom: 2px;" type="button" data-toggle="modal" data-target="#myModSegu<?=$dta['noava'];?>"><small><small><i class="fa fa-plus"></i> Agregar Seguimiento</small></small></button>
 								                	<?php 
 							                			echo Utils::modalTextCombo("myModSegu", "Agregar Seguimiento", $dta['noava'], "Análisis del seguimiento <small>(Información del análisis adelantado por el auditor que realizó el seguimiento - OCI)</small>", base_url."mejseg/saveSegu", "anaseg", $nopla, $dta['comava'],$est,"Evidencias y/o soportes de la ejecución de la acción", "aleseg", "",$vlmin)

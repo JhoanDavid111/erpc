@@ -1,12 +1,15 @@
 <?php
 session_start();
-include '../models/plamejpdf.php';
+require_once '../../../config/db.php';
+include '../models/plamej.php';
+// include '../models/plamejpdf.php';
 
 $plamej = new Plamej();
 $pdf = isset($_GET['pdf']) ? $_GET['pdf']:NULL;
 $fil1 = isset($_GET['fil1']) ? $_GET['fil1'] : false;
 $fil2 = isset($_GET['fil2']) ? $_GET['fil2'] : false;
 $fil3 = isset($_GET['fil3']) ? $_GET['fil3'] : false;
+$valid = isset($_REQUEST['valid']) ? $_REQUEST['valid']:3001;
 $ac = isset($_GET['ac']) ? $_GET['ac'] : false;
 if($fil1 && $fil2){
 	$plamej->setFil1($fil1);
@@ -18,10 +21,13 @@ if($fil3){
 date_default_timezone_set('America/Bogota');
 $fecha = date("Ymdhis");
 
-$datAll = $plamej->getAll($ac);
+if($ac==2)
+	$datAll = $plamej->getAllcr($valid);
+else
+	$datAll = $plamej->getAll($valid);
 header('Content-Type: application/vnd.ms-excel');
 header("Content-Type: application/vnd.ms-excel; charset=UTF-16LE");
-header('Content-Disposition: attachment; filename="Planes de mejora '.$fecha.'.csv"');
+header('Content-Disposition: attachment; filename="Planes '.$fecha.'.csv"');
 
 $html = '';
 $html .= 'No.;';

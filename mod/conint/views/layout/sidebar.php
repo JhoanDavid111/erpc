@@ -62,9 +62,9 @@
 					<li class="">
 						<a href="<?=base_ini?>"><span class="fas fa-table mr-3"></span> Módulos</a>
 					</li>
-					<li class="">
+					<!-- <li class="">
 						<a href="<?=base_url?>"><span class="fa fa-home mr-3"></span> Inicio</a>
-					</li>
+					</li> -->
 					<?php 
 						$menu = $_SESSION['menu']; 
 						foreach ($menu as $mn) {
