@@ -86,6 +86,7 @@
 			</div>
 <!-- // Fin//////////////////////////////////////////////////////////// -->
 			<div class="form-group col-md-6">
+				<input type="hidden" name="valid" value="<?=$valid;?>">
 				<input type="submit" class="btn-primary-ccapital" value="Registrar">
 			</div>
 		</div>
@@ -118,10 +119,10 @@
 				</div>
 
 				<div class="form-group col-md-3" style="text-align: center;">
-					<a href="<?=base_url?>views/pdftot.php?fil1=<?=$fil1;?>&fil2=<?=$fil2;?>&fil3=<?=$fil3;?>&ac=1" target="_blank" title="Imprimir Planes de Mejora">
+					<a href="<?=base_url?>views/pdftot.php?fil1=<?=$fil1;?>&fil2=<?=$fil2;?>&fil3=<?=$fil3;?>&ac=1&valid=3051" target="_blank" title="Imprimir Planes de Mejora">
 			            <i class="fas fa-print fa-2x" style="color: #523178;margin-top: 30px;"></i>
 			        </a>
-			        <a href="<?=base_url?>views/csv.php?fil1=<?=$fil1;?>&fil2=<?=$fil2;?>&fil3=<?=$fil3;?>&ac=1" target="_blank" title="CSV Planes de Mejora">
+			        <a href="<?=base_url?>views/csv.php?fil1=<?=$fil1;?>&fil2=<?=$fil2;?>&fil3=<?=$fil3;?>&ac=1&valid=3051" target="_blank" title="CSV Planes de Mejora">
 			        	<i class="fa fa-download fa-2x" style="color: #523178;margin-top: 30px;"></i>
 			        </a>
 			    </div>
@@ -254,7 +255,7 @@
 	                		?>
 						<div class="btnajupl">
 		                <?php if($CouAcc<>0){ ?>
-		                	<?php if(!$va['perid'] AND ($_SESSION['pefid']==70 OR $_SESSION['pefid']==71)){
+		                	<?php if(!$va['perid'] AND ($_SESSION['pefid']==70 OR $_SESSION['pefid']==71 OR $_SESSION['pefid']==75)){
 		                		$dtPerid = isset($datPL[0]['perid']) ? $datPL[0]['perid']:NULL;
 		                	?>
 		                		<?php if($dtPerid==$_SESSION['perid']){ 
@@ -262,7 +263,7 @@
 		                			$DtCaA = $plamej->getCouAccApr();*/
 		                			if($DtCaA AND $DtCaA[0]['can']==0){
 		                		?>
-				                		<a href= "<?=base_url;?>plamej/updPlmj&nopla=<?=$va['nopla'];?>">
+				                		<a href= "<?=base_url;?>plamej/updPlmj&nopla=<?=$va['nopla'];?>&valid=3051">
 				                			<i class="fa fa-check-circle fa-2x" title="Por aprobar" style="color: #f00;text-shadow: 1px 1px 1px #000;"></i>
 				                			<br><span class="txtajupl">Por aprobar</span>
 				                		</a>
@@ -287,7 +288,7 @@
 	                			<br><span class="txtajupl">Por aprobar</span>
 	                		<?php }else{ ?>
 	                			<?php if($_SESSION['pefid']==70){ ?>
-	                				<a href= "<?=base_url;?>plamej/updDAplmj&nopla=<?=$va['nopla'];?>" onclick="return confirm('¿Está seguro de desaprobar este item? Tenga en cuenta que el proceso se inicia y las acciones se desaprueban para realizar ajustes, luego debe aprobar Control Interno, por último el líder debe aprobar para poder iniciar el seguimiento.');">
+	                				<a href= "<?=base_url;?>plamej/updDAplmj&nopla=<?=$va['nopla'];?>&valid=3051" onclick="return confirm('¿Está seguro de desaprobar este item? Tenga en cuenta que el proceso se inicia y las acciones se desaprueban para realizar ajustes, luego debe aprobar Control Interno, por último el líder debe aprobar para poder iniciar el seguimiento.');">
 				                		<i class="fa fa-check-circle fa-2x" title="Haga Click para DESAPROBAR este item. El proceso vuelve a iniciar." style="color: #523178;text-shadow: 1px 1px 1px #f00, 0px 0px 3px #000;"></i>
 				                		<br><span class="txtajupl">Aprobado</span>
 				                	</a>
@@ -317,7 +318,7 @@
 	                	<?php }else{ ?>
 	                		
 	                		<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70){ ?>
-		                		<a href= "<?=base_url;?>plamej/updPlmj&nopla=<?=$va['nopla'];?>">
+		                		<a href= "<?=base_url;?>plamej/updPlmj&nopla=<?=$va['nopla'];?>&valid=3051">
 		                			<i class="fa fa-check-circle fa-2x" title="Por aprobar" style="color: #f00;"></i>
 		                			<br><span class="txtajupl">Por aprobar</span>
 		                		</a>
@@ -345,7 +346,7 @@
 			                	<?php ;
 			                		$plamej->setNopla($va['nopla']);
 			                		$dtobs = $plamej->getObsNp();
-			                		echo Utils::modalUnTextAbCe("myModCob", "Cerrar Plan de mejora", $va['nopla'], "Observación", base_url."plamej/updpm", "ocpla",$va['nopla'],"","","","",$va['ocpla'],$dtobs);
+			                		echo Utils::modalUnTextAbCe("myModCob", "Cerrar Plan de mejora", $va['nopla'], "Observación", base_url."plamej/updpm&valid=3051", "ocpla",$va['nopla'],"","","","",$va['ocpla'],$dtobs);
 			                	?>
 				            <?php }else{ ?>
 				            	<div class="btnajupl">
@@ -375,7 +376,7 @@
 			                	if($cacc){ if($cacc[0]['can']==0){ 
 			                ?>
 					            <div class="btnajupl">
-					            	<a href="<?=base_url?>plamej/elipm&nopla=<?=$va['nopla'];?>" onclick="return eliminar();">
+					            	<a href="<?=base_url?>plamej/elipm&nopla=<?=$va['nopla'];?>&valid=3051" onclick="return eliminar();">
 					                	<i class="fas fa-trash fa-2x" title="Eliminar" style="color: #523178;"></i>
 					                	<br><span class="txtajupl">Eliminar</span>
 					                </a>

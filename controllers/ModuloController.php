@@ -86,7 +86,7 @@ class moduloController{
           header('Location:../mod/temporal/'); */
           header('Location:https://intranet.canalcapital.gov.co/intranet/radicado-cuentas-de-cobro/');
           break;
-        case 11: // 9	Dereccho de Autor
+        case 11: // 9	Derecho de Autor
         	$perfil = $mod->getPerfil(11, $_SESSION['perid']);
         	$_SESSION['pefid'] = $perfil[0]['pefid'];
         	$_SESSION['pefnom'] = $perfil[0]['pefnom'];
@@ -127,7 +127,11 @@ class moduloController{
           $_SESSION['pefnom'] = $perfil[0]['pefnom'];
           $_SESSION['depid'] = $perfil[0]['depid'];
           $_SESSION['nomarea'] = $perfil[0]['valnom'];
-          header('Location:../mod/conint/');
+          // OR $_SESSION['pefid']==71
+          if($_SESSION['pefid']==58 or $_SESSION['pefid']==70)
+            header('Location:../mod/conint/');
+          else
+            header('Location:../mod/conint/plamej/inst');
           break;
         case 23: // 23 Recursos Humanos
           $perfil = $mod->getPerfil(23, $_SESSION['perid']);

@@ -36,6 +36,7 @@ class MejsegController{
 			$txm = ";".$plamejs[0]['areapla'];
 			// echo $txm;
 			$OCI = strpos($txm, 1006);
+			if(!$OCI) $OCI = strpos($txm, 1016);
 			// echo "<br>".$OCI;
 			// die();
 		}

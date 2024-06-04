@@ -23,10 +23,10 @@
 				</div>
 
 				<div class="form-group col-md-3" style="text-align: center;">
-					<a href="<?=base_url?>views/pdftot.php?fil1=<?=$fil1;?>&fil2=<?=$fil2;?>&fil3=<?=$fil3;?>&ac=2" target="_blank" title="Imprimir Planes de Mejora">
+					<a href="<?=base_url?>views/pdftot.php?fil1=<?=$fil1;?>&fil2=<?=$fil2;?>&fil3=<?=$fil3;?>&ac=2&valid=3051" target="_blank" title="Imprimir Planes de Mejora">
 			            <i class="fas fa-print fa-2x" style="color: #523178;margin-top: 30px;"></i>
 			        </a>
-			        <a href="<?=base_url?>views/csv.php?fil1=<?=$fil1;?>&fil2=<?=$fil2;?>&fil3=<?=$fil3;?>&ac=2" target="_blank" title="CSV Planes de Mejora">
+			        <a href="<?=base_url?>views/csv.php?fil1=<?=$fil1;?>&fil2=<?=$fil2;?>&fil3=<?=$fil3;?>&ac=2&valid=3051" target="_blank" title="CSV Planes de Mejora">
 			        	<i class="fa fa-download fa-2x" style="color: #523178;margin-top: 30px;"></i>
 			        </a>
 			    </div>
@@ -108,7 +108,7 @@
 			                	<?php ;
 			                		$plamej->setNopla($va['nopla']);
 			                		$dtobs = $plamej->getObsNp();
-			                		echo Utils::modalUnTextAbCe("myModCob", "Abrir Plan de mejora", $va['nopla'], "Observación", base_url."plamej/updpm", "ocpla",$va['nopla'],"","","","",$va['ocpla'],$dtobs);
+			                		echo Utils::modalUnTextAbCe("myModCob", "Abrir Plan de mejora", $va['nopla'], "Observación", base_url."plamej/updpm&valid=3051", "ocpla",$va['nopla'],"","","","",$va['ocpla'],$dtobs);
 			                	?>
 				            <?php }else{ ?>
 				            	<div class="btnajupl">
