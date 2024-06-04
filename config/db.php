@@ -1,10 +1,15 @@
 <?php 	
 	class conexion{
 		public static function get_conexion(){
-			$host="localhost";
+			/*$host="localhost";
 			$db="erpc2";
 			$user="userCanal";
-			$pass="4QgmfSzz!HMt]nMd";
+			$pass="4QgmfSzz!HMt]nMd";*/
+
+			$host="localhost";
+			$db="erpc";
+			$user="root";
+			$pass="root";
 
 			$conexion=new PDO("mysql:host=$host; dbname=$db;",
 			$user, $pass,
