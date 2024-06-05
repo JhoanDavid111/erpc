@@ -9,6 +9,7 @@ class PlamejController{
 		$fil1 = isset($_POST['fil1']) ? $_POST['fil1'] : false;
 		$fil2 = isset($_POST['fil2']) ? $_POST['fil2'] : false;
 		$fil3 = isset($_POST['fil3']) ? $_POST['fil3'] : false;
+		$selectedAreas = isset($_POST['areapla']) ? $_POST['areapla'] : []; // Nuevo filtro por área
 
 		date_default_timezone_set('America/Bogota');
 		$hoy = date("Y-m-d");
@@ -24,6 +25,11 @@ class PlamejController{
 		if($fil3){
 			$plamej->setFil3($fil3);
 		}
+
+		if (!empty($selectedAreas)) {
+            $plamej->setSelectedAreas($selectedAreas);
+        }
+
 		$plamejs = $plamej->getAll(3051);
 		$areasT = $plamej->getAllVal(1,"as",3);
 		$datfuet = $plamej->getAllVal(32);
@@ -100,6 +106,8 @@ class PlamejController{
 		$fil1 = isset($_POST['fil1']) ? $_POST['fil1'] : false;
 		$fil2 = isset($_POST['fil2']) ? $_POST['fil2'] : false;
 		$fil3 = isset($_POST['fil3']) ? $_POST['fil3'] : false;
+		$selectedAreas = isset($_POST['areapla']) ? $_POST['areapla'] : []; // Nuevo filtro por área
+		//$fil4 = isset($_POST['fil4']) ? $_POST['fil4'] : false; // Agregado filtro 4
 
 		date_default_timezone_set('America/Bogota');
 		$hoy = date("Y-m-d");
@@ -115,6 +123,11 @@ class PlamejController{
 		if($fil3){
 			$plamej->setFil3($fil3);
 		}
+
+		if (!empty($selectedAreas)) {
+            $plamej->setSelectedAreas($selectedAreas);
+        }
+
 		$plamejs = $plamej->getAll();
 		$areasT = $plamej->getAllVal(1,"as",3);
 		$datfuet = $plamej->getAllVal(32);

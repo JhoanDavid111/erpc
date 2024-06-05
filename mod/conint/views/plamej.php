@@ -116,8 +116,32 @@
 						<option value="1901" <?php if($fil3==1901) echo "selected"; ?>>Externo</option>
 						<option value="1902" <?php if($fil3==1902) echo "selected"; ?>>Interno</option>
 					</select>
+				 </div>
+				 <div class="form-group col-md-6" id="go1">
+					<label for="areapla">Área</label>
+					<?php
+					// Verifica si $val está definido y si $val[0]['areapla'] existe para dividirlo en un array
+					if (isset($val) && isset($val[0]['areapla'])) {
+						$rvare = explode(";", $val[0]['areapla']);
+					} else {
+						$rvare = []; // Inicializa como un array vacío si no hay valores definidos
+					}
+					?>
+					<select class="form-control form-control-sm" id="areapla" name="areapla[]" multiple="multiple" onChange="this.form.submit();" style="padding: 0px 5px;">
+						<?php 
+						if ($areasT) {
+							foreach ($areasT as $do) {
+								// Determina si la opción actual debe estar seleccionada
+								$selected = in_array($do['valid'], $rvare) ? 'selected="selected"' : '';
+								?>
+								<option value="<?= $do['valid']; ?>" <?= $selected; ?>><?= $do['valnom']; ?></option>
+							<?php }
+						} ?>
+					</select>
 				</div>
 
+
+				 
 				<div class="form-group col-md-3" style="text-align: center;">
 					<a href="<?=base_url?>views/pdftot.php?fil1=<?=$fil1;?>&fil2=<?=$fil2;?>&fil3=<?=$fil3;?>&ac=1&valid=3051" target="_blank" title="Imprimir Planes de Mejora">
 			            <i class="fas fa-print fa-2x" style="color: #523178;margin-top: 30px;"></i>

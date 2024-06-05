@@ -1,7 +1,7 @@
 <?php
 
 //define("base_url", "http://localhost/erpc/");
-define("base_url", "https://intranet.canalcapital.gov.co/erpc/");
+//define("base_url", "https://intranet.canalcapital.gov.co/erpc/");
 
 // Intranet ---------------------------------
 // define("base_url", "https://intranet.canalcapital.gov.co/erpc/");

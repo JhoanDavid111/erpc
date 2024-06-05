@@ -66,6 +66,8 @@ class Plamej{
 	private $fil1;
 	private $fil2;
 	private $fil3;
+	private $selectedAreas;
+	
 
 	private $db;
 	public function __construct() {
@@ -244,6 +246,10 @@ class Plamej{
 	function getFil3() {
 		return $this->fil3;
 	}
+	function getSelectedAreas() {
+        return $this->selectedAreas;
+    }
+	
 //Metodos Set Guardan el dato
 	// Tabla plamej
 	function setNopla($nopla){
@@ -416,38 +422,71 @@ class Plamej{
 	function setFil3($fil3) {
 		$this->fil3 = $fil3;
 	}
+	function setSelectedAreas($selectedAreas) {
+        $this->selectedAreas = $selectedAreas;
+    }
 
 //Metodos CRUD
 //--Tabla plamej --------------------------------------------------
-	public function getAll($valid=3001){
-		// $sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla, a.perid AS apro, l.valid FROM plamej AS l LEFT JOIN valor AS f ON l.fuepla=f.valid LEFT JOIN valor AS e ON l.estpla=e.valid LEFT JOIN valor AS c ON l.carlmej=c.valid LEFT JOIN persona AS p ON l.perid=p.perid LEFT JOIN persona AS a ON l.carlmej=a.cargo LEFT JOIN plaacc AS p1 ON l.nopla=p1.nopla LEFT JOIN plaact AS p2 ON p1.noacc=p2.noact LEFT JOIN plaava AS p3 ON p2.noact=p3.noact LEFT JOIN plaseg AS p4 ON p3.noava=p4.noava WHERE l.actpla=1";
-		$sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla, '' AS apro, l.valid FROM plamej AS l LEFT JOIN valor AS f ON l.fuepla=f.valid LEFT JOIN valor AS e ON l.estpla=e.valid LEFT JOIN valor AS c ON l.carlmej=c.valid LEFT JOIN persona AS p ON l.perid=p.perid LEFT JOIN persona AS a ON l.carlmej=a.cargo LEFT JOIN plaacc AS p1 ON l.nopla=p1.nopla LEFT JOIN plaact AS p2 ON p1.noacc=p2.noact LEFT JOIN plaava AS p3 ON p2.noact=p3.noact LEFT JOIN plaseg AS p4 ON p3.noava=p4.noava WHERE l.actpla=1";
-		if($valid==3051) $sql .= " AND l.valid=3051";
-		else $sql .= " AND l.valid!=3051";
-		if($_SESSION['pefid']==71 or $_SESSION['pefid']==75)
-			$sql .= " AND a.perid='".$_SESSION['perid']."'";
-		elseif($_SESSION['pefid']!=58 AND $_SESSION['pefid']!=70 AND $_SESSION['pefid']!=73 AND $_SESSION['pefid']!=74)
+	public function getAll($valid = 3001) {
+
+		// Obtener el contenido de $selectedAreas
+		$selectedAreas = $this->getSelectedAreas(); // Asegúrate de que esta función devuelva correctamente el array de áreas seleccionadas
+
+		$sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla, '' AS apro, l.valid 
+				FROM plamej AS l 
+				LEFT JOIN valor AS f ON l.fuepla = f.valid 
+				LEFT JOIN valor AS e ON l.estpla = e.valid 
+				LEFT JOIN valor AS c ON l.carlmej = c.valid 
+				LEFT JOIN persona AS p ON l.perid = p.perid 
+				LEFT JOIN persona AS a ON l.carlmej = a.cargo 
+				LEFT JOIN plaacc AS p1 ON l.nopla = p1.nopla 
+				LEFT JOIN plaact AS p2 ON p1.noacc = p2.noact 
+				LEFT JOIN plaava AS p3 ON p2.noact = p3.noact 
+				LEFT JOIN plaseg AS p4 ON p3.noava = p4.noava 
+				WHERE l.actpla = 1";
+
+		if ($valid == 3051) {
+			$sql .= " AND l.valid = 3051";
+		} else {
+			$sql .= " AND l.valid != 3051";
+		}
+
+		if ($_SESSION['pefid'] == 71 || $_SESSION['pefid'] == 75) {
+			$sql .= " AND a.perid = '".$_SESSION['perid']."'";
+		} elseif ($_SESSION['pefid'] != 58 && $_SESSION['pefid'] != 70 && $_SESSION['pefid'] != 73 && $_SESSION['pefid'] != 74) {
 			$sql .= " AND l.areapla LIKE '%".$_SESSION['depid']."%'";
-		
+		}
 
-		if($this->getFil1() && $this->getFil2())
+		if ($this->getFil1() && $this->getFil2()) {
 			$sql .= " AND date(p4.fecseg) BETWEEN '".$this->getFil1()."' AND '".$this->getFil2()."'";
-			//$sql .= " AND date(l.fsolpla) BETWEEN '".$this->getFil1()."' AND '".$this->getFil2()."'";
-		if($this->getFil3())
-			$sql .= " AND l.fuepla='".$this->getFil3()."'";
-		
+		}
+
+		if ($this->getFil3()) {
+			$sql .= " AND l.fuepla = '".$this->getFil3()."'";
+		}
+
+		// Filtro por áreas seleccionadas
+		if (!empty($selectedAreas)) {
+			$placeholders = implode(',', array_fill(0, count($selectedAreas), '?'));
+			$sql .= " AND l.areapla IN ($placeholders)";
+		}
+
 		$sql .= " ORDER BY l.fsolpla";
-		// echo "<br>".$sql."<br><br>".$this->getFil1()."-".$this->getFil2()."-".$this->getFil3()."-".$_SESSION['pefid']."-".$_SESSION['perid']."<br><br><br>";
-		// die();
 
-		$execute = $this->db->query($sql);
-		$rub = $execute->fetchall(PDO::FETCH_ASSOC);
-
-		// var_dump($rub);
-		// die();
+		// Ejecución de la consulta y obtención de resultados
+		$stmt = $this->db->prepare($sql);
+		if (!empty($selectedAreas)) {
+			foreach ($selectedAreas as $key => $value) {
+				$stmt->bindValue(($key + 1), $value); // Bind de los valores de $selectedAreas
+			}
+		}
+		$stmt->execute();
+		$rub = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 		return $rub;
 	}
+
 
 	public function getPerCargo(){
 		$sql = "SELECT perid, nodocemp, pernom, perape, peremail, cargo FROM persona WHERE actemp=1 AND cargo=".$this->cargo;
