@@ -68,3 +68,15 @@ div .redesp a span i{
   background: linear-gradient(to right,  rgba(82,49,120,0.3) 0%,rgba(82,49,120,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80523178', endColorstr='#00523178',GradientType=1 ); /* IE6-9 */
 }
+
+
+.custom-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 2px;
+  border-radius: 2px;
+  cursor: pointer;
+}

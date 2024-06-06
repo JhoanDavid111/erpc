@@ -8506,6 +8506,17 @@ table.table thead{
   
 }
 
+.custom-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 2px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
 .user-section img{
   max-width: 35px;
 }

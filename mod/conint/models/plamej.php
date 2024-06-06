@@ -466,23 +466,15 @@ class Plamej{
 			$sql .= " AND l.fuepla = '".$this->getFil3()."'";
 		}
 
-		// Filtro por áreas seleccionadas
-		if (!empty($selectedAreas)) {
-			$placeholders = implode(',', array_fill(0, count($selectedAreas), '?'));
-			$sql .= " AND l.areapla IN ($placeholders)";
+		if ($this->getSelectedAreas()) {
+			$sql .= " AND l.areapla = '".$this->getSelectedAreas()."'";
 		}
+
 
 		$sql .= " ORDER BY l.fsolpla";
 
-		// Ejecución de la consulta y obtención de resultados
-		$stmt = $this->db->prepare($sql);
-		if (!empty($selectedAreas)) {
-			foreach ($selectedAreas as $key => $value) {
-				$stmt->bindValue(($key + 1), $value); // Bind de los valores de $selectedAreas
-			}
-		}
-		$stmt->execute();
-		$rub = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$execute = $this->db->query($sql);
+		$rub = $execute->fetchAll(PDO::FETCH_ASSOC);
 
 		return $rub;
 	}
