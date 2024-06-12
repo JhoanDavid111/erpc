@@ -431,7 +431,7 @@ class Plamej{
 	public function getAll($valid = 3001) {
 
 		// Obtener el contenido de $selectedAreas
-		$selectedAreas = $this->getSelectedAreas(); // Asegúrate de que esta función devuelva correctamente el array de áreas seleccionadas
+		$selectedAreas = $this->getSelectedAreas(); 
 
 		$sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla, '' AS apro, l.valid 
 				FROM plamej AS l 

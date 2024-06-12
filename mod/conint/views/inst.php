@@ -105,54 +105,59 @@
 <?php } ?>
 <!-- Ver datos -->
 
-<<h2 class="title-c">Planes Institucionales</h2>
+<h2 class="title-c">Planes Institucionales</h2>
 <?php $url_action2 = base_url . "plamej/inst"; ?>
 <div>
-    <form class="m-tb-40" action="<?= $url_action2 ?>" method="POST">
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label for="fil1">F. Inicial Seguimiento:</label>
-                <input type="date" class="form-control form-control-sm" id="fil1" name="fil1" value="<?= $fil1; ?>">
-            </div>
-            <div class="form-group col-md-3">
-                <label for="fil2">F. Final Seguimiento:</label>
-                <input type="date" class="form-control form-control-sm" id="fil2" name="fil2" onChange="this.form.submit();" value="<?= $fil2; ?>">
-            </div>
-            <div class="form-group col-md-3">
-                <label for="fil3">Origen:</label>
-                <select class="form-control form-control-sm" id="fil3" name="fil3" onChange="this.form.submit();" style="padding: 0px 5px;">
-                    <option value="0">Seleccione</option>
-                    <option value="1901" <?= $fil3 == 1901 ? "selected" : ""; ?>>Externo</option>
-                    <option value="1902" <?= $fil3 == 1902 ? "selected" : ""; ?>>Interno</option>
-                </select>
-            </div>
-            </div>
-			<div class="form-group col-md-6" id="go1">
-					<label for="areapla">Área</label>
-					<select class="form-control form-control-sm" id="areapla" name="areapla" onChange="this.form.submit();" style="padding: 0px 5px;">
-						<option value="" disabled selected>Seleccione una área</option>
-						<?php 
-						if ($areasT) {
-							foreach ($areasT as $do) {
-								// Verifica si la opción actual debe estar seleccionada
-								$selected = (isset($val) && isset($val[0]['areapla']) && $do['valid'] == $val[0]['areapla']) ? 'selected="selected"' : '';
-								?>
-								<option value="<?= $do['valid']; ?>" <?= $selected; ?>><?= $do['valnom']; ?></option>
-								<?php
-							}
-						} ?>
+<form class="m-tb-40" action="<?=$url_action2?>" method="POST">
+			<div class="row">
+				<div class="form-group col-md-3">
+					<label for="fil1">F. Inicial Seguimiento:</label>
+					<input type="date" class="form-control form-control-sm" id="fil1" name="fil1" value="<?=$fil1;?>">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="fil2">F. Final Seguimiento:</label>
+					<input type="date" class="form-control form-control-sm" id="fil2" name="fil2"  onChange="this.form.submit();" value="<?=$fil2;?>">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="fil3">Origen:</label>
+					<select class="form-control form-control-sm" id="fil3" name="fil3" onChange="this.form.submit();" style="padding: 0px 5px;">
+						<option value="0" >Seleccione</option>
+						<option value="1901" <?php if($fil3==1901) echo "selected"; ?>>Externo</option>
+						<option value="1902" <?php if($fil3==1902) echo "selected"; ?>>Interno</option>
 					</select>
-				</div>	 
-            <div class="form-group col-md-3" style="text-align: center;">
-                <a href="<?= base_url ?>views/pdftot.php?fil1=<?= $fil1; ?>&fil2=<?= $fil2; ?>&fil3=<?= $fil3; ?>&ac=1" target="_blank" title="Imprimir Planes Institucionales">
-                    <i class="fas fa-print fa-2x" style="color: #523178;margin-top: 30px;"></i>
-                </a>
-                <a href="<?= base_url ?>views/csv.php?fil1=<?= $fil1; ?>&fil2=<?= $fil2; ?>&fil3=<?= $fil3; ?>&ac=1" target="_blank" title="CSV Planes de Mejora">
-                    <i class="fa fa-download fa-2x" style="color: #523178;margin-top: 30px;"></i>
-                </a>
-            </div>
-        </div>
-    </form>
+				 </div>
+				 <div class="form-group col-md-6" id="go1">
+					<label for="areapla">Área</label>
+					<?php if ($_SESSION['pefid'] != 59) : ?>
+						<select class="form-control form-control-sm" id="areapla" name="areapla" onChange="this.form.submit();" style="padding: 0px 5px;">
+							<option value="" disabled selected>Seleccione una área</option>
+							<?php 
+							if ($areasT) {
+								foreach ($areasT as $do) {
+									// Verifica si la opción actual debe estar seleccionada
+									$selected = (isset($val) && isset($val[0]['areapla']) && $do['valid'] == $val[0]['areapla']) ? 'selected="selected"' : '';
+									?>
+									<option value="<?= $do['valid']; ?>" <?= $selected; ?>><?= $do['valnom']; ?></option>
+									<?php
+								}
+							} ?>
+						</select>
+					<?php else : ?>
+						<select class="form-control form-control-sm" id="areapla" name="areapla" disabled>
+    						<option value="" disabled selected></option>
+						</select>
+					<?php endif; ?>
+				</div>
+				<div class="form-group col-md-3" style="text-align: center;">
+					<a href="<?=base_url?>views/pdftot.php?fil1=<?=$fil1;?>&fil2=<?=$fil2;?>&fil3=<?=$fil3;?>&ac=1&valid=3051" target="_blank" title="Imprimir Planes de Mejora">
+			            <i class="fas fa-print fa-2x" style="color: #523178;margin-top: 30px;"></i>
+			        </a>
+			        <a href="<?=base_url?>views/csv.php?fil1=<?=$fil1;?>&fil2=<?=$fil2;?>&fil3=<?=$fil3;?>&ac=1&valid=3051" target="_blank" title="CSV Planes de Mejora">
+			        	<i class="fa fa-download fa-2x" style="color: #523178;margin-top: 30px;"></i>
+			        </a>
+			    </div>
+			</div>
+		</form>
 </div>
 
 	<div class="table-responsive">

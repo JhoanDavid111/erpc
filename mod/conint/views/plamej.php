@@ -119,19 +119,25 @@
 				 </div>
 				 <div class="form-group col-md-6" id="go1">
 					<label for="areapla">Área</label>
-					<select class="form-control form-control-sm" id="areapla" name="areapla" onChange="this.form.submit();" style="padding: 0px 5px;">
-						<option value="" disabled selected>Seleccione una área</option>
-						<?php 
-						if ($areasT) {
-							foreach ($areasT as $do) {
-								// Verifica si la opción actual debe estar seleccionada
-								$selected = (isset($val) && isset($val[0]['areapla']) && $do['valid'] == $val[0]['areapla']) ? 'selected="selected"' : '';
-								?>
-								<option value="<?= $do['valid']; ?>" <?= $selected; ?>><?= $do['valnom']; ?></option>
-								<?php
-							}
-						} ?>
-					</select>
+					<?php if ($_SESSION['pefid'] != 59) : ?>
+						<select class="form-control form-control-sm" id="areapla" name="areapla" onChange="this.form.submit();" style="padding: 0px 5px;">
+							<option value="" disabled selected>Seleccione una área</option>
+							<?php 
+							if ($areasT) {
+								foreach ($areasT as $do) {
+									// Verifica si la opción actual debe estar seleccionada
+									$selected = (isset($val) && isset($val[0]['areapla']) && $do['valid'] == $val[0]['areapla']) ? 'selected="selected"' : '';
+									?>
+									<option value="<?= $do['valid']; ?>" <?= $selected; ?>><?= $do['valnom']; ?></option>
+									<?php
+								}
+							} ?>
+						</select>
+					<?php else : ?>
+						<select class="form-control form-control-sm" id="areapla" name="areapla" disabled>
+    						<option value="" disabled selected></option>
+						</select>
+					<?php endif; ?>
 				</div>
 				<div class="form-group col-md-3" style="text-align: center;">
 					<a href="<?=base_url?>views/pdftot.php?fil1=<?=$fil1;?>&fil2=<?=$fil2;?>&fil3=<?=$fil3;?>&ac=1&valid=3051" target="_blank" title="Imprimir Planes de Mejora">
