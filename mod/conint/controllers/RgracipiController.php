@@ -1,10 +1,10 @@
 <?php
 include'models/plamej.php';
 
-class rgraci1Controller{
+class rgracipiController{
 	
 	public function index(){
-		Utils::useraccess('rgraci1/index',$_SESSION['pefid']);
+		Utils::useraccess('rgracipi/index',$_SESSION['pefid']);
 		$plamej = new Plamej();
 		date_default_timezone_set('America/Bogota');
 		$ano = isset($_POST['ano']) ? $_POST['ano']:date("Y");
@@ -16,18 +16,18 @@ class rgraci1Controller{
 		//$pmj = $plamej->getDatM();
 		$toms = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 		$anos = $plamej->getAno();
-		$pmj = $plamej->getGraEstado(0,$fil1,$fil2, 3051);
-		$pmj1 = $plamej->getGraEstadoI(1901,$fil1,$fil2, 3051);
-		$pmj2 = $plamej->getGraEstadoI(1902,$fil1,$fil2, 3051);
-		$CanPlan = $plamej->getCanPlan($fil1, $fil2, 3051);
-		$AC = $plamej->getAC($fil1, $fil2, 3051);
-		$EI = $plamej->getEI($fil1, $fil2, 3051);
+		$pmj = $plamej->getGraEstado(0,$fil1,$fil2, 1111);
+		$pmj1 = $plamej->getGraEstadoI(1901,$fil1,$fil2, 1111);
+		$pmj2 = $plamej->getGraEstadoI(1902,$fil1,$fil2, 1111);
+		$CanPlan = $plamej->getCanPlan($fil1, $fil2, 1111);
+		$AC = $plamej->getAC($fil1, $fil2, 1111);
+		$EI = $plamej->getEI($fil1, $fil2, 1111);
 
-		require_once 'views/rgraci1.php';
+		require_once 'views/rgracipi.php';
 	}
 
 	public function area(){
-		Utils::useraccess('rgraci1/area',$_SESSION['pefid']);
+		Utils::useraccess('rgracipi/area',$_SESSION['pefid']);
 		$plamej = new Plamej();
 		date_default_timezone_set('America/Bogota');
 		$ano = isset($_POST['ano']) ? $_POST['ano']:date("Y");
@@ -44,13 +44,13 @@ class rgraci1Controller{
 		$toms = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 		$anos = $plamej->getAno();
 		$areas = $plamej->getAllVal(1);;
-		$pmj = $plamej->getGraEstado($area,$fil1,$fil2, 3051);
-		$pmj1 = $plamej->getGraEstadoIarea(1901,$area,$fil1,$fil2, 3051);//Interno
-		$pmj2 = $plamej->getGraEstadoIarea(1902,$area,$fil1,$fil2, 3051);//Externo
-		$CanPlan = $plamej->getCanPlan($fil1, $fil2, 3051);
-		$AC = $plamej->getACarea($area,$fil1, $fil2, 3051);
-		$EI = $plamej->getEIarea($area,$fil1, $fil2, 3051);
+		$pmj = $plamej->getGraEstado($area,$fil1,$fil2, 1111);
+		$pmj1 = $plamej->getGraEstadoIarea(1901,$area,$fil1,$fil2, 1111);//Interno
+		$pmj2 = $plamej->getGraEstadoIarea(1902,$area,$fil1,$fil2, 1111);//Externo
+		$CanPlan = $plamej->getCanPlan($fil1, $fil2, 1111);
+		$AC = $plamej->getACarea($area,$fil1, $fil2, 1111);
+		$EI = $plamej->getEIarea($area,$fil1, $fil2, 1111);
 
-		require_once 'views/rgraci2.php';
+		require_once 'views/rgracipipa.php';
 	}
 }

@@ -229,7 +229,7 @@
 	        type: 'column'
 	    },
 	    title: {
-	        text: 'Origen Interno por estados'
+	        text: 'Origen Externo por estados'
 	    },
 	    subtitle: {
 	        text: 'Gráfico en Barras'
@@ -310,7 +310,7 @@
 	        type: 'column'
 	    },
 	    title: {
-	        text: 'Origen Externo por estados'
+	        text: 'Origen Interno por estados'
 	    },
 	    subtitle: {
 	        text: 'Gráfico en Barras'

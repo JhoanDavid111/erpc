@@ -1,7 +1,7 @@
 <h2 class="title-c">Gráficas Generales</h2>
 
 <!-- Selección de área Inicio  -->
-<?php $url_action = base_url."rgraci1/index"; ?>
+<?php $url_action = base_url."rgracipi/index"; ?>
 <form class="m-tb-40" id="formdes" name="frmdes" method="POST" action="<?=$url_action;?>">
 	<div class="row">
 		<div class="form-group col-md-4">
@@ -62,7 +62,7 @@
 	<script src="../code/modules/accessibility.js"></script>
 <!-- Llamado a librería gráficas JS fin  -->
 
-<strong>Planes de mejora Abiertos y Cerrados</strong><br>
+<strong>Planes Institucionales Abiertos y Cerrados</strong><br>
 <center>
 	<figure class="highcharts-figure" style="display: inline-block;width: 30%;">
 	    <div id="container"></div>
@@ -155,7 +155,7 @@
 	        }
 	    },
 	    title: {
-	        text: 'Planes de mejora',
+	        text: 'Planes Institucionales',
 	        align: 'center'
 	    },
 	    subtitle: {
@@ -188,7 +188,7 @@
 <!-- Gráfica 2 Fin  -->
 
 
-<strong>Planes de mejora por Estado</strong><br>
+<strong>Planes Institucionales por Estado</strong><br>
 <center>
 	<figure class="highcharts-figure" style="display: inline-block;width: 30%;">
 	    <div id="container3"></div>
@@ -314,7 +314,7 @@
 <!-- Gráfica 4 Fin  -->
 
 
-<strong>Planes de mejora por Estado</strong><br>
+<strong>Planes Institucionales por Estado</strong><br>
 <center>
 	<figure class="highcharts-figure" style="display: inline-block;width: 90%;">
 	    <div id="container6"></div>
@@ -337,7 +337,7 @@
 	        }
 	    },
 	    title: {
-	        text: 'Planes de mejora por Estados',
+	        text: 'Planes Institucionales por Estados',
 	        align: 'center'
 	    },
 	    subtitle: {
@@ -376,7 +376,7 @@
 	        type: 'column'
 	    },
 	    title: {
-	        text: 'Planes de mejora por Estados'
+	        text: 'Planes Institucionales por Estados'
 	    },
 	    subtitle: {
 	        text: 'Gráfico en Barras'
@@ -451,7 +451,7 @@
 <!-- Gráfica 6 Fin  -->
 
 
-<strong>Planes de mejora Internos y Externos</strong><br>
+<strong>Planes Institucionales Internos y Externos</strong><br>
 <center>
 	<figure class="highcharts-figure" style="display: inline-block;width: 30%;">
 	    <div id="container7"></div>
@@ -470,7 +470,7 @@
 	        type: 'column'
 	    },
 	    title: {
-	        text: 'Planes de mejora por Estados Externos'
+	        text: 'Planes Institucionales por Estados Externos'
 	    },
 	    subtitle: {
 	        text: 'Gráfico en Barras'
@@ -551,7 +551,7 @@
 	        type: 'column'
 	    },
 	    title: {
-	        text: 'Planes de mejora por Estados Internos'
+	        text: 'Planes Institucionales por Estados Internos'
 	    },
 	    subtitle: {
 	        text: 'Gráfico en Barras'

@@ -1132,13 +1132,20 @@ class Plamej{
 		return $save;
 	}
 
-	public function getAC($fil1=0, $fil2=0){
-		$sql ='SELECT "Abierto" AS tipo, COUNT(nopla) AS tot FROM plamej WHERE actpla=1';
+	public function getAC($fil1=0, $fil2=0, $valid){
+		$sql ='SELECT "Abierto" AS tipo, COUNT(nopla) AS tot FROM plamej WHERE actpla=1' ;
 		if($fil1 and $fil2)
 			$sql .=" AND fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
 		$sql .=' UNION SELECT "Cerrado" AS tipo, COUNT(nopla) AS tot FROM plamej WHERE actpla=2';
 		if($fil1 and $fil2)
 			$sql .=" AND fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
+
+			if ($valid == 3051) {
+				$sql .= " AND valid = 3051";
+			} else {
+				$sql .= " AND valid != 3051";
+			}
+
 		$execute = $this->db->query($sql);
 		$save = $execute->fetchall(PDO::FETCH_ASSOC);
 
@@ -1148,16 +1155,23 @@ class Plamej{
 		// die();
 		return $save;
 	}
-	public function getACarea($valid=0, $fil1=0, $fil2=0){
+	public function getACarea($area=0, $fil1=0, $fil2=0, $valid){
 		$sql ='SELECT "Abierto" AS tipo, COUNT(nopla) AS tot FROM plamej WHERE actpla=1';
-		if($valid)	$sql .=" AND areapla LIKE '%".$valid."%'";
+		if($area)	$sql .=" AND areapla LIKE '%".$area."%'";
 		if($fil1 and $fil2)
 			$sql .=" AND fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
 		$sql .=' UNION SELECT "Cerrado" AS tipo, COUNT(nopla) AS tot FROM plamej WHERE actpla=2';
 		if($fil1 and $fil2)
 			$sql .=" AND fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
-		if($valid)	$sql .=" AND areapla LIKE '%".$valid."%'";
+		if($area)	$sql .=" AND areapla LIKE '%".$area."%'";
 		$sql .=' ;';
+
+		if ($valid == 3051) {
+			$sql .= " AND valid = 3051";
+		} else {
+			$sql .= " AND valid != 3051";
+		}
+
 		$execute = $this->db->query($sql);
 		$save = $execute->fetchall(PDO::FETCH_ASSOC);
 
@@ -1167,13 +1181,20 @@ class Plamej{
 		// die();
 		return $save;
 	}
-	public function getEI($fil1=0, $fil2=0){
+	public function getEI($fil1=0, $fil2=0, $valid){
 		$sql ='SELECT "Externo" AS tipo, COUNT(nopla) AS tot FROM plamej WHERE fuepla=1901';
 		if($fil1 and $fil2)
 			$sql .=" AND fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
 		$sql .= ' UNION SELECT "Interno" AS tipo, COUNT(nopla) AS tot FROM plamej WHERE fuepla=1902';
 		if($fil1 and $fil2)
 			$sql .=" AND fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
+
+			if ($valid == 3051) {
+				$sql .= " AND valid = 3051";
+			} else {
+				$sql .= " AND valid != 3051";
+			}
+
 		$execute = $this->db->query($sql);
 		$save = $execute->fetchall(PDO::FETCH_ASSOC);
 
@@ -1183,16 +1204,23 @@ class Plamej{
 		// die();
 		return $save;
 	}
-	public function getEIarea($valid=0, $fil1=0, $fil2=0){
+	public function getEIarea($area=0, $fil1=0, $fil2=0, $valid){
 		$sql ='SELECT "Externo" AS tipo, COUNT(nopla) AS tot FROM plamej WHERE fuepla=1901';
-		if($valid)	$sql .=" AND areapla LIKE '%".$valid."%'";
+		if($area)	$sql .=" AND areapla LIKE '%".$area."%'";
 		if($fil1 and $fil2)
 			$sql .=" AND fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
 		$sql .=' UNION SELECT "Interno" AS tipo, COUNT(nopla) AS tot FROM plamej WHERE fuepla=1902';
 		if($fil1 and $fil2)
 			$sql .=" AND fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
-		if($valid)	$sql .=" AND areapla LIKE '%".$valid."%'";
+		if($area)	$sql .=" AND areapla LIKE '%".$area."%'";
 		$sql .=' ;';
+
+		if ($valid == 3051) {
+			$sql .= " AND valid = 3051";
+		} else {
+			$sql .= " AND valid != 3051";
+		}
+
 		$execute = $this->db->query($sql);
 		$save = $execute->fetchall(PDO::FETCH_ASSOC);
 
@@ -1202,11 +1230,43 @@ class Plamej{
 		// die();
 		return $save;
 	}
-	public function getGraEstado($valid=0, $fil1=0, $fil2=0){
+	public function getGraEstado($area=0, $fil1=0, $fil2=0, $valid){
 		$sql ="SELECT v.valid, v.valnom, v.pre, COUNT(p.nopla) AS tot, avg(p.porpla) AS pro FROM valor AS v LEFT JOIN plamej AS p ON v.valid=p.estpla WHERE v.parid=31";
-		if($valid) $sql .=" AND p.areapla LIKE '%".$valid."%'";
+		if($area) $sql .=" AND p.areapla LIKE '%".$area."%'";
 		if($fil1 and $fil2)
 			$sql .=" AND p.fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
+		
+
+		if ($valid == 3051) {
+			$sql .= " AND p.valid = 3051";
+		} else {
+			$sql .= " AND p.valid != 3051";
+		}
+
+		$sql .=" GROUP BY v.valid, v.valnom, v.pre ORDER BY COUNT(p.nopla) DESC;";
+
+		$execute = $this->db->query($sql);
+		$save = $execute->fetchall(PDO::FETCH_ASSOC);
+
+		
+
+		// echo "<br>".$sql."<br>";
+		// var_dump($save);
+		// $error= $this->db->errorInfo();
+		// die();
+		return $save;
+	}
+	public function getGraEstadoI($ei, $fil1=0, $fil2=0, $valid){
+	$sql ="SELECT v.valid, v.valnom, v.pre, COUNT(p.nopla) AS tot, avg(p.porpla) AS pro FROM valor AS v LEFT JOIN plamej AS p ON v.valid=p.estpla WHERE v.parid=31 AND p.fuepla='".$ei."'";
+		if($fil1 and $fil2)
+			$sql .=" AND p.fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
+
+			if ($valid == 3051) {
+				$sql .= " AND p.valid = 3051";
+			} else {
+				$sql .= " AND p.valid != 3051";
+			}
+
 		$sql .=" GROUP BY v.valid, v.valnom, v.pre ORDER BY COUNT(p.nopla) DESC;";
 		$execute = $this->db->query($sql);
 		$save = $execute->fetchall(PDO::FETCH_ASSOC);
@@ -1217,27 +1277,20 @@ class Plamej{
 		// die();
 		return $save;
 	}
-	public function getGraEstadoI($ei, $fil1=0, $fil2=0){
+	public function getGraEstadoIarea($ei, $area=0, $fil1=0, $fil2=0, $valid){
 		$sql ="SELECT v.valid, v.valnom, v.pre, COUNT(p.nopla) AS tot, avg(p.porpla) AS pro FROM valor AS v LEFT JOIN plamej AS p ON v.valid=p.estpla WHERE v.parid=31 AND p.fuepla='".$ei."'";
-		if($fil1 and $fil2)
-			$sql .=" AND p.fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
-		$sql .=" GROUP BY v.valid, v.valnom, v.pre ORDER BY COUNT(p.nopla) DESC;";
-		$execute = $this->db->query($sql);
-		$save = $execute->fetchall(PDO::FETCH_ASSOC);
-
-		// echo "<br>".$sql."<br>";
-		// var_dump($save);
-		// $error= $this->db->errorInfo();
-		// die();
-		return $save;
-	}
-	public function getGraEstadoIarea($ei, $valid=0, $fil1=0, $fil2=0){
-		$sql ="SELECT v.valid, v.valnom, v.pre, COUNT(p.nopla) AS tot, avg(p.porpla) AS pro FROM valor AS v LEFT JOIN plamej AS p ON v.valid=p.estpla WHERE v.parid=31 AND p.fuepla='".$ei."'";
-		if($valid){
-			$sql .=" AND p.areapla LIKE '%".$valid."%'";
+		if($area){
+			$sql .=" AND p.areapla LIKE '%".$area."%'";
 		}
 		if($fil1 and $fil2)
 			$sql .=" AND p.fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
+
+			if ($valid == 3051) {
+				$sql .= " AND p.valid = 3051";
+			} else {
+				$sql .= " AND p.valid != 3051";
+			}
+
 		$sql .=" GROUP BY v.valid, v.valnom, v.pre ORDER BY COUNT(p.nopla) DESC;";
 		//echo "<br><br>".$sql."<br><br>"; 
 		$execute = $this->db->query($sql);
@@ -1249,10 +1302,17 @@ class Plamej{
 		// die();
 		return $save;
 	}
-	public function getCanPlan($fil1=0, $fil2=0){
+	public function getCanPlan($fil1=0, $fil2=0, $valid){
 		$sql ="SELECT COUNT(p.nopla) AS tot FROM valor AS v LEFT JOIN plamej AS p ON v.valid=p.estpla WHERE v.parid=31";
 		if($fil1 and $fil2)
 			$sql .=" AND p.fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
+
+			if ($valid == 3051) {
+				$sql .= " AND p.valid = 3051";
+			} else {
+				$sql .= " AND p.valid != 3051";
+			}
+
 		$execute = $this->db->query($sql);
 		$save = $execute->fetchall(PDO::FETCH_ASSOC);
 
