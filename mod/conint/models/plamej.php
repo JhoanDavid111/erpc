@@ -1134,9 +1134,17 @@ class Plamej{
 
 	public function getAC($fil1=0, $fil2=0, $valid){
 		$sql ='SELECT "Abierto" AS tipo, COUNT(nopla) AS tot FROM plamej WHERE actpla=1' ;
+		if ($valid == 3051) {
+			$sql .= " AND valid = 3051";
+		} else {
+			$sql .= " AND valid != 3051";
+		}
+
 		if($fil1 and $fil2)
 			$sql .=" AND fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
+
 		$sql .=' UNION SELECT "Cerrado" AS tipo, COUNT(nopla) AS tot FROM plamej WHERE actpla=2';
+
 		if($fil1 and $fil2)
 			$sql .=" AND fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
 
@@ -1145,6 +1153,7 @@ class Plamej{
 			} else {
 				$sql .= " AND valid != 3051";
 			}
+
 
 		$execute = $this->db->query($sql);
 		$save = $execute->fetchall(PDO::FETCH_ASSOC);
@@ -1183,9 +1192,17 @@ class Plamej{
 	}
 	public function getEI($fil1=0, $fil2=0, $valid){
 		$sql ='SELECT "Externo" AS tipo, COUNT(nopla) AS tot FROM plamej WHERE fuepla=1901';
+
+		if ($valid == 3051) {
+			$sql .= " AND valid = 3051";
+		} else {
+			$sql .= " AND valid != 3051";
+		}
+
 		if($fil1 and $fil2)
 			$sql .=" AND fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
 		$sql .= ' UNION SELECT "Interno" AS tipo, COUNT(nopla) AS tot FROM plamej WHERE fuepla=1902';
+		
 		if($fil1 and $fil2)
 			$sql .=" AND fsolpla BETWEEN '".$fil1." 00:00:00' AND '".$fil2." 23:59:59'";
 
