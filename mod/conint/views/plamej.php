@@ -84,6 +84,15 @@
 			    <?php }} ?>
 			    </select>
 			</div>
+			<div class="form-group col-md-3">
+					<label for="periodi">Periodicidad</label>
+					<select class="form-control form-control-sm" id="periodi" name="periodi" style="padding: 0px 5px;">
+						<option value="0" >Seleccione</option>
+						<option value="mensual">Mensual</option>
+						<option value="trimestral">Trimestral</option>
+						<option value="semestral">Semestral</option>
+					</select>
+			</div>
 <!-- // Fin//////////////////////////////////////////////////////////// -->
 			<div class="form-group col-md-6">
 				<input type="hidden" name="valid" value="<?=$valid;?>">
@@ -193,6 +202,9 @@
 	                        		<?php } ?>
 	                        		<br>
 	                        	<?php } ?>
+								</br>
+                            	<strong>Periodicidad: </strong><?=$va['periodi'];?>							
+                            	</br>
                             	</br>
                             	<strong>Fuente de la Observación y/o hallazgo: </strong><?=$va['fte'];?>
                             	</br> 
