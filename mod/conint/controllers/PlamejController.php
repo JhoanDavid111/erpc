@@ -1,6 +1,8 @@
 <?php
 include'models/plamej.php';
 
+$validGlobal = "";
+
 class PlamejController{
 	
 	public function index(){
@@ -105,9 +107,12 @@ class PlamejController{
 	
 		$fil1 = isset($_POST['fil1']) ? $_POST['fil1'] : false;
 		$fil2 = isset($_POST['fil2']) ? $_POST['fil2'] : false;
-		$fil3 = isset($_POST['fil3']) ? $_POST['fil3'] : false;
+		$fil3 = isset($_POST['fil3']) ? $_POST['fil3'] : false;	
 		$selectedAreas = isset($_POST['areapla']) ? $_POST['areapla'] : []; // Nuevo filtro por área
 		//$fil4 = isset($_POST['fil4']) ? $_POST['fil4'] : false; // Agregado filtro 4
+
+		//$valid = isset($_REQUEST['valid']) ? $_REQUEST['valid']:false;
+		//$valid = isset($_POST['valid']) ? $_POST['valid'] : false;
 
 		date_default_timezone_set('America/Bogota');
 		$hoy = date("Y-m-d");
@@ -186,9 +191,17 @@ class PlamejController{
 					//echo $dtf['pro']." ".$aleseg." ".$actpla."<br>";
 				}
 			}
+
+			//$tipla = $plamej->getTipla(90,$valid);
+
+
 		}}
+
 		$plamejs = $plamej->getAll();
 		$datTiplan = $plamej->getAllTiplan(90);
+		//$tipla = $plamej->getTipla(90,3004);
+		//print_r($valid);
+
 
 		if($_SESSION['pefid']==70 or $_SESSION['pefid']==74)
 			require_once 'views/inst.php';
@@ -198,6 +211,7 @@ class PlamejController{
 
 	public function updDAplmj(){
 		$valid = isset($_REQUEST['valid']) ? $_REQUEST['valid']:false;
+
 		if($valid==3051)
 			Utils::useraccess('plamej/index',$_SESSION['pefid']);
 		else
@@ -236,6 +250,7 @@ class PlamejController{
 			$estpla = isset($_POST['estpla']) ? $_POST['estpla']:1801;
 			$carlmej = isset($_POST['carlmej']) ? $_POST['carlmej']:false;
 			$valid = isset($_POST['valid']) ? $_POST['valid']:false;
+			$periodi = isset($_POST['periodi']) ? $_POST['periodi'] : false;
 
 			$areapla = $this->aTexto($areapla);
 
@@ -254,6 +269,7 @@ class PlamejController{
 				$plamej->setEstpla($estpla);
 				$plamej->setCarlmej($carlmej);
 				$plamej->setValid($valid);
+				$plamej->setPeriodi($periodi);
 				
 				$plamejs = $plamej->getAll();
 				$areasT = $plamej->getAllVal(1,"as",3);

@@ -17,6 +17,7 @@ class Plamej{
 	private $fecautpla;
 	private $cargo;
 	private $valid;
+	private $periodi;
 
 	// Tabla plaacc
 	private $noacc;
@@ -123,6 +124,9 @@ class Plamej{
 	}
 	function getValid(){
 		return $this->valid;
+	}
+	function getPeriodi(){
+		return $this->periodi;
 	}
 
 	// Tabla plaacc
@@ -300,6 +304,9 @@ class Plamej{
 	function setValid($valid){
 		$this->valid = $valid;
 	}
+	function setPeriodi($periodi){
+		$this->periodi = $periodi;
+	}
 
 	// Tabla plaacc
 	function setNoacc($noacc){
@@ -433,7 +440,7 @@ class Plamej{
 		// Obtener el contenido de $selectedAreas
 		$selectedAreas = $this->getSelectedAreas(); 
 
-		$sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla, '' AS apro, l.valid 
+		$sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla, '' AS apro, l.valid, l.periodi 
 				FROM plamej AS l 
 				LEFT JOIN valor AS f ON l.fuepla = f.valid 
 				LEFT JOIN valor AS e ON l.estpla = e.valid 
@@ -555,6 +562,15 @@ class Plamej{
 		return $save;
 	}
 
+	public function getTipla($parid, $valid){
+		$sql ="SELECT * FROM valor WHERE parid = ".$parid." AND valid='".$valid."'";
+		$sql .=" ORDER BY valnom";
+		$execute = $this->db->query($sql);
+		$save = $execute->fetchall(PDO::FETCH_ASSOC);
+		return $save;
+	}
+
+
 	public function getAllValPre($parid, $od="as"){
 		$sql ="SELECT * FROM valor WHERE parid = ".$parid." AND pre='1' ORDER BY valnom";
 		if($od=="ds") $sql .= " DESC;";
@@ -654,9 +670,9 @@ class Plamej{
 	public function save(){
 		//SELECT nopla, fsolpla, fuepla, detfue, fobspla, cappla, obspla, areapla, estpla, carlmej, valid FROM plamej
 		// porpla, ocpla, feciepla, perid, fecautpla
-		$sql= "INSERT INTO plamej(fsolpla, fuepla, detfue, fobspla, cappla, obspla, areapla, estpla, carlmej, valid) VALUES (?,?,?,?,?,?,?,?,?,?)";
+		$sql= "INSERT INTO plamej(fsolpla, fuepla, detfue, fobspla, cappla, obspla, areapla, estpla, carlmej, valid, periodi) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 		$insert = $this->db->prepare($sql);
-		$arrdata = array($this->getFsolpla(), $this->getFuepla(), $this->getDetfue(), $this->getFobspla(), $this->getCappla(), $this->getObspla(), $this->getAreapla(), $this->getEstpla(), $this->getCarlmej(), $this->getValid());
+		$arrdata = array($this->getFsolpla(), $this->getFuepla(), $this->getDetfue(), $this->getFobspla(), $this->getCappla(), $this->getObspla(), $this->getAreapla(), $this->getEstpla(), $this->getCarlmej(), $this->getValid(), $this->getPeriodi());
 		// echo "<br>".$sql."<br>";;
 		// var_dump($arrdata);
 		// die();

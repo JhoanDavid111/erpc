@@ -95,6 +95,15 @@
 			    <?php }} ?>
 			    </select>
 			</div>
+			<div class="form-group col-md-3">
+					<label for="periodi">Periodicidad</label>
+					<select class="form-control form-control-sm" id="periodi" name="periodi" style="padding: 0px 5px;">
+						<option value="0" >Seleccione</option>
+						<option value="mensual">Mensual</option>
+						<option value="trimestral">Trimestral</option>
+						<option value="semestral">Semestral</option>
+					</select>
+			</div>
 <!-- // Fin//////////////////////////////////////////////////////////// -->
 			<div class="form-group col-md-6">
 				<input type="submit" class="btn-primary-ccapital" value="Registrar">
@@ -173,7 +182,9 @@
 	        <tbody>
 	        	<?php 
 	        	if(isset($plamejs)){
-	        		foreach ($plamejs as $va){ ?>
+	        		foreach ($plamejs as $va){ 
+						$valid = $va['valid'];
+			            $tipla = $plamej->getTipla(90, $valid);?>
 		            <tr>
 		            	<td style="text-align: center;">
 		            		<strong><?=str_pad($va['nopla'], 6, "0", STR_PAD_LEFT);?></strong>
@@ -202,6 +213,12 @@
 	                        		<?php } ?>
 	                        		<br>
 	                        	<?php } ?>
+								</br>
+                            	<strong>Tipo de plan: </strong><?=$tipla[0]['valnom'];?>							
+                            	</br>
+								</br>
+                            	<strong>Periodicidad: </strong><?=$va['periodi'];?>							
+                            	</br>
                             	</br>
                             	<strong>Fuente de la Observación y/o hallazgo: </strong><?=$va['fte'];?>
                             	</br> 
