@@ -541,7 +541,8 @@ $msg		->	Mensaje que aparece en la parte inferior, predeterminadamente se encuen
 									$txt .= '<label for="'.$dtnb.'">';
 										$txt .= $nomnb;
 									$txt .= '</label>';
-									$txt .= '<input type="file" name="'.$dtnb.'" class="form-control" />';
+									if($nomnb=="Evidencias y/o soportes de la ejecución de la acción") $req=""; else $req="required";
+									$txt .= '<input type="file" name="'.$dtnb.'" class="form-control" '.$req.' />';
 								$txt .= '</div>';
 							$txt .= '</div>';
 							$txt .= '<input type="hidden" name="noact" value="'.$id.'">';

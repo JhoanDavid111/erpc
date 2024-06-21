@@ -187,15 +187,15 @@
 			            $tipla = $plamej->getTipla(90, $valid);?>
 		            <tr>
 		            	<td style="text-align: center;">
-		            		<strong><?=str_pad($va['nopla'], 6, "0", STR_PAD_LEFT);?></strong>
+							<!-- <strong><?=str_pad($va['nopla'], 6, "0", STR_PAD_LEFT);?></strong> -->
+							<strong><?=$va['cappla'];?></strong>
 		            		<br><br>
 	                        <small>
 	                            <strong>Fecha Sol. </strong><?=$va['fsolpla'];?>
 		                        </br>
 		                        <strong>Fecha Obs. </strong><?=substr($va['fobspla'],0,10);?>
 		                        </br>
-		                        <strong>Cod. </strong><?=$va['cappla'];?>
-                            </small>
+                            </small>
 		                </td>
 		                <td>
 		                	<strong><?=$va['detfue'];?></strong><br>

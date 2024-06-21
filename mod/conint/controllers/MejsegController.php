@@ -535,7 +535,7 @@ class MejsegController{
 			// var_dump($eviava);
 			// die();
 
-			if($comava AND $eviava){
+			if($comava){
 				$plamej = new plamej();
 				$plamej->setNoava($noava);
 				$plamej->setNoact($noact);
