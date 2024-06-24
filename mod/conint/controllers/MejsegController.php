@@ -118,7 +118,7 @@ class MejsegController{
 			$fechor = date("Y-m-d H:i:s");
 			$caumej = isset($_POST['caumej']) ? $_POST['caumej']:false;
 			$accmej = isset($_POST['accmej']) ? $_POST['accmej']:false;
-			$unimej = isset($_POST['unimej']) ? $_POST['unimej']:false;
+			$unimej = isset($_POST['unimej']) ? $_POST['unimej']:0;
 			$tapmej = isset($_POST['tapmej']) ? $_POST['tapmej']:false;
 			$foract = isset($_POST['foract']) ? $_POST['foract']:false;
 			$chkeli = isset($_POST['chkeli']) ? $_POST['chkeli']:false;

@@ -226,7 +226,9 @@
 	<?php 
 //l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est
         if(isset($plamejs)){
-        	foreach ($plamejs as $va){ ?>
+        	foreach ($plamejs as $va){
+				$carlmej = $va['carlmej'];
+        		$peridAc = $va['perid']; ?>
 				<table class="table table-hover">
 					<tr>
 						<th class="tablefor">Fecha Solicitud:</th>
@@ -296,6 +298,40 @@ function mosArea($noAre){
 <!-- Ver datos -->
 
 <h2 class="title-c">Acción de mejora</h2>
+
+<?php 
+if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
+    $plamej->setCargo($carlmej);
+    $datPL = $plamej->getPerCargo();
+    $dtPerid = isset($datPL[0]['perid']) ? $datPL[0]['perid'] : NULL;
+    $plamej->setNopla($nopla);
+    $DtCaA = $plamej->getCouAccApr();
+
+    if (!$peridAc AND $dtPerid == $_SESSION['perid'] AND $DtCaA AND $DtCaA[0]['can'] == 0) {
+?>
+        <div class="row">
+            <div class="form-group col-md-12" style="text-align: right;">
+                <a href="<?= base_url; ?>plamej/updPlmj&nopla=<?= $nopla; ?>&valid=3051">
+					<button class="btn-primary-ccapital">
+						<i class="fa fa-check-circle"></i>&nbsp;&nbsp;Aprobar por Lider de Proceso
+					</button>
+                </a>
+            </div>
+        </div>
+<?php 
+    } else { 
+?>
+        <div class="row">
+            <div class="form-group col-md-12" style="text-align: right; color: #f00; font-weight: bold; text-shadow: 1px 1px 1px #000;">
+                Aprobado por Lider de Proceso
+            </div>
+        </div>
+<?php 
+    }
+} 
+?>
+
+
 <br><br>
 <div class="table-responsive">
 	<table id="example" class="table table-striped table-bordered dterpce" style="width:100%;">

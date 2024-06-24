@@ -113,7 +113,7 @@ $html .= '<body>';
 	$html .= '</table>';
 
 	$html .= '<br>';
-
+    
 	$html .= '<table width="'.$anchoja.'px" border="1" cellpadding="3px" cellspacing="0px">';
 		$html .= '<tr>';
 			$html .= '<th>Auditoría</th>';
@@ -134,6 +134,7 @@ $html .= '<body>';
 					$html .=  '<small>';
 						//$html .=  '<strong>Fuente de la Observación y/o hallazgo: </strong>'.$dta['fte'];
 						$html .=  '</br>'.$dta['obspla'];
+						$html .=  '</br></br>Fecha observación:'.$dta['fsolpla'];
 					$html .=  '</small>';
 				$html .= '</td>';
 				
@@ -157,6 +158,8 @@ $html .= '<body>';
 	            					$html .= '<small>';
 		            					$html .= '<strong>Indicador: </strong>';
 		            					$html .= $acti[$i]['foract'];
+										$html .= '<br><strong>Fecha Inicial actividad: </strong> '.substr($acti[$i]['finimej'],0,10);
+		            					$html .= '<br><strong>Fecha Final actividad: </strong> '.substr($acti[$i]['ffinmej'],0,10);
 		            				$html .= '</small>';
 		            			$html .= '</div>';
 								$plamej->setNoact($acti[$i]['noact']);
@@ -168,13 +171,14 @@ $html .= '<body>';
 									$html .= '<small>';
 										$html .= '<strong>Avance: </strong>';
 											$html .= $dtv['comava'];
-											$html .= '. '.$dtv['fechava'];
+											$html .= '. <br>Fecha avance: '.$dtv['fechava'];
 
 										$html .= '<div class="form-group col-md-6 bpun bpuncm">';
 									        	$plamej->setNoava($dtv['noava']);
 												$segui = $plamej->getAllSeg();
 									        	if($segui){ foreach ($segui as $sg){
-								            		$html .= '<strong>'.$sg['ale'].'</strong> '.$sg['fecseg'];
+								            		$html .= '<strong>'.$sg['ale'].'</strong><br>';
+								            		$html .= '<strong>Fecha Seguimiento: </strong> '.$sg['fecseg'];
 								            		$html .= '<br>';
 								            			$html .= $sg['anaseg'].' ('.$sg['ejesep'].' %)'.'<br>';
 								            			$html .= '<strong>Auditor: </strong> '.$sg['pernom'].' '.$sg['perape'].'<br>';

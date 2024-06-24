@@ -296,38 +296,38 @@
 		                			$DtCaA = $plamej->getCouAccApr();*/
 		                			if($DtCaA AND $DtCaA[0]['can']==0){
 		                		?>
-				                		<a href= "<?=base_url;?>plamej/updPlmj&nopla=<?=$va['nopla'];?>&valid=3051">
-				                			<i class="fa fa-check-circle fa-2x" title="Por aprobar" style="color: #f00;text-shadow: 1px 1px 1px #000;"></i>
-				                			<br><span class="txtajupl">Por aprobar</span>
-				                		</a>
+				                		<!-- <a href= "<?=base_url;?>plamej/updPlmj&nopla=<?=$va['nopla'];?>&valid=3051"> -->
+				                			<i class="fa fa-check-circle fa-2x" title="Por aprobar plan por líder de proceso" style="color: #f00;"></i>
+				                			<br><span class="txtajupl">Por Aprobar Líder P.</span>
+				                		<!-- </a> -->
 				                	<?php }else{ ?>
 				                		<i class="fa fa-check-circle fa-2x" title="Pendiente por aprobar acciones por CI" style="color: #f00;"></i>
-	                					<br><span class="txtajupl">Pend. CI.</span>
+	                					<br><span class="txtajupl">Pend. Acc. CI</span>
 				                	<?php } ?>
 			                	<?php }elseif(!$va['carlmej']){ ?>
 			                		<i class="fa fa-check-circle fa-2x" title="Sin cargo de lider asignado" style="color: #f00;"></i>
-	                				<br><span class="txtajupl">Sin Cargo</span>
+	                				<br><span class="txtajupl">Sin Cargo Líder</span>
 	                			<?php }else{ ?>
 	                				<?php if($DtCaA AND $DtCaA[0]['can']==0){ ?>
-	                					<i class="fa fa-check-circle fa-2x" title="Pendiente por aprobar del lider" style="color: #f00;"></i>
-		                				<br><span class="txtajupl">Pend. Lider</span>
+	                					<i class="fa fa-check-circle fa-2x" title="Pendiente por aprobación del líder" style="color: #f00;"></i>
+		                				<br><span class="txtajupl">Pend. Apro. Líder</span>
 	                				<?php }else{ ?>
 	                					<i class="fa fa-check-circle fa-2x" title="Pendiente por aprobar acciones por CI" style="color: #f00;"></i>
-		                				<br><span class="txtajupl">Pend. CI.</span>
+		                				<br><span class="txtajupl">Pend. Acc. CI</span>
 	                				<?php } ?>
 			                	<?php } ?>
 		                	<?php }elseif(!$va['perid']){ ?>
-		                		<i class="fa fa-check-circle fa-2x" title="Por aprobar" style="color: #f00;"></i>
-	                			<br><span class="txtajupl">Por aprobar</span>
+		                		<i class="fa fa-check-circle fa-2x" title="Por aprobar acciones CI" style="color: #f00;"></i>
+	                			<br><span class="txtajupl">Por aprobar acc. CI</span>
 	                		<?php }else{ ?>
 	                			<?php if($_SESSION['pefid']==70){ ?>
 	                				<a href= "<?=base_url;?>plamej/updDAplmj&nopla=<?=$va['nopla'];?>&valid=3051" onclick="return confirm('¿Está seguro de desaprobar este item? Tenga en cuenta que el proceso se inicia y las acciones se desaprueban para realizar ajustes, luego debe aprobar Control Interno, por último el líder debe aprobar para poder iniciar el seguimiento.');">
 				                		<i class="fa fa-check-circle fa-2x" title="Haga Click para DESAPROBAR este item. El proceso vuelve a iniciar." style="color: #523178;text-shadow: 1px 1px 1px #f00, 0px 0px 3px #000;"></i>
-				                		<br><span class="txtajupl">Aprobado</span>
+				                		<br><span class="txtajupl">Apro. CI y Líder</span>
 				                	</a>
 			                	<?php }else{ ?>
-			                		<i class="fa fa-check-circle fa-2x" title="Aprobado" style="color: #523178;"></i>
-			                		<br><span class="txtajupl">Aprobado</span>
+			                		<i class="fa fa-check-circle fa-2x" title="Apro. CI y Líder" style="color: #523178;"></i>
+			                		<br><span class="txtajupl">Apro. CI y Líder</span>
 			                	<?php } ?>
 	                		<?php } ?>
 	                	<?php }else{ ?>
