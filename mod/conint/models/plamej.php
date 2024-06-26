@@ -486,6 +486,44 @@ class Plamej{
 		return $rub;
 	}
 
+	public function getCSV($valid){
+		$sql = "SELECT 
+					m.nopla, m.fsolpla, m.fuepla, m.detfue, m.fobspla, m.cappla, m.obspla, 
+					m.areapla, m.estpla, m.carlmej, m.actpla, m.porpla, m.ocpla, m.feciepla, 
+					m.perid, m.fecautpla, m.valid, 
+					a.noacc, a.nopla, a.caumej, a.accmej, a.unimej, a.tapmej, a.formej, 
+					a.metmej, a.alcmej, a.finimej, a.ffinmej, a.aremej, a.carlmej, 
+					a.carrmej, a.aprpmj, 
+					t.noact, t.accmej, t.foract, t.bloact, t.finimej, t.ffinmej, 
+					v.noava, v.noact, v.comava, v.eviava, v.perid, v.fechava, 
+					s.noplsg, s.noava, s.fecseg, s.anaseg, s.ejesep, s.aleseg, 
+					s.audseg, s.actrea, s.eviseg, s.estseg 
+				FROM 
+					plamej AS m 
+				LEFT JOIN 
+					plaacc AS a ON m.nopla = a.nopla 
+				LEFT JOIN 
+					plaact AS t ON a.noacc = t.noacc 
+				LEFT JOIN 
+					plaava AS v ON t.noact = v.noact 
+				LEFT JOIN 
+					plaseg AS s ON v.noava = s.noava 
+				WHERE";
+	
+		// Añade la condición
+		if ($valid == 3051) {
+			$sql .= " m.valid = 3051";
+		} else {
+			$sql .= " m.valid != 3051";
+		}
+	
+		// Ejecuta la consulta
+		$execute = $this->db->query($sql);
+		$rub = $execute->fetchAll(PDO::FETCH_ASSOC);
+		return $rub;
+	}
+	
+
 
 	public function getPerCargo(){
 		$sql = "SELECT perid, nodocemp, pernom, perape, peremail, cargo FROM persona WHERE actemp=1 AND cargo=".$this->cargo;
