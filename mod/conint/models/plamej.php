@@ -51,6 +51,7 @@ class Plamej{
 	private $comava;
 	private $eviava;
 	private $fechava;
+	private $estado;
 
 	//Tabla Plaseg
 	private $noplsg;
@@ -193,6 +194,9 @@ class Plamej{
 	}
 	function getFechava(){
 		return $this->fechava;
+	}
+	function getEstado(){
+		return $this->estado;
 	}
 
 	// Tabla plaseg
@@ -401,6 +405,9 @@ class Plamej{
 	function setFechava($fechava){
 		$this->fechava = $fechava;
 	}
+	function setEstado($estado){
+		$this->estado = $estado;
+	}
 
 	//Tabla Placom
 	function setNocom($nocom){
@@ -565,15 +572,35 @@ class Plamej{
 		return $rub;
 	}
 
-	public function getOne(){
-		$sql ="SELECT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, l.porpla, l.carlmej, l.feciepla, l.perid, l.fecautpla, l.valid FROM plamej AS l LEFT JOIN valor AS f ON l.fuepla=f.valid LEFT JOIN valor AS e ON l.estpla=e.valid WHERE l.nopla = ".$this->nopla;
-		$execute = $this->db->query($sql);
-		$save = $execute->fetchall(PDO::FETCH_ASSOC);
-
-		// var_dump($save);
-		// $error= $this->db->errorInfo();
-		// die();
-		return $save;
+	public function getOne() {
+		// Asegúrate de que $this->nopla esté definido y sea seguro de utilizar
+		if (!isset($this->nopla)) {
+			// Manejar el caso en que nopla no esté definido, puede lanzar una excepción o manejarlo según sea necesario
+			return false;
+		}
+	
+		// Preparar la consulta SQL utilizando parámetros seguros
+		$sql ="SELECT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, l.porpla, l.carlmej, l.feciepla, l.perid, l.fecautpla, l.valid 
+			   FROM plamej AS l 
+			   LEFT JOIN valor AS f ON l.fuepla=f.valid 
+			   LEFT JOIN valor AS e ON l.estpla=e.valid 
+			   WHERE l.nopla = :nopla";
+	
+		// Preparar la sentencia SQL
+		$stmt = $this->db->prepare($sql);
+	
+		// Asignar el valor del parámetro :nopla
+		$stmt->bindParam(':nopla', $this->nopla, PDO::PARAM_INT);
+	
+		// Ejecutar la consulta
+		if ($stmt->execute()) {
+			// Obtener los resultados como un array asociativo
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			return $result;
+		} else {
+			// Manejar errores de ejecución de la consulta según sea necesario
+			return false;
+		}
 	}
 
 	public function getAllVal($parid, $od="as", $cdpmul=""){
@@ -801,15 +828,38 @@ class Plamej{
 	}
 //--Tabla plamej --------------------------------------------------
 
-	public function getAllMejo(){
-		$sql = "SELECT p.noacc, p.nopla, p.caumej, p.accmej, p.unimej, p.tapmej, t.valnom AS tap, p.formej, p.metmej, p.alcmej, p.finimej, p.ffinmej, p.aremej, a.valnom AS are, p.carlmej, l.valnom AS cal, p.carrmej, r.valnom AS car, p.aprpmj FROM plaacc AS p INNER JOIN valor AS a ON p.aremej=a.valid INNER JOIN valor AS l ON p.carlmej=l.valid INNER JOIN valor AS r ON p.carrmej=r.valid INNER JOIN valor AS t ON p.tapmej=t.valid WHERE p.nopla=$this->nopla";
-		// echo "<br>".$sql."<br><br>".noacc."-".nopla."-".caumej."-".accmej."-".unimej."-".tapmej."-".formej."-".metmej."-".alcmej."-".finimej."-".ffinmej."-".aremej."-".carlmej."-".carrmej."<br><br><br>";
-		$execute = $this->db->query($sql);
-		$rub = $execute->fetchall(PDO::FETCH_ASSOC);
-		// var_dump($rub);
-		// die();
-		return $rub;
-	}
+	public function getAllMejo() {
+    // Asegúrate de que $this->nopla esté definido y sea seguro de utilizar
+    if (!isset($this->nopla)) {
+        // Manejar el caso en que nopla no esté definido, puede lanzar una excepción o manejarlo según sea necesario
+        return false;
+    }
+
+    // Preparar la consulta SQL utilizando parámetros seguros
+    $sql = "SELECT p.noacc, p.nopla, p.caumej, p.accmej, p.unimej, p.tapmej, t.valnom AS tap, p.formej, p.metmej, p.alcmej, p.finimej, p.ffinmej, p.aremej, a.valnom AS are, p.carlmej, l.valnom AS cal, p.carrmej, r.valnom AS car, p.aprpmj 
+            FROM plaacc AS p 
+            INNER JOIN valor AS a ON p.aremej = a.valid 
+            INNER JOIN valor AS l ON p.carlmej = l.valid 
+            INNER JOIN valor AS r ON p.carrmej = r.valid 
+            INNER JOIN valor AS t ON p.tapmej = t.valid 
+            WHERE p.nopla = :nopla";
+
+    // Preparar la sentencia SQL
+    $stmt = $this->db->prepare($sql);
+
+    // Asignar el valor del parámetro :nopla
+    $stmt->bindParam(':nopla', $this->nopla, PDO::PARAM_INT);
+
+    // Ejecutar la consulta
+    if ($stmt->execute()) {
+        // Obtener los resultados como un array asociativo
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    } else {
+        // Manejar errores de ejecución de la consulta según sea necesario
+        return false;
+    }
+}
 
 	public function getOneMejo(){
 		$sql = "SELECT p.noacc, p.nopla, p.caumej, p.accmej, p.unimej, p.tapmej, p.formej, p.metmej, p.alcmej, p.finimej, p.ffinmej, p.aremej, a.valnom AS are, p.carlmej, l.valnom AS cal, p.carrmej, r.valnom AS car, p.aprpmj FROM plaacc AS p INNER JOIN valor AS a ON p.aremej=a.valid INNER JOIN valor AS l ON p.carlmej=l.valid INNER JOIN valor AS r ON p.carrmej=r.valid WHERE p.noacc=$this->noacc";
@@ -1074,10 +1124,16 @@ class Plamej{
 		return $save;
 	}
 
+	public function updatePreviousActivity($activityId) {
+		$sql = "UPDATE plaava SET estado = 2 WHERE noact = ?";
+		$update = $this->db->prepare($sql);
+		return $update->execute([$activityId]);
+	}
+
 	public function saveAva(){
-		$sql= "INSERT INTO plaava(noact, comava, eviava, perid, fechava) VALUES (?,?,?,?,?)";
+		$sql= "INSERT INTO plaava(noact, comava, eviava, perid, fechava, estado) VALUES (?,?,?,?,?,?)";
 		$insert = $this->db->prepare($sql);
-		$arrdata = array($this->getNoact(), $this->getComava(), $this->getEviava(), $this->getPerid(), $this->getFechava());
+		$arrdata = array($this->getNoact(), $this->getComava(), $this->getEviava(), $this->getPerid(), $this->getFechava(), $this->getEstado());
 		// echo "<br>".$sql."<br>";
 		// var_dump($arrdata);
 		// die();

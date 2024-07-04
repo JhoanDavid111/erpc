@@ -18,6 +18,7 @@ class MejsegController{
 		$noava = isset($_REQUEST['noava']) ? $_REQUEST['noava']:false;
 		$h = isset($_REQUEST['h']) ? $_REQUEST['h']:false;
 		$plamej->setNopla($nopla);
+		//$plamej->updateEstadoAnterior($nopla);
 		$plamejs = $plamej->getOne();
 		$accpro = $plamej->getAllVal(33);
 		$area = $plamej->getAllVal(1);
@@ -51,6 +52,42 @@ class MejsegController{
 		// die();
 
 		require_once 'views/mejseg.php';
+	}
+
+	public function actualizarActividad() {
+		if ($_POST) {
+			// Recoger los datos del formulario
+			$prevActivityId = $_POST['prevActivityId'];
+			$noact = $_POST['noact'];
+			$comava = $_POST['comava'];
+			$eviava = $_POST['eviava'];
+			$perid = $_POST['perid'];
+			$fechava = $_POST['fechava'];
+
+			if (empty($fechava)) {
+				die("La fecha de la actividad no puede estar vacía.");
+			}
+	
+			// Crear una instancia del modelo
+			$plamej = new Plamej();  // Asegúrate de que la clase se llama 'Plamej'
+	
+			// Actualizar el estado de la actividad anterior
+			$plamej->updatePreviousActivity($prevActivityId);
+	
+			// Configurar el modelo con los nuevos datos de la actividad
+			$plamej->setNoact($noact);
+			$plamej->setComava($comava);
+			$plamej->setEviava($eviava);
+			$plamej->setPerid($perid);
+			$plamej->setFechava($fechava);
+			$plamej->setEstado(1); // Establecer el estado a 1 para la nueva actividad
+	
+			// Guardar la nueva actividad
+			$plamej->saveAva();
+	
+			// Redirigir a la página principal u otra página de confirmación
+			header("Location:".base_url.'mejseg/index&nopla='.$_POST['nopla']);
+		}
 	}
 
 	public function updMej(){

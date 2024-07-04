@@ -1,4 +1,56 @@
 <?php if($_SESSION['pefid']!=58 or $_SESSION['pefid']!=73 or $OCI){ ?>
+
+	<?php
+	// Definir la función modalEditActivity
+	function modalEditActivity($modalId, $modalTitle, $activityId, $activityData) {
+		ob_start();
+		$url_action = base_url."Mejseg/actualizarActividad&nopla=".$_GET['nopla'];
+		?>
+		<div class="modal fade" id="<?= $modalId . $activityId ?>" tabindex="-1" role="dialog" aria-labelledby="<?= $modalId . 'Label' ?>" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="<?= $modalId . 'Label' ?>"><?= $modalTitle ?></h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form action="<?= $url_action ?>" method="POST" enctype="multipart/form-data">
+							<input type="hidden" name="prevActivityId" value="<?= $activityData['noava'] ?>">
+							<div class="form-group">
+								<label for="noact">Número de Actividad</label>
+								<input type="text" class="form-control" name="noact" value="<?= $activityData['noact'] ?>">
+							</div>
+							<div class="form-group">
+								<label for="comava">Comentario</label>
+								<input type="text" class="form-control" name="comava" value="<?= $activityData['comava'] ?>">
+							</div>
+							<div class="form-group">
+								<label for="eviava">Evidencia</label>
+								<input type="text" class="form-control" name="eviava" value="<?= $activityData['eviava'] ?>">
+							</div>
+							<div class="form-group">
+								<label for="perid">ID del Personal</label>
+								<input type="text" class="form-control" name="perid" value="<?= $activityData['perid'] ?>">
+							</div>
+							<div class="form-group">
+								<label for="fechava">Fecha</label>
+								<input type="date" name="fechava" value="<?= date('Y-m-d', strtotime($activityData['fechava'])) ?>" required>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+								<button type="submit" class="btn btn-primary">Guardar cambios</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
+	?>
 	<!-- Insertar o Editar datos -->
 	<?php if($h!='t47kt'){ ?>
 		<?php echo Utils::tit("Acción","fas fa-restroom  mr-3","mejseg/index&nopla=".$nopla,"300px"); ?>
@@ -451,84 +503,58 @@ if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
 
 								<?php $r=0; if($datAva){ foreach ($datAva as $dta){ ?>
 									<small>
-									<div class="row">
-										<div class="form-group col-md-3 bpun">
-											<?=$dta['comava'];?>
-										</div>
-										<div class="form-group col-md-2 bpun bpuncm">
-											<?=$dta['fechava'];?>
-										</div>
-										<div class="form-group col-md-1 bpun bpuncm">
-											<?php
-												$pathc = path_filem.$dta['eviava'];
-												$pathc2 = path_file.$dta['eviava'];
-												if (file_exists($pathc2))
-													echo "<a href='".$pathc."' title='Descargar Evidencia ".$dta['comava']."'><i class='fa fa-download'></i></a>";
-											?>
-										</div>
-										<div class="form-group col-md-6 bpun bpuncm">
-											<?php 
-												// echo $pathc."<br><br>".$pathc2."<br>";
-									        	$plamej->setNoava($dta['noava']);
-												$segui = $plamej->getAllSeg();
-												$p=0;
-									        	if($segui){ foreach ($segui as $sg){ ?>
-								            		<strong><?=$sg['ale'];?></strong> <?=$sg['fecseg'];?>
-								            		<?php
-								            		if(isset($sg['ejesep'])){
-								            			$vlmin= $sg['ejesep'];
-								            		}
-								            		$plamej->setNoact($acti[$i]['noact']);
-								            		$CtnSgAcc = $plamej->getCtnSgAcc();
-								            		$CtnSgAcc = isset($CtnSgAcc[0]['ctn']) ? $CtnSgAcc[0]['ctn']-1:0;
-								            		$EjeSgAcc = $plamej->getEjeSgAcc();
-								            		$EjeSgAcc = isset($EjeSgAcc[$CtnSgAcc-1]['ejesep']) ? $EjeSgAcc[$CtnSgAcc-1]['ejesep']:0;
-								            		?>
-								            		<?php if($h!='t47kt' and ($r==count($datAva)-1 or $r==$CtnSgAcc)){ ?>
-									            		<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
-									            		<button class="btn btn-primary btn-sm btn2" style="background-color: #523178;padding: 0px 4px;margin-bottom: 2px;" type="button" data-toggle="modal" data-target="#myModSeguE<?=$dta['noava'];?>" title="Editar Seguimiento"><i class="fa fa-pencil-square-o"></i></button>
-									                	<?php 
-								                			echo Utils::modalTextComboEdi("myModSeguE", "Editar Seguimiento", $dta['noava'], "Análisis del seguimiento <small>(Información del análisis adelantado por el auditor que realizó el seguimiento - OCI)</small>", base_url."mejseg/saveSegu", "anaseg", $nopla, $dta['comava'],substr($acti[$i]['ffinmej'],0,10),"Fecha Entrega", "aleseg","Porcentaje Ejecución","ejesep", "",$sg['noplsg'],$sg['anaseg'],$sg['ejesep'],$EjeSgAcc);
-									                	?>
-									                	<?php } ?>
-									                <?php } ?>
-
-
-								            		<br>
-								            		<!-- <?=$sg['est'];?> -->
-								            		<small>
-								            			<?=$sg['anaseg'];?><br>
-								            			<!-- <strong>Actividades realizadas a la fecha:</strong> <?=$sg['actrea'];?>
-								            			<br> -->
-								            			<!-- <strong>% avance en ejecución de la meta:</strong> <?=$sg['valfijo'];?> % -->
-							                        </small>
-							                        <?php $txtbcsb=""; 
-							                        if(!$sg['ejesep']) $txtbcsb= "style='background-color: ".$sg['pre'].";'"; ?>
-							                        <div class="bar1" <?=$txtbcsb;?>><div class="bar2" style="background-color: <?=$sg['pre'];?>;width: <?=$sg['ejesep'];?>%;">
-							                        	<?=$sg['ejesep'];?> %
-							                     <!--   	<?=$sg['valfijo'];?> % <?=$sg['abr'];?> -->
-							                        </div></div>
-							                        <small>
-								            			<strong>Auditor: </strong> <?=$sg['pernom']." ".$sg['perape'];?><br>
-								            		</small>
-											    <?php $p++; }}else{ ?>
-											    	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
-											    		<?php if($h!='t47kt'){ ?>
-															<button class="btn btn-primary btn-sm btn2" style="background-color: #523178;padding: 0px 4px;margin-bottom: 2px;" type="button" data-toggle="modal" data-target="#myModSegu<?=$dta['noava'];?>"><small><small><i class="fa fa-plus"></i> Agregar Seguimiento</small></small></button>
-										                	<?php 
-									                			echo Utils::modalTextCombo("myModSegu", "Agregar Seguimiento", $dta['noava'], "Análisis del seguimiento <small>(Información del análisis adelantado por el auditor que realizó el seguimiento - OCI)</small>", base_url."mejseg/saveSegu", "anaseg", $nopla, $dta['comava'],substr($acti[$i]['ffinmej'],0,10),"Fecha Entrega", "aleseg","Porcentaje Ejecución","ejesep", "",$vlmin);
-										                	?>
-										                	<?php $flag=false; ?>
-										                <?php } ?>
-													<?php }else{ ?>
+										<div class="row">
+											<div class="form-group col-md-3 bpun">
+												<?=$dta['comava'];?>
+											</div>
+											<div class="form-group col-md-2 bpun bpuncm">
+												<?=$dta['fechava'];?>
+											</div>
+											<div class="form-group col-md-1 bpun bpuncm">
+												<?php
+													$pathc = path_filem.$dta['eviava'];
+													$pathc2 = path_file.$dta['eviava'];
+													if (file_exists($pathc2))
+														echo "<a href='".$pathc."' title='Descargar Evidencia ".$dta['comava']."'><i class='fa fa-download'></i></a>";
+												?>
+											</div>
+											<div class="form-group col-md-6 bpun bpuncm">
+												<?php 
+													$plamej->setNoava($dta['noava']);
+													$segui = $plamej->getAllSeg();
+													$p=0;
+													if($segui){ foreach ($segui as $sg){ ?>
+														<strong><?=$sg['ale'];?></strong> <?=$sg['fecseg'];?>
+														<br>
+														<small>
+															<?=$sg['anaseg'];?><br>
+														</small>
+														<div class="bar1" style="background-color: <?=$sg['pre'];?>;">
+															<div class="bar2" style="background-color: <?=$sg['pre'];?>;width: <?=$sg['ejesep'];?>%;">
+																<?=$sg['ejesep'];?> %
+															</div>
+														</div>
+														<small>
+															<strong>Auditor: </strong> <?=$sg['pernom']." ".$sg['perape'];?><br>
+														</small>
+														<?php $p++; }} else { ?>
 														<small>Sin seguimiento</small>
 													<?php } ?>
-												<?php } ?>
 
+													<!-- Botón para editar la actividad -->
+													<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
+														<button class="btn btn-primary btn-sm btn2" type="button" data-toggle="modal" data-target="#editActivityModal<?=$dta['noava'];?>" title="Editar Actividad">
+															<i class="fa fa-pencil-square-o"></i>
+														</button>
+														<?php
+															// Modal para editar la actividad
+															echo modalEditActivity("editActivityModal", "Editar Actividad", $dta['noava'], $dta);
+														?>
+													<?php } ?>
+											</div>
 										</div>
-									</div>
 									</small>
-						        <?php $r++; }} ?>
+								<?php $r++; }} ?>
 						        <div class="form-group col-md-12 bpun">
 						        <?php if($h!='t47kt'){ ?>
 									<?php if($segui AND $va['aprpmj']==1){ ?>
