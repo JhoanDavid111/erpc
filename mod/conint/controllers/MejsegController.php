@@ -86,7 +86,7 @@ class MejsegController{
 			$plamej->saveAva();
 	
 			// Redirigir a la página principal u otra página de confirmación
-			header("Location:".base_url.'mejseg/index&nopla='.$_POST['nopla']);
+			header("Location:".base_url.'plamej/index');
 		}
 	}
 

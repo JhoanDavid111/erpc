@@ -1103,7 +1103,7 @@ class Plamej{
 
 // Avances
 	public function getAllAva(){
-		$sql ="SELECT a.noava, a.noact, a.comava, a.eviava, a.perid, p.nodocemp, p.pernom, p.perape, p.peremail, a.fechava FROM plaava AS a INNER JOIN persona AS p ON a.perid=p.perid WHERE noact=$this->noact";
+		$sql ="SELECT a.noava, a.noact, a.comava, a.eviava, a.perid, p.nodocemp, p.pernom, p.perape, p.peremail, a.fechava FROM plaava AS a INNER JOIN persona AS p ON a.perid=p.perid WHERE a.estado = 1 AND noact=$this->noact";
 		$execute = $this->db->query($sql);
 		$save = $execute->fetchall(PDO::FETCH_ASSOC);
 
@@ -1125,7 +1125,7 @@ class Plamej{
 	}
 
 	public function updatePreviousActivity($activityId) {
-		$sql = "UPDATE plaava SET estado = 2 WHERE noact = ?";
+		$sql = "UPDATE plaava SET estado = 2 WHERE noava = ?";
 		$update = $this->db->prepare($sql);
 		return $update->execute([$activityId]);
 	}

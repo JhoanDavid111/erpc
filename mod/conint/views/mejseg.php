@@ -1,7 +1,7 @@
 <?php if($_SESSION['pefid']!=58 or $_SESSION['pefid']!=73 or $OCI){ ?>
 
 	<?php
-	// Definir la función modalEditActivity
+	// Ajustar la función modalEditActivity
 	function modalEditActivity($modalId, $modalTitle, $activityId, $activityData) {
 		ob_start();
 		$url_action = base_url."Mejseg/actualizarActividad&nopla=".$_GET['nopla'];
@@ -18,6 +18,8 @@
 					<div class="modal-body">
 						<form action="<?= $url_action ?>" method="POST" enctype="multipart/form-data">
 							<input type="hidden" name="prevActivityId" value="<?= $activityData['noava'] ?>">
+							<input type="hidden" name="noava" value="<?= $activityData['noava'] ?>">
+							<?php var_dump($activityData['noava']); ?> <!-- Asegurarse de incluir noava aquí -->
 							<div class="form-group">
 								<label for="noact">Número de Actividad</label>
 								<input type="text" class="form-control" name="noact" value="<?= $activityData['noact'] ?>">
