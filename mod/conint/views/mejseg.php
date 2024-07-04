@@ -1,7 +1,6 @@
 <?php if($_SESSION['pefid']!=58 or $_SESSION['pefid']!=73 or $OCI){ ?>
 
 	<?php
-	// Ajustar la función modalEditActivity
 	function modalEditActivity($modalId, $modalTitle, $activityId, $activityData) {
 		ob_start();
 		$url_action = base_url."Mejseg/actualizarActividad&nopla=".$_GET['nopla'];
@@ -19,7 +18,6 @@
 						<form action="<?= $url_action ?>" method="POST" enctype="multipart/form-data">
 							<input type="hidden" name="prevActivityId" value="<?= $activityData['noava'] ?>">
 							<input type="hidden" name="noava" value="<?= $activityData['noava'] ?>">
-							<?php var_dump($activityData['noava']); ?> <!-- Asegurarse de incluir noava aquí -->
 							<div class="form-group">
 								<label for="noact">Número de Actividad</label>
 								<input type="text" class="form-control" name="noact" value="<?= $activityData['noact'] ?>">
@@ -427,8 +425,14 @@ if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
 		            		<?php 
 		            			$plamej->setNoacc($va['noacc']);
 								$acti = $plamej->getOneAct();
-		            			if($acti){ for ($i=0;$i<count($acti);$i++) { ?>
-	            				
+		            			if($acti){ for ($i=0;$i<count($acti);$i++) { 
+	            				// Obtener la fecha actual
+								$currentDate = date('Y-m-d');
+								// Obtener la fecha de inicio
+								$startDate = substr($acti[$i]['finimej'], 0, 10);
+								if ($currentDate < $startDate) {
+                                $acti[$i]['bloact'] = 1; // Bloquear la actividad
+                                }?>
 	            				<div class="titdtact">
 	            					<?php if($h!='t47kt'){ ?>
 		            					<?php if($va['aprpmj']==1){ ?>
