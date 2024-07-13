@@ -52,6 +52,7 @@ class Plamej{
 	private $eviava;
 	private $fechava;
 	private $estado;
+	private $estapr;
 
 	//Tabla Plaseg
 	private $noplsg;
@@ -197,6 +198,9 @@ class Plamej{
 	}
 	function getEstado(){
 		return $this->estado;
+	}
+	function getEstapr(){
+		return $this->estapr;
 	}
 
 	// Tabla plaseg
@@ -407,6 +411,9 @@ class Plamej{
 	}
 	function setEstado($estado){
 		$this->estado = $estado;
+	}
+	function setEstapr($estapr){
+		$this->estapr = $estapr;
 	}
 
 	//Tabla Placom
@@ -1103,7 +1110,7 @@ class Plamej{
 
 // Avances
 	public function getAllAva(){
-		$sql ="SELECT a.noava, a.noact, a.comava, a.eviava, a.perid, p.nodocemp, p.pernom, p.perape, p.peremail, a.fechava FROM plaava AS a INNER JOIN persona AS p ON a.perid=p.perid WHERE a.estado = 1 AND noact=$this->noact";
+		$sql ="SELECT a.noava, a.noact, a.comava, a.eviava, a.perid, p.nodocemp, p.pernom, p.perape, p.peremail, a.fechava, a.estapr FROM plaava AS a INNER JOIN persona AS p ON a.perid=p.perid WHERE a.estado = 1 AND noact=$this->noact";
 		$execute = $this->db->query($sql);
 		$save = $execute->fetchall(PDO::FETCH_ASSOC);
 
@@ -1131,14 +1138,21 @@ class Plamej{
 	}
 
 	public function saveAva(){
-		$sql= "INSERT INTO plaava(noact, comava, eviava, perid, fechava, estado) VALUES (?,?,?,?,?,?)";
+		$sql= "INSERT INTO plaava(noact, comava, eviava, perid, fechava, estado, estapr) VALUES (?,?,?,?,?,?,?)";
 		$insert = $this->db->prepare($sql);
-		$arrdata = array($this->getNoact(), $this->getComava(), $this->getEviava(), $this->getPerid(), $this->getFechava(), $this->getEstado());
+		$arrdata = array($this->getNoact(), $this->getComava(), $this->getEviava(), $this->getPerid(), $this->getFechava(), $this->getEstado(), $this->getEstapr());
 		// echo "<br>".$sql."<br>";
 		// var_dump($arrdata);
 		// die();
 		$save = $insert->execute($arrdata);
 	}
+
+	public function actualizarEstadoAprobacion() {
+        $sql = "UPDATE plaava SET estapr = ? WHERE noava = ?";
+        $update = $this->db->prepare($sql);
+        return $update->execute([$this->estapr, $this->noava]);
+    }
+
 
 	public function getFfAcc(){
 		$sql ="SELECT noacc,finimej,ffinmej FROM plaacc WHERE nopla=$this->nopla";

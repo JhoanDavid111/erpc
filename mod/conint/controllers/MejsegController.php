@@ -56,7 +56,7 @@ class MejsegController{
 
 	public function actualizarActividad() {
 		if ($_POST) {
-			// Recoger los datos del formulario
+
 			$prevActivityId = $_POST['prevActivityId'];
 			$noact = $_POST['noact'];
 			$comava = $_POST['comava'];
@@ -68,27 +68,66 @@ class MejsegController{
 				die("La fecha de la actividad no puede estar vacía.");
 			}
 	
-			// Crear una instancia del modelo
-			$plamej = new Plamej();  // Asegúrate de que la clase se llama 'Plamej'
+			$plamej = new Plamej();
 	
-			// Actualizar el estado de la actividad anterior
 			$plamej->updatePreviousActivity($prevActivityId);
 	
-			// Configurar el modelo con los nuevos datos de la actividad
 			$plamej->setNoact($noact);
 			$plamej->setComava($comava);
 			$plamej->setEviava($eviava);
 			$plamej->setPerid($perid);
 			$plamej->setFechava($fechava);
-			$plamej->setEstado(1); // Establecer el estado a 1 para la nueva actividad
+			$plamej->setEstado(1);
+			$plamej->setEstapr("Pendiente");
 	
-			// Guardar la nueva actividad
+
 			$plamej->saveAva();
 	
-			// Redirigir a la página principal u otra página de confirmación
+
 			header("Location:".base_url.'plamej/index');
 		}
 	}
+
+	public function aprobarActividad() {
+		if ($_POST) {
+
+			$noava = $_POST['noava'];
+	
+			$plamej = new Plamej();
+	
+			// Configurar el modelo para aprobar la actividad
+			$plamej->setNoava($noava);
+			$plamej->setEstapr("Aprobado");
+
+	
+			// Guardar el estado aprobado de la actividad
+			$resultado = $plamej->actualizarEstadoAprobacion();
+	
+			header("Location:".base_url.'plamej/index');
+		}
+	}
+
+	public function desaprobarActividad() {
+		if ($_POST) {
+
+			$noava = $_POST['noava'];
+	
+			$plamej = new Plamej();
+	
+			// Configurar el modelo para aprobar la actividad
+			$plamej->setNoava($noava);
+			$plamej->setEstapr("No Aprobado");
+	
+			// Guardar el estado aprobado de la actividad
+			$resultado = $plamej->actualizarEstadoAprobacion();
+
+			header("Location:".base_url.'plamej/index');
+		}
+	}
+
+
+
+
 
 	public function updMej(){
 		Utils::useraccess('mejseg/index',$_SESSION['pefid']);
@@ -343,9 +382,9 @@ class MejsegController{
 			$fecseg = isset($_POST['fecseg']) ? $_POST['fecseg']:$fechor;
 			$ejesep = isset($_POST['ejesep']) ? $_POST['ejesep']:false;
 			$audseg = isset($_POST['audseg']) ? $_POST['audseg']:false;
-			$actrea = isset($_POST['actrea']) ? $_POST['actrea']:false;
+			$actrea = isset($_POST['actrea']) ? $_POST['actrea']:0;
 			$eviseg = isset($_POST['eviseg']) ? $_POST['eviseg']:false;
-			$estseg = isset($_POST['estseg']) ? $_POST['estseg']:false;
+			$estseg = isset($_POST['estseg']) ? $_POST['estseg']:0;
 			$fecter = isset($_POST['fecter']) ? $_POST['fecter']:false;
 
 			// Generar estado automáticamente, dependiendo de porcentaje y fecha
@@ -417,9 +456,11 @@ class MejsegController{
 			$fecseg = isset($_POST['fecseg']) ? $_POST['fecseg']:$fechor;
 			$ejesep = isset($_POST['ejesep']) ? $_POST['ejesep']:false;
 			$audseg = isset($_POST['audseg']) ? $_POST['audseg']:false;
-			$actrea = isset($_POST['actrea']) ? $_POST['actrea']:false;
+			//$actrea = isset($_POST['actrea']) ? $_POST['actrea']:false;
+			$actrea = 0;
+			$estseg = 0;
 			$eviseg = isset($_POST['eviseg']) ? $_POST['eviseg']:false;
-			$estseg = isset($_POST['estseg']) ? $_POST['estseg']:false;
+			//$estseg = isset($_POST['estseg']) ? $_POST['estseg']:false;
 			$fecter = isset($_POST['fecter']) ? $_POST['fecter']:false;
 
 			$plamej = new plamej();
@@ -429,6 +470,7 @@ class MejsegController{
 				$plamej->setEviava("");
 				$plamej->setPerid($_SESSION['perid']);
 				$plamej->setFechava($fechor);
+				$plamej->setEstado(1);
 				$plamej->saveAva();
 				$resSAva = $plamej->getOneAvaUlt();
 				if($resSAva) $noava = $resSAva[0]['noava'];
@@ -580,6 +622,8 @@ class MejsegController{
 				$plamej->setEviava($eviava);
 				$plamej->setPerid($_SESSION['perid']);
 				$plamej->setFechava($fechor);
+				$plamej->setEstado(1);
+				$plamej->setEstapr("Pendiente");
 
 				$plamej->setNopla($nopla);
 				$plamejs = $plamej->getOne();
