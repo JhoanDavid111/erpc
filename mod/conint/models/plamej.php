@@ -45,6 +45,7 @@ class Plamej{
 	private $accmej;
 	private $foract;
 	private $bloact;
+	private $porcentaje;
 
 	//Tabla Plaava
 	private $noava;
@@ -182,6 +183,10 @@ class Plamej{
 	function getBloact(){
 		return $this->bloact;
 	}
+	function getPorcentaje(){
+		return $this->porcentaje;
+	}
+	
 
 	//Tabla Plaava
 	function getNoava(){
@@ -394,6 +399,9 @@ class Plamej{
 	}
 	function setBloact($bloact){
 		$this->bloact = $bloact;
+	}
+	function setPorcentaje($porcentaje){
+		$this->porcentaje = $porcentaje;
 	}
 
 	//Tabla Plaava
@@ -969,7 +977,7 @@ class Plamej{
 
 //--Tabla plaact --------------------------------------------------
 	public function getOneAct(){
-		$sql = "SELECT noact, noacc, accmej, foract, bloact, finimej, ffinmej FROM plaact WHERE noacc=$this->noacc";
+		$sql = "SELECT noact, noacc, accmej, foract, bloact, finimej, ffinmej, porcentaje FROM plaact WHERE noacc=$this->noacc";
 		// echo "<br>".$sql."<br><br>".$this->noacc."<br><br><br>";
 		$execute = $this->db->query($sql);
 		$rub = $execute->fetchall(PDO::FETCH_ASSOC);
@@ -979,9 +987,9 @@ class Plamej{
 	}
 
 	public function saveAct(){
-		$sql= "INSERT INTO plaact(noacc, accmej, foract, finimej, ffinmej) VALUES (?,?,?,?,?)";
+		$sql= "INSERT INTO plaact(noacc, accmej, foract, finimej, ffinmej, porcentaje) VALUES (?,?,?,?,?,?)";
 		$insert = $this->db->prepare($sql);
-		$arrdata = array($this->getNoacc(), $this->getAccmej(), $this->getForact(), $this->getFinimej(), $this->getFfinmej());
+		$arrdata = array($this->getNoacc(), $this->getAccmej(), $this->getForact(), $this->getFinimej(), $this->getFfinmej(), $this->getPorcentaje());
 		// echo "<br>".$sql."<br>";
 		// var_dump($arrdata);
 		// die();
@@ -999,9 +1007,9 @@ class Plamej{
 	}
 
 	public function editAct(){
-		$sql= "UPDATE plaact SET noacc=?, accmej=?, foract=?, finimej=?, ffinmej=? WHERE noact=?";
+		$sql= "UPDATE plaact SET noacc=?, accmej=?, foract=?, finimej=?, ffinmej=?, porcentaje=? WHERE noact=?";
 		$insert = $this->db->prepare($sql);
-		$arrdata = array($this->getNoacc(), $this->getAccmej(), $this->getForact(), $this->getFinimej(), $this->getFfinmej(), $this->getNoact());
+		$arrdata = array($this->getNoacc(), $this->getAccmej(), $this->getForact(), $this->getFinimej(), $this->getFfinmej(), $this->getNoact(), $this->getPorcentaje());
 		// echo "<br>".$sql."<br>";
 		// var_dump($arrdata);
 		//  die();

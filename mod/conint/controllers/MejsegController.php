@@ -197,6 +197,7 @@ class MejsegController{
 			$unimej = isset($_POST['unimej']) ? $_POST['unimej']:0;
 			$tapmej = isset($_POST['tapmej']) ? $_POST['tapmej']:false;
 			$foract = isset($_POST['foract']) ? $_POST['foract']:false;
+			$porcentaje = isset($_POST['porcentaje']) ? $_POST['porcentaje']:false;
 			$chkeli = isset($_POST['chkeli']) ? $_POST['chkeli']:false;
 			$metmej = isset($_POST['metmej']) ? $_POST['metmej']:false;
 			$alcmej = isset($_POST['alcmej']) ? $_POST['alcmej']:false;
@@ -249,6 +250,7 @@ class MejsegController{
 							$plamej->setForact($foract[$i]);
 							$plamej->setFinimej($finimej[$i]." 00:00:00");
 							$plamej->setFfinmej($ffinmej[$i]." 23:59:59");
+							$plamej->setPorcentaje($porcentaje[$i]);
 							if($nct){
 								// echo "<br>Edita ".$noact[$i]." ".$accmej[$i];
 								$save = $plamej->editAct();
@@ -287,6 +289,7 @@ class MejsegController{
 							$plamej->setForact($foract[$i]);
 							$plamej->setFinimej($finimej[$i]." 00:00:00");
 							$plamej->setFfinmej($ffinmej[$i]." 23:59:59");
+							$plamej->setPorcentaje($porcentaje[$i]);
 							$save = $plamej->saveAct();
 						}
 					}
@@ -471,6 +474,7 @@ class MejsegController{
 				$plamej->setPerid($_SESSION['perid']);
 				$plamej->setFechava($fechor);
 				$plamej->setEstado(1);
+				$plamej->setEstapr("Pendiente");
 				$plamej->saveAva();
 				$resSAva = $plamej->getOneAvaUlt();
 				if($resSAva) $noava = $resSAva[0]['noava'];

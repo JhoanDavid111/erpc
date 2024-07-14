@@ -7,7 +7,7 @@
 			$pass="4QgmfSzz!HMt]nMd";*/
 
 			$host="localhost";
-			$db="erpc2";
+			$db="erpc";
 			$user="root";
 			$pass="";
 

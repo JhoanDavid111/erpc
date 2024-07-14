@@ -19,7 +19,7 @@ function adctr(deseli) {
 
     let mdv2 = document.createElement('div');
     mdv2.id = "dc" + num;
-    mdv2.className = "form-group col-md-3";
+    mdv2.className = "form-group col-md-2";
     mdv2.style.background = "#dfd0f1";
 
     let mdv3 = document.createElement('div');

@@ -106,7 +106,7 @@ function modalEditActivity($modalId, $modalTitle, $activityId, $activityData) {
 				<div class="form-group col-md-3">
 					<label>Actividad <small>(Por cada actividad agregue una nueva)</small></label>
 				</div>
-				<div class="form-group col-md-3">
+				<div class="form-group col-md-2">
 					<label>Fórmula del indicador <small>(Detalle el resultado que se espera obtener)</small></label>
 				</div>
 				<div class="form-group col-md-2">
@@ -486,6 +486,11 @@ if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
 	            					<small>
 		            					<strong>Indicador: </strong>
 		            					<?=$acti[$i]['foract'];?>
+		            				</small>
+									<br>
+									<small>
+		            					<strong>Porcentaje actividad: </strong>
+		            					<?=$acti[$i]['porcentaje'];?>%
 		            				</small>
 		            				<div style="display: inherit;float: right;margin-top: -17px;">
 			            				<small>

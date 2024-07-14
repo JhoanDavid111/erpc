@@ -69,6 +69,10 @@ div .redesp a span i{
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80523178', endColorstr='#00523178',GradientType=1 ); /* IE6-9 */
 }
 
+/* styles.css */
+.foract-class {
+  width: 50%; /* Ajusta el porcentaje según el tamaño deseado */
+}
 
 .custom-select {
   appearance: none;
