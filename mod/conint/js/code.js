@@ -122,7 +122,7 @@ function adctr(deseli) {
 }
 
 function elitr(n) {
-    let h = confirm("¿Desea eliminar el registro selecionado?");
+    let h = confirm("¿Desea eliminar el registro seleccionado?");
     if (h == true) {
         let dp = document.getElementById("dp" + n);
         let dc = document.getElementById("dc" + n);
@@ -150,7 +150,20 @@ function validatePercentage() {
         total += parseFloat(input.value) || 0;
     });
 
-    if (total > 100) {
-        alert("La suma de los porcentajes no puede exceder el 100%");
-    }
+    return total === 100;
 }
+
+// Integrar la validación en el evento de envío del formulario
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById('myForm');
+
+    form.addEventListener('submit', function(event) {
+        if (!validatePercentage()) {
+            event.preventDefault();
+            alert("Asegúrate de que la suma de los porcentajes de las actividades sea exactamente 100%");
+        }
+    });
+});
+
+
+

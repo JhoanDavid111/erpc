@@ -225,7 +225,7 @@
 			                        ?>
 					                        <br>
 					                        <?php if(!$va['perid']){ ?>
-					                        	<strong>Aprueba: </strong> <?=$datPL[0]['pernom']." ".$datPL[0]['perape'];?> 
+					                        	<strong>Aprobado pendiente: </strong> <?=$datPL[0]['pernom']." ".$datPL[0]['perape'];?> 
 					                        <?php }else{ ?>
 					                        	<strong>Aprobado: </strong> <?=$va['pernom']." ".$va['perape'];?> 
 					                        <?php } ?>

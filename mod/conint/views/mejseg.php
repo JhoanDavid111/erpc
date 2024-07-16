@@ -88,7 +88,7 @@ function modalEditActivity($modalId, $modalTitle, $activityId, $activityData) {
 			<h2 class="title-c m-tb-40">Crear Nueva Acción</h2>
 		<?php endif; ?>
 		<?php $url_action = base_url."mejseg/saveMejo&nopla=".$nopla; ?>
-		<form class="m-tb-40" action="<?=$url_action?>" method="POST" enctype="multipart/form-data">
+		<form id="myForm" class="m-tb-40" action="<?=$url_action?>" method="POST" enctype="multipart/form-data">
 			<div class="row">
 				<input type="hidden" name="nopla" value="<?=isset($nopla) ? $nopla:''; ?>"/>
 				<input type="hidden" name="noacc" value="<?=isset($noacc) ? $noacc:''; ?>"/>
@@ -120,6 +120,7 @@ function modalEditActivity($modalId, $modalTitle, $activityId, $activityData) {
 				</div>
 				<div class="form-group col-md-1">
 				</div>
+
 				<?php 
 					if($dtOnem){
 						$plamej->setNoacc($dtOnem[0]['noacc']);
@@ -287,7 +288,7 @@ function modalEditActivity($modalId, $modalTitle, $activityId, $activityData) {
 					<?php if($noacc){ ?>
 						<input type="hidden" name="edit" value="<?=$noacc;?>">
 					<?php } ?>
-				</div>
+				</div> 
 			</div>
 		</form>
 	</div>
