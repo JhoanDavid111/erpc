@@ -461,7 +461,7 @@ if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
 	            				<div class="titdtact">
 	            					<?php if($h!='t47kt'){ ?>
 		            					<?php if($va['aprpmj']==1){ ?>
-		            						<?php if(($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74)){ ?>
+		            						<?php if(($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==71)){ ?>
 					            				<?php if($acti[$i]['bloact']==1){ ?>
 					            					<a href= "<?=base_url;?>mejseg/updBloq&bloact=2&noact=<?=$acti[$i]['noact'];?>&nopla=<?=$va['nopla'];?>" class="btnblq">
 				            							<i class="fas fa-lock" title="Haz click para desbloquear"></i>
@@ -517,7 +517,7 @@ if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
 						                		echo Utils::modalTextFile("myModtf", "Agregar Avance", $acti[$i]['noact'], "Relación de Avances", base_url."mejseg/saveAva", "comava", $nopla, ($i+1).". ".$acti[$i]['accmej'],"Evidencias y/o soportes de la ejecución de la acción", "eviava", "Si va a subir más de una evidencia, <br>súbelo en un archivo *.zip")
 						                	?>
 
-						                	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
+						                	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==71){ ?>
 						                		<button class="btn btn-primary btn-sm btn2" style="background-color: #523178;padding: 0px 4px;margin-bottom: 2px;" type="button" data-toggle="modal" data-target="#myModSegSA<?=$acti[$i]['noact'];?>"><i class="fa fa-plus"></i> Agregar Seguimiento Sin Avances</button>
 
 						                		<?php 
@@ -554,7 +554,7 @@ if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
 												<?=$dta['fechava'];?>
 											</div>
 											<div class="form-group col-md-1 bpun bpuncm">
-											<?php if($_SESSION['pefid'] == 58 || $_SESSION['pefid'] == 70 || $_SESSION['pefid'] == 73 || $_SESSION['pefid'] == 74) { ?>
+											<?php if($_SESSION['pefid'] == 58 || $_SESSION['pefid'] == 70 || $_SESSION['pefid'] == 73 || $_SESSION['pefid'] == 71) { ?>
 													<div class="btn-group">
 														<!-- Botón para editar-->
 														<button class="btn btn-primary btn-sm btn2" type="button" data-toggle="modal" data-target="#editActivityModal<?=$dta['noava'];?>" title="Editar Actividad">
@@ -597,7 +597,7 @@ if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
 								            		$EjeSgAcc = isset($EjeSgAcc[$CtnSgAcc-1]['ejesep']) ? $EjeSgAcc[$CtnSgAcc-1]['ejesep']:0;
 								            		?>
 								            		<?php if($h!='t47kt' and ($r==count($datAva)-1 or $r==$CtnSgAcc)){ ?>
-									            		<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
+									            		<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==71){ ?>
 									            		<button class="btn btn-primary btn-sm btn2" style="background-color: #523178;padding: 0px 4px;margin-bottom: 2px;" type="button" data-toggle="modal" data-target="#myModSeguE<?=$dta['noava'];?>" title="Editar Seguimiento"><i class="fa fa-pencil-square-o"></i></button>
 									                	<?php 
 								                			echo Utils::modalTextComboEdi("myModSeguE", "Editar Seguimiento", $dta['noava'], "Análisis del seguimiento <small>(Información del análisis adelantado por el auditor que realizó el seguimiento - OCI)</small>", base_url."mejseg/saveSegu", "anaseg", $nopla, $dta['comava'],substr($acti[$i]['ffinmej'],0,10),"Fecha Entrega", "aleseg","Porcentaje Ejecución","ejesep", "",$sg['noplsg'],$sg['anaseg'],$sg['ejesep'],$EjeSgAcc);
@@ -624,7 +624,7 @@ if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
 								            			<strong>Auditor: </strong> <?=$sg['pernom']." ".$sg['perape'];?><br>
 								            		</small>
 											    <?php $p++; }}else{ ?>
-											    	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
+											    	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==71){ ?>
 											    		<?php if($h!='t47kt'){ ?>
 															<button class="btn btn-primary btn-sm btn2" style="background-color: #523178;padding: 0px 4px;margin-bottom: 2px;" type="button" data-toggle="modal" data-target="#myModSegu<?=$dta['noava'];?>"><small><small><i class="fa fa-plus"></i> Agregar Seguimiento</small></small></button>
 										                	<?php 
@@ -652,7 +652,7 @@ if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
 			            				<?php } ?>
 		            				<?php } ?>
 <!-- Inicio Agregar seguimiento sin avance -->
-		            				<?php if($flag==true AND ($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74)){ ?>
+		            				<?php if($flag==true AND ($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==71)){ ?>
 						                		<button class="btn btn-primary btn-sm btn2" style="background-color: #523178;padding: 0px 4px;margin-bottom: 2px;" type="button" data-toggle="modal" data-target="#myModSegSA<?=$acti[$i]['noact'];?>"><i class="fa fa-plus"></i> Agregar Seguimiento Sin Avances</button>
 
 						                		<?php 
@@ -678,7 +678,7 @@ if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
 
 	                	<div class="btnajupl">
 	                	<?php if($va['aprpmj']==1){ ?>
-	                		<?php if(($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74) AND $h!='t47kt' AND ($plamejs AND !$plamejs[0]['fecautpla'])){ ?>
+	                		<?php if(($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==71) AND $h!='t47kt' AND ($plamejs AND !$plamejs[0]['fecautpla'])){ ?>
 		                		<a href= "<?=base_url;?>mejseg/updMej&nopla=<?=$va['nopla'];?>&at=2&noacc=<?=$va['noacc'];?>">
 		                			<i class="fa fa-check-circle fa-2x" title="Aprobado" style="color: #523178;"></i>
 		                			<br><span class="txtajupl">Aprobado</span>
@@ -689,7 +689,7 @@ if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
 	                		<?php } ?>
 	                	<?php }else{ ?>
 	                		
-	                		<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
+	                		<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==71){ ?>
 	                			<?php if($plamejs AND $plamejs[0]['perid']){ ?>
 			                		<i class="fa fa-times-circle fa-2x" title="Falta la aprobación del lider a cargo" style="color: #f00;"></i>
 		                			<br><span class="txtajupl">Sin aprobar</span>
@@ -716,7 +716,7 @@ if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
 		                	$datos = NULL;
 	                	?>
 	                	<?php if($h!='t47kt'){ ?>
-		                	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
+		                	<?php if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==71){ ?>
 		                		<div class="btnajupl">
 				                	<i class="fa fa-plus-circle fa-2x" data-toggle="modal" data-target="#myModCom<?=$va['noacc'];?>" title="Agregar Comentario" style="color: #523178;"></i>
 				                	<br><span class="txtajupl" data-toggle="modal" data-target="#myModCom<?=$va['noacc'];?>">+ Comentario</span>
@@ -748,7 +748,7 @@ if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
 	                	?>
 
 
-	                	<?php //if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ ?>
+	                	<?php //if($_SESSION['pefid']==58 OR $_SESSION['pefid']==70 OR $_SESSION['pefid']==73 OR $_SESSION['pefid']==71){ ?>
 	                		<!-- <br>
 	                		<a href= "<?=base_url;?>mejseg/delMejo&nopla=<?=$va['nopla'];?>&noacc=<?=$va['noacc'];?>" onclick="return eliminar();">
 	                			<i class="fa fa-trash fa-2x" title="Eliminar" style="color: #523178;"></i>
@@ -850,7 +850,7 @@ if ($_SESSION['pefid'] == 71 OR $_SESSION['pefid'] == 75) {
                                                 </small>
 												
                                             <?php }} else { ?>
-                                                <?php if ($_SESSION['pefid'] == 58 || $_SESSION['pefid'] == 70 || $_SESSION['pefid'] == 73 || $_SESSION['pefid'] == 74) { 
+                                                <?php if ($_SESSION['pefid'] == 58 || $_SESSION['pefid'] == 70 || $_SESSION['pefid'] == 73 || $_SESSION['pefid'] == 71) { 
                                                     // Validar si la fecha actual es mayor que fecseg
                                                     $fecha_actual = date('Y-m-d');
                                                     if ($fecha_actual > $fechava) {
