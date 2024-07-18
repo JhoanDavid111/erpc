@@ -108,6 +108,7 @@
 	        foreach ($areas as $f){
 	        	//$datnoco = $contrato->selcanabo($f['perid'],$ano); ?>
 	        name: '<?=strtoupper($f['valnom']);?>',
+
 	        data: [
 	            	<?php
 	            		$t = 0;

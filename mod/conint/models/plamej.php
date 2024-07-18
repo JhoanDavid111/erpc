@@ -634,6 +634,25 @@ class Plamej{
 		return $save;
 	}
 
+	public function setotarea($ano, $mes, $valid){
+		$sql="SELECT c.areapla as codest, v.valnom as nomest, MONTH(c.fsolpla) AS mes, COUNT(c.nopla) AS cant FROM plamej AS c INNER JOIN valor AS v ON c.areapla=v.valid WHERE c.areapla='$valid'";
+
+		if($ano)
+			$sql.=" AND YEAR(c.fsolpla)=$ano";
+		if($mes)
+			$sql.=" AND MONTH(c.fsolpla)=$mes";
+		$sql.=" GROUP BY c.areapla, v.valnom ORDER BY COUNT(c.nopla) DESC";
+
+		//echo "<br><br><br>".$sql."<br>'".$valid."','".$ano."','".$mes."'<br><br>";
+		$execute = $this->db->query($sql);
+		$save = $execute->fetchall(PDO::FETCH_ASSOC);
+
+		//var_dump($save);
+		// $error= $this->db->errorInfo();
+		// die();
+		return $save;
+	}
+
 	public function getAllTiplan($parid, $valfijo="1"){
 		$sql ="SELECT * FROM valor WHERE parid = ".$parid." AND valfijo='".$valfijo."'";
 		$sql .=" ORDER BY valnom";
