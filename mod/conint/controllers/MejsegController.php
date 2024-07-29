@@ -56,21 +56,30 @@ class MejsegController{
 
 	public function actualizarActividad() {
 		if ($_POST) {
-
-			$prevActivityId = $_POST['prevActivityId'];
-			$noact = $_POST['noact'];
-			$comava = $_POST['comava'];
-			$eviava = $_POST['eviava'];
-			$perid = $_POST['perid'];
-			$fechava = $_POST['fechava'];
-
+			$prevActivityId = isset($_POST['prevActivityId']) ? $_POST['prevActivityId'] : null;
+			$noact = isset($_POST['noact']) ? $_POST['noact'] : null;
+			$comava = isset($_POST['comava']) ? $_POST['comava'] : null;
+			$perid = isset($_POST['perid']) ? $_POST['perid'] : null;
+			$fechava = isset($_POST['fechava']) ? $_POST['fechava'] : null;
+	
+			// Obtener el valor anterior de eviava
+			$eviava = isset($activityData['eviava']) ? $activityData['eviava'] : null;
+	
+			// Manejo del archivo subido
+			if (isset($_FILES['eviava']) && $_FILES['eviava']['error'] === UPLOAD_ERR_OK) {
+				$eviava = Utils::opti($_FILES['eviava'], $noact . "_" . date("Ymd"), "arcci", "");
+			}
+	
 			if (empty($fechava)) {
 				die("La fecha de la actividad no puede estar vacía.");
 			}
 	
 			$plamej = new Plamej();
 	
-			$plamej->updatePreviousActivity($prevActivityId);
+			// Actualiza la actividad previa si es necesario
+			if ($prevActivityId) {
+				$plamej->updatePreviousActivity($prevActivityId);
+			}
 	
 			$plamej->setNoact($noact);
 			$plamej->setComava($comava);
@@ -80,10 +89,8 @@ class MejsegController{
 			$plamej->setEstado(1);
 			$plamej->setEstapr("Pendiente");
 	
-
 			$plamej->saveAva();
 	
-
 			header("Location:".base_url.'plamej/index');
 		}
 	}

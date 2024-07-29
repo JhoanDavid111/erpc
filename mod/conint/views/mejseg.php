@@ -17,34 +17,28 @@ function modalEditActivity($modalId, $modalTitle, $activityId, $activityData) {
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?= $url_edit_action ?>" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="prevActivityId" value="<?= $activityData['noava'] ?>">
-                        <input type="hidden" name="noava" value="<?= $activityData['noava'] ?>">
-                        <div class="form-group">
-                            <label for="noact">Número de Actividad</label>
-                            <input type="text" class="form-control" name="noact" value="<?= $activityData['noact'] ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="comava">Comentario</label>
-                            <input type="text" class="form-control" name="comava" value="<?= $activityData['comava'] ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="eviava">Evidencia</label>
-                            <input type="text" class="form-control" name="eviava" value="<?= $activityData['eviava'] ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="perid">ID persona</label>
-                            <input type="text" class="form-control" name="perid" value="<?= $activityData['perid'] ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="fechava">Fecha</label>
-                            <input type="date" name="fechava" value="<?= date('Y-m-d', strtotime($activityData['fechava'])) ?>" required>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                        </div>
-                    </form>
+				<form action="<?= $url_edit_action ?>" method="POST" enctype="multipart/form-data">
+					<input type="hidden" name="prevActivityId" value="<?= $activityData['noava'] ?>">
+					<input type="hidden" name="noava" value="<?= $activityData['noava'] ?>">
+					<input type="hidden" name="noact" value="<?= $activityData['noact'] ?>">
+					<input type="hidden" name="perid" value="<?= $activityData['perid'] ?>">
+					<div class="form-group">
+						<label for="comava">Comentario</label>
+						<input type="text" class="form-control" name="comava" value="<?= $activityData['comava'] ?>">
+					</div>
+					<div class="form-group">
+						<label for="eviava">Evidencia</label>
+						<input type="file" class="form-control" name="eviava">
+					</div>
+					<div class="form-group">
+						<label for="fechava">Fecha</label>
+						<input type="date" name="fechava" value="<?= date('Y-m-d', strtotime($activityData['fechava'])) ?>" required>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="submit" class="btn btn-primary">Guardar cambios</button>
+					</div>
+				</form>
 
                     <!-- Formulario para aprobar avance -->
                     <form action="<?= $url_approve_action ?>" method="POST" class="d-inline">

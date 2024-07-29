@@ -216,6 +216,9 @@
 								</br>
                             	<strong>Tipo de plan: </strong><?=$tipla[0]['valnom'];?>							
                             	</br>
+								<br>
+								<strong>Fecha revisión CI: </strong><?= date('d-m-Y', strtotime($va['fechaci'])); ?>							
+								<br>
 								</br>
                             	<strong>Periodicidad: </strong><?=$va['periodi'];?>							
                             	</br>

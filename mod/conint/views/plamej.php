@@ -202,6 +202,9 @@
 	                        		<?php } ?>
 	                        		<br>
 	                        	<?php } ?>
+								<br>
+								<strong>Fecha revisión CI: </strong><?= date('d-m-Y', strtotime($va['fechaci'])); ?>							
+								<br>
 								</br>
                             	<strong>Periodicidad: </strong><?=$va['periodi'];?>							
                             	</br>
@@ -363,30 +366,58 @@
 	                	<?php } ?>
 	                	</div> -->
 
+						<?php
+							// Obtener la fecha actual
+							$fecha_actual = date('Y-m-d');
+
+							// Verificar si la fecha del campo 'fechaci' es menor o igual a la fecha actual
+							if (strtotime($va['fechaci']) <= strtotime($fecha_actual)) {
+								// Establecer el número de plan en el objeto $plamej
+								$plamej->setNopla($va['nopla']);
+
+								// Actualizar el estado del plan a cerrado (supongamos que el estado cerrado es 3051)
+								$plamej->setActpla(2);
+
+								// Mensaje de observación
+								$observacion = "Plan cerrado por revisión de control interno";
+								$plamej->setOcpla($observacion);
+
+								$plamej->actualizarEstado(2,$observacion);
+
+							}
+
+							?>
 
 
-		                	<div class="btnajupl">
-			                	<a href="<?=base_url?>mejseg/index&nopla=<?=$va['nopla'];?>">
-				                	<i class="fa fa-file-text fa-2x" title="Ver Desarrollo Hallazgo" style="color: #523178;"></i>
-				                	<br><span class="txtajupl">Ver</span>
-		                		</a>
-		                	</div>
-		                	<?php if($_SESSION['pefid']==70 AND ($va['estpla']==1803 OR $va['estpla']==1804)){ ?>
-		                		<div class="btnajupl">
-					                <i class="fas fa-unlock-alt fa-2x bcacnd" data-toggle="modal" data-target="#myModCob<?=$va['nopla'];?>" title="Caso Abierto"></i>
-						            <br><span class="txtajupl">Abierto</span>
-			                	</div>
-			                	<?php ;
-			                		$plamej->setNopla($va['nopla']);
-			                		$dtobs = $plamej->getObsNp();
-			                		echo Utils::modalUnTextAbCe("myModCob", "Cerrar Plan de mejora", $va['nopla'], "Observación", base_url."plamej/updpm&valid=3051", "ocpla",$va['nopla'],"","","","",$va['ocpla'],$dtobs);
-			                	?>
-				            <?php }else{ ?>
-				            	<div class="btnajupl">
-			                		<i class="fas fa-unlock-alt fa-2x" title="Caso Abierto" style="color: #523178;"></i>
-			                	<br><span class="txtajupl">Abierto</span>
-			                	</div>
-				            <?php } ?>
+
+							<div class="btnajupl">
+								<a href="<?= base_url ?>mejseg/index&nopla=<?= $va['nopla']; ?>">
+									<i class="fa fa-file-text fa-2x" title="Ver Desarrollo Hallazgo" style="color: #523178;"></i>
+									<br><span class="txtajupl">Ver</span>
+								</a>
+							</div>
+
+							<?php if ($_SESSION['pefid'] == 70 && ($va['estpla'] == 1803 || $va['estpla'] == 1804)) { ?>
+								<div class="btnajupl">
+									<i class="fas fa-unlock-alt fa-2x bcacnd" data-toggle="modal" data-target="#myModCob<?= $va['nopla']; ?>" title="Caso Abierto"></i>
+									<br><span class="txtajupl">Abierto</span>
+								</div>
+								<?php 
+									$plamej->setNopla($va['nopla']);
+									$dtobs = $plamej->getObsNp();
+									echo Utils::modalUnTextAbCe("myModCob", "Cerrar Plan de mejora", $va['nopla'], "Observación", base_url . "plamej/updpm&valid=3051", "ocpla", $va['nopla'], "", "", "", "", $va['ocpla'], $dtobs);
+								?>
+							<?php } elseif ($va['actpla'] == 2) { ?>
+								<div class="btnajupl">
+									<i class="fas fa-lock fa-2x" title="Caso Cerrado" style="color: #523178;"></i>
+									<br><span class="txtajupl">Cerrado</span>
+								</div>
+							<?php } else { ?>
+								<div class="btnajupl">
+									<i class="fas fa-unlock-alt fa-2x" title="Caso Abierto" style="color: #523178;"></i>
+									<br><span class="txtajupl">Abierto</span>
+								</div>
+							<?php } ?>
 
 				            <?php if($DtCaA AND $DtCaA[0]['can']==0 AND ($_SESSION['pefid']==58 OR $_SESSION['pefid']==70)){ ?>
 				            	<div class="btnajupl">

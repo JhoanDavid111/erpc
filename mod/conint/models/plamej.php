@@ -18,6 +18,7 @@ class Plamej{
 	private $cargo;
 	private $valid;
 	private $periodi;
+	private $fechaci;
 
 	// Tabla plaacc
 	private $noacc;
@@ -130,6 +131,9 @@ class Plamej{
 	}
 	function getPeriodi(){
 		return $this->periodi;
+	}
+	function getFechaci(){
+		return $this->fechaci;
 	}
 
 	// Tabla plaacc
@@ -320,6 +324,9 @@ class Plamej{
 	function setPeriodi($periodi){
 		$this->periodi = $periodi;
 	}
+	function setFechaci($fechaci){
+		$this->fechaci = $fechaci;
+	}
 
 	// Tabla plaacc
 	function setNoacc($noacc){
@@ -462,7 +469,7 @@ class Plamej{
 		// Obtener el contenido de $selectedAreas
 		$selectedAreas = $this->getSelectedAreas(); 
 
-		$sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla, '' AS apro, l.valid, l.periodi 
+		$sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla, '' AS apro, l.valid, l.periodi, l.fechaci 
 				FROM plamej AS l 
 				LEFT JOIN valor AS f ON l.fuepla = f.valid 
 				LEFT JOIN valor AS e ON l.estpla = e.valid 
@@ -1490,5 +1497,32 @@ class Plamej{
 		// die();
 		return $save;
 	}
+
+	public function saveReviewPlan($valid, $fechaci) {
+		// Definir la consulta SQL dependiendo del valor de $valid
+		if ($valid == 3051) {
+			$sql = "UPDATE plamej SET fechaci = :fechaci WHERE valid = :valid";
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(':fechaci', $fechaci);
+			$stmt->bindParam(':valid', $valid);
+		} else {
+			$sql = "UPDATE plamej SET fechaci = :fechaci WHERE valid != 3051";
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(':fechaci', $fechaci);
+		}
+	
+		return $stmt->execute();
+	}
+
+	    // Método para actualizar el estado del plan en la base de datos
+		public function actualizarEstado($nuevo_estado, $observacion) {
+			// Supongamos que tienes una conexión a la base de datos llamada $db
+			$sql = "UPDATE plamej SET actpla = :nuevo_estado, ocpla = :observacion WHERE nopla = :nopla";
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(':nuevo_estado', $nuevo_estado);
+			$stmt->bindParam(':observacion', $observacion);
+			$stmt->bindParam(':nopla', $this->nopla);
+			$stmt->execute();
+		}
 
 }
