@@ -217,7 +217,28 @@
                             	<strong>Tipo de plan: </strong><?=$tipla[0]['valnom'];?>							
                             	</br>
 								<br>
-								<strong>Fecha revisión CI: </strong><?= date('d-m-Y', strtotime($va['fechaci'])); ?>							
+								<?php
+								// Obtener los rangos de fechas de la base de datos
+								$rangos_json = $plamej->obtenerRangosFechas($va['nopla']);
+
+								// Asegurarnos de que $rangos_json sea una cadena JSON antes de decodificarla
+								$rangos = is_string($rangos_json) ? json_decode($rangos_json, true) : [];
+
+								?>
+								<p><strong>Rangos de fecha de revisión CI:</strong></p>
+								<ul>
+									<?php if (is_array($rangos) && !empty($rangos)) : ?>
+										<?php foreach ($rangos as $rango) : ?>
+											<li>
+												<?= date('d-m-Y', strtotime($rango['fecha_inicio'])); ?> 
+												a 
+												<?= date('d-m-Y', strtotime($rango['fecha_fin'])); ?>
+											</li>
+										<?php endforeach; ?>
+									<?php else : ?>
+										<li>No hay rangos de fechas disponibles.</li>
+									<?php endif; ?>
+								</ul>							
 								<br>
 								</br>
                             	<strong>Periodicidad: </strong><?=$va['periodi'];?>							
@@ -379,47 +400,113 @@
 	                		
 	                	<?php } ?>
 	                	</div> -->
+						<?php
+						// Obtener la fecha actual
+						$fecha_actual = date('Y-m-d');
+
+						// Obtener los rangos de fechas de la base de datos
+						$rangos_json = $plamej->obtenerRangosFechas($va['nopla']);
+						$rangos = is_string($rangos_json) ? json_decode($rangos_json, true) : [];
+
+						$bloquear_plan = false;
+
+						// Verificar si la fecha actual se encuentra dentro de alguno de los rangos de fechas
+						if (is_array($rangos)) {
+							foreach ($rangos as $rango) {
+								if (strtotime($rango['fecha_inicio']) <= strtotime($fecha_actual) && strtotime($fecha_actual) <= strtotime($rango['fecha_fin'])) {
+									$bloquear_plan = true;
+									break;
+								}
+							}
+						} else {
+							echo "Error: No se pudieron obtener los rangos de fechas.";
+						}
+
+						if ($bloquear_plan) {
+							// Establecer el número de plan en el objeto $plamej
+							$plamej->setNopla($va['nopla']);
+
+							// Actualizar el estado del plan a bloqueado temporalmente
+							$nuevo_estado = 1; // Código para cerrado temporalmente
+							$observacion = "Plan bloqueado temporalmente por revisión de control interno";
+							$cerradoTemp = 1;
+							$plamej->actualizarEstado($nuevo_estado, $observacion, $cerradoTemp);
+						} else {
+							// Actualizar el estado del plan a abierto
+							$nuevo_estado = 1; // Código para abierto
+							$observacion = "";
+							$cerradoTemp = 0;
+							$plamej->actualizarEstado($nuevo_estado, $observacion, $cerradoTemp);
+						}
+						?>
 
 
+						<?php if ($va['cerrado_temporalmente'] == 1) { ?>
+							<div class="btnajupl">
+								<i class="fas fa-lock fa-2x" title="Cerrado Temporalmente" style="color: #ff0000;"></i>
+								<br><span class="txtajupl">Cerrado Temporalmente</span>
+							</div>
+							<!-- Bloquear todos los demás botones -->
+							<div class="btnajupl" style="pointer-events: none; opacity: 0.5;">
+								<i class="fa fa-pencil-square-o fa-2x" title="Editar" style="color: #523178;"></i>
+								<br><span class="txtajupl">Editar</span>
+							</div>
+							<div class="btnajupl" style="pointer-events: none; opacity: 0.5;">
+								<i class="fas fa-print fa-2x" style="color: #523178;"></i>
+								<br><span class="txtajupl">Imprimir</span>
+							</div>
+							<div class="btnajupl" style="pointer-events: none; opacity: 0.5;">
+								<i class="fa fa-file-text fa-2x" title="Ver Desarrollo Hallazgo" style="color: #523178;"></i>
+								<br><span class="txtajupl">Ver</span>
+							</div>
+						<?php } else { ?>
+							<div class="btnajupl">
+								<a href="<?= base_url ?>mejseg/index&nopla=<?= $va['nopla']; ?>">
+									<i class="fa fa-file-text fa-2x" title="Ver Desarrollo Hallazgo" style="color: #523178;"></i>
+									<br><span class="txtajupl">Ver</span>
+								</a>
+							</div>
+						<?php } ?>
 
-		                	<div class="btnajupl">
-			                	<a href="<?=base_url?>mejseg/index&nopla=<?=$va['nopla'];?>">
-				                	<i class="fa fa-file-text fa-2x" title="Ver Desarrollo Hallazgo" style="color: #523178;"></i>
-				                	<br><span class="txtajupl">Ver</span>
-		                		</a>
-		                	</div>
-		                	<?php if($_SESSION['pefid']==74 AND ($va['estpla']==1803 OR $va['estpla']==1804)){ ?>
-		                		<div class="btnajupl">
-					                <i class="fas fa-unlock-alt fa-2x bcacnd" data-toggle="modal" data-target="#myModCob<?=$va['nopla'];?>" title="Caso Abierto"></i>
-						            <br><span class="txtajupl">Abierto</span>
-			                	</div>
-			                	<?php ;
-			                		$plamej->setNopla($va['nopla']);
-			                		$dtobs = $plamej->getObsNp();
-			                		echo Utils::modalUnTextAbCe("myModCob", "Cerrar Plan Institucional", $va['nopla'], "Observación", base_url."plamej/updpm", "ocpla",$va['nopla'],"","","","",$va['ocpla'],$dtobs);
-			                	?>
-				            <?php }else{ ?>
-				            	<div class="btnajupl">
-			                		<i class="fas fa-unlock-alt fa-2x" title="Caso Abierto" style="color: #523178;"></i>
-			                	<br><span class="txtajupl">Abierto</span>
-			                	</div>
-				            <?php } ?>
+						<?php if ($_SESSION['pefid'] == 70 && ($va['estpla'] == 1803 || $va['estpla'] == 1804) && $va['cerrado_temporalmente'] == 0) { ?>
+							<div class="btnajupl">
+								<i class="fas fa-unlock-alt fa-2x bcacnd" data-toggle="modal" data-target="#myModCob<?= $va['nopla']; ?>" title="Caso Abierto"></i>
+								<br><span class="txtajupl">Abierto</span>
+							</div>
+							<?php 
+								$plamej->setNopla($va['nopla']);
+								$dtobs = $plamej->getObsNp();
+								echo Utils::modalUnTextAbCe("myModCob", "Cerrar Plan de mejora", $va['nopla'], "Observación", base_url . "plamej/updpm&valid=3051", "ocpla", $va['nopla'], "", "", "", "", $va['ocpla'], $dtobs);
+							?>
+						<?php } elseif ($va['actpla'] == 2) { ?>
+							<div class="btnajupl">
+								<i class="fas fa-lock fa-2x" title="Caso Cerrado" style="color: #523178;"></i>
+								<br><span class="txtajupl">Cerrado</span>
+							</div>
+						<?php }  elseif ($va['cerrado_temporalmente'] == 0) { ?>
+							<div class="btnajupl">
+								<i class="fas fa-unlock-alt fa-2x" title="Caso Abierto" style="color: #523178;"></i>
+								<br><span class="txtajupl">Abierto</span>
+							</div>
+						<?php } ?>
 
-				            <?php if($DtCaA AND $DtCaA[0]['can']==0 AND ($_SESSION['pefid']==73 OR $_SESSION['pefid']==74)){ ?>
-				            	<div class="btnajupl">
-						            <a href="<?=base_url?>plamej/edit&nopla=<?=$va['nopla'];?>">
-					                	<i class="fa fa-pencil-square-o fa-2x" title="Editar" style="color: #523178;"></i>
-						                <br><span class="txtajupl">Editar</span>
-			                		</a>
-			                	</div>
-			                <?php } ?>
+						<?php if($DtCaA AND $DtCaA[0]['can']==0 AND ($_SESSION['pefid']==58 OR $_SESSION['pefid']==70) && $va['cerrado_temporalmente'] == 0){ ?>
+							<div class="btnajupl">
+								<a href="<?=base_url?>plamej/edit&nopla=<?=$va['nopla'];?>">
+									<i class="fa fa-pencil-square-o fa-2x" title="Editar" style="color: #523178;"></i>
+									<br><span class="txtajupl">Editar</span>
+								</a>
+							</div>
+						<?php } ?>
 
-			                <div class="btnajupl">
-				                <a href="<?=base_url?>views/pdfpm.php?nopla=<?=$va['nopla'];?>" target="_blank" title="Imprimir Plan de Mejora">
-				                	<i class="fas fa-print fa-2x" style="color: #523178;"></i>
-				                	<br><span class="txtajupl">Imprimir</span>
-				                </a>
-				            </div>
+						<?php if($va['cerrado_temporalmente'] == 0){ ?>
+							<div class="btnajupl">
+								<a href="<?=base_url?>views/pdfpm.php?nopla=<?=$va['nopla'];?>" target="_blank" title="Imprimir Plan de Mejora">
+									<i class="fas fa-print fa-2x" style="color: #523178;"></i>
+									<br><span class="txtajupl">Imprimir</span>
+								</a>
+							</div>
+						<?php } ?>
 
 			                <?php if($_SESSION['pefid']==73 OR $_SESSION['pefid']==74){ 
 			                	$cacc = $plamej->getCouAcc();
