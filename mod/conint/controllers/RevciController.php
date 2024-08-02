@@ -6,7 +6,8 @@ class RevciController {
     public function index() {
         if ($_POST) {
             $categoria = $_POST['categoria'];
-            $fechaci = $_POST['fechaci'];
+            $fechas_inicio = $_POST['fecha_inicio'];
+            $fechas_fin = $_POST['fecha_fin'];
 
             if ($categoria == 'mejora') {
                 $valid = 3051;
@@ -18,15 +19,20 @@ class RevciController {
                 return;
             }
 
-            $plamej = new Plamej();
-            $plamej->setFechaci($fechaci);
-            $plamej->setValid($valid);
+            $rangosFechas = [];
+            for ($i = 0; $i < count($fechas_inicio); $i++) {
+                $rangosFechas[] = [
+                    'fecha_inicio' => $fechas_inicio[$i],
+                    'fecha_fin' => $fechas_fin[$i]
+                ];
+            }
 
-            $save = $plamej->saveReviewPlan($valid, $fechaci);
+            $plamej = new Plamej();
+            $save = $plamej->saveDatesCi($valid, $rangosFechas);
 
             if ($save) {
                 $_SESSION['register'] = "complete";
-                $_SESSION['message'] = "La fecha $fechaci ha sido cargada al plan de tipo $categoria.";
+                $_SESSION['message'] = "Los rangos de fechas han sido cargados al plan de tipo $categoria.";
             } else {
                 $_SESSION['register'] = "failed";
             }
@@ -38,6 +44,7 @@ class RevciController {
         }
     }
 }
+
 ?>
 
 

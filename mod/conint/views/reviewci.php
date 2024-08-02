@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seleccionar Categoría y fecha del Plan</title>
+    <title>Seleccionar Categoría y Fechas del Plan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -85,18 +85,39 @@
                 </select>
             </div>
             <br>
-            <h2 class="mt-4">Selecciona una fecha de revisión</h2>
+            <h2 class="mt-4">Seleccionar Rangos de Fechas de Revisión</h2>
             <br>
-            <div class="form-group">
-                <label for="fechaci">Fecha</label>
-                <input type="date" id="fechaci" name="fechaci" required>
+            <div id="rango-fechas-container">
+                <div class="form-group rango-fechas">
+                    <label for="fecha_inicio_1">Fecha Inicio 1</label>
+                    <input type="date" id="fecha_inicio_1" name="fecha_inicio[]" required>
+                    <label for="fecha_fin_1">Fecha Fin 1</label>
+                    <input type="date" id="fecha_fin_1" name="fecha_fin[]" required>
+                </div>
             </div>
-            <br>
+            <button type="button" onclick="agregarRangoFechas()">Agregar Otro Rango de Fechas</button>
+            <br><br>
             <button type="submit">Guardar</button>
         </form>
     </div>
 
     <script>
+        let rangoCount = 1;
+
+        function agregarRangoFechas() {
+            rangoCount++;
+            const container = document.getElementById('rango-fechas-container');
+            const newRango = document.createElement('div');
+            newRango.classList.add('form-group', 'rango-fechas');
+            newRango.innerHTML = `
+                <label for="fecha_inicio_${rangoCount}">Fecha Inicio ${rangoCount}</label>
+                <input type="date" id="fecha_inicio_${rangoCount}" name="fecha_inicio[]" required>
+                <label for="fecha_fin_${rangoCount}">Fecha Fin ${rangoCount}</label>
+                <input type="date" id="fecha_fin_${rangoCount}" name="fecha_fin[]" required>
+            `;
+            container.appendChild(newRango);
+        }
+
         setTimeout(function() {
             var alert = document.getElementById('alert-message');
             if (alert) {
@@ -110,6 +131,11 @@
     </script>
 </body>
 </html>
+
+
+
+
+
 
 
 

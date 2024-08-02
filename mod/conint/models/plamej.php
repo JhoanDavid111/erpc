@@ -18,7 +18,8 @@ class Plamej{
 	private $cargo;
 	private $valid;
 	private $periodi;
-	private $fechaci;
+	private $rangosFechas;
+	private $cerradoTemporalmente;
 
 	// Tabla plaacc
 	private $noacc;
@@ -132,9 +133,13 @@ class Plamej{
 	function getPeriodi(){
 		return $this->periodi;
 	}
-	function getFechaci(){
-		return $this->fechaci;
+	function getRangosFechas(){
+		return $this->rangosFechas;
 	}
+	function getCerradoTemporalmente(){
+		return $this->cerradoTemporalmente;
+	}
+
 
 	// Tabla plaacc
 	function getnoacc(){
@@ -324,8 +329,11 @@ class Plamej{
 	function setPeriodi($periodi){
 		$this->periodi = $periodi;
 	}
-	function setFechaci($fechaci){
-		$this->fechaci = $fechaci;
+	function setRangosFechas($rangosFechas){
+		$this->rangosFechas = $rangosFechas;
+	}
+	function setCerradoTemporalmente($cerradoTemporalmente){
+		$this->cerradoTemporalmente = $cerradoTemporalmente;
 	}
 
 	// Tabla plaacc
@@ -469,7 +477,7 @@ class Plamej{
 		// Obtener el contenido de $selectedAreas
 		$selectedAreas = $this->getSelectedAreas(); 
 
-		$sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla, '' AS apro, l.valid, l.periodi, l.fechaci 
+		$sql = "SELECT DISTINCT l.nopla, l.fsolpla, l.fuepla, f.valnom AS fte, l.detfue, l.fobspla, l.cappla, l.obspla, l.areapla, l.estpla, e.valnom AS est, e.pre, l.actpla, l.porpla, l.ocpla, l.carlmej, c.valnom AS lid, l.feciepla, l.perid, p.nodocemp, p.pernom, p.perape, p.cargo, l.fecautpla, '' AS apro, l.valid, l.periodi, l.cerrado_temporalmente 
 				FROM plamej AS l 
 				LEFT JOIN valor AS f ON l.fuepla = f.valid 
 				LEFT JOIN valor AS e ON l.estpla = e.valid 
@@ -1498,31 +1506,67 @@ class Plamej{
 		return $save;
 	}
 
-	public function saveReviewPlan($valid, $fechaci) {
+	public function saveReviewPlan($valid, $fechaci_inicio, $fechaci_final) {
 		// Definir la consulta SQL dependiendo del valor de $valid
 		if ($valid == 3051) {
-			$sql = "UPDATE plamej SET fechaci = :fechaci WHERE valid = :valid";
+			$sql = "UPDATE plamej SET fechaci_inicio = :fechaci_inicio, fechaci_final = :fechaci_final WHERE valid = :valid";
 			$stmt = $this->db->prepare($sql);
-			$stmt->bindParam(':fechaci', $fechaci);
+			$stmt->bindParam(':fechaci_inicio', $fechaci_inicio);
+			$stmt->bindParam(':fechaci_final', $fechaci_final);
 			$stmt->bindParam(':valid', $valid);
 		} else {
-			$sql = "UPDATE plamej SET fechaci = :fechaci WHERE valid != 3051";
+			$sql = "UPDATE plamej SET fechaci_inicio = :fechaci_inicio, fechaci_final = :fechaci_final WHERE valid != 3051";
 			$stmt = $this->db->prepare($sql);
-			$stmt->bindParam(':fechaci', $fechaci);
+			$stmt->bindParam(':fechaci_inicio', $fechaci_inicio);
+			$stmt->bindParam(':fechaci_final', $fechaci_final);
 		}
 	
 		return $stmt->execute();
 	}
 
 	    // Método para actualizar el estado del plan en la base de datos
-		public function actualizarEstado($nuevo_estado, $observacion) {
-			// Supongamos que tienes una conexión a la base de datos llamada $db
-			$sql = "UPDATE plamej SET actpla = :nuevo_estado, ocpla = :observacion WHERE nopla = :nopla";
+		public function actualizarEstado($nuevo_estado, $observacion, $cerrado_temporalmente) {
+			$sql = "UPDATE plamej SET actpla = :nuevo_estado, ocpla = :observacion, cerrado_temporalmente = :cerrado_temporalmente WHERE nopla = :nopla";
 			$stmt = $this->db->prepare($sql);
 			$stmt->bindParam(':nuevo_estado', $nuevo_estado);
 			$stmt->bindParam(':observacion', $observacion);
+			$stmt->bindParam(':cerrado_temporalmente', $cerrado_temporalmente);
 			$stmt->bindParam(':nopla', $this->nopla);
 			$stmt->execute();
 		}
+
+		public function obtenerRangosFechas($nopla) {
+			$sql = "SELECT rangos_fechas FROM plamej WHERE nopla = :nopla";
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(':nopla', $nopla);
+			$stmt->execute();
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $result ? $result['rangos_fechas'] : null;
+		}
+
+		public function saveDatesCi($valid, $rangosFechas) {
+			$rangosFechasJson = json_encode($rangosFechas);
+		
+			try {
+				if ($valid == 3051) {
+					$sql = "UPDATE plamej SET rangos_fechas = :rangos_fechas WHERE valid = :valid";
+					$stmt = $this->db->prepare($sql);
+					$stmt->bindParam(':valid', $valid);
+				} else {
+					$sql = "UPDATE plamej SET rangos_fechas = :rangos_fechas WHERE valid != 3051";
+					$stmt = $this->db->prepare($sql);
+				}
+		
+				// Vincular el parámetro 'rangos_fechas'
+				$stmt->bindParam(':rangos_fechas', $rangosFechasJson);
+		
+				// Ejecutar la consulta
+				return $stmt->execute();
+			} catch (PDOException $e) {
+				echo 'Error: ' . $e->getMessage();
+				return false;
+			}
+		}
+		
 
 }
