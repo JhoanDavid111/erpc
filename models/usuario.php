@@ -1,85 +1,63 @@
 <?php
 
-class Usuario{
-		
-	private $peremail;
-	private $perpass;
-	private $db;
-	
-	public function __construct() {
-		$this->db = conexion::get_conexion();
-	}
-	
-	function getId() {
-		return $this->id;
-	}	
+class Usuario {
+    private $peremail;
+    private $perpass;
+    private $db;
 
-	function getEmail() {
-		return $this->peremail;
-	}	
+    public function __construct() {
+        $this->db = conexion::get_conexion();
+    }
 
-	function getPassword() {
-		//return password_hash($this->password, PASSWORD_DEFAULT, array("cost"=>4));
-		return $password = sha1(md5($this->perpass));
-	}	
-	
-	function setEmail($email) {
-		$this->peremail = $email;
-	}
+    function setEmail($email) {
+        $this->peremail = $email;
+    }
 
-	function setPassword($password) {
-		$pass=$password;
-		$this->perpass = $password;
-	}
+    function setPassword($password) {
+        $this->perpass = $password;
+    }
 
-		
-	public function login($email){
-		$result = false;		
-		$password = $this->getPassword();		
-		$malito=$email;		
+    function getPassword() {
+        return sha1(md5($this->perpass));
+    }
 
-		$sql = "SELECT * FROM persona WHERE (pernom=:email or peremail= :email) AND actemp=1 limit 1";
-		$sth = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-		$sth->execute(array(':email' => $malito));
-		$usuario = $sth->fetchObject();
+    // Método para autenticar con usuario y contraseña
+    public function login($email) {
+        $result = false;        
+        $password = $this->getPassword();        
+        $malito = $email;        
 
-		// $cuenta=$sth->rowCount();
-		// var_dump($cuenta);
-		// var_dump($usuario->perpass);
-		// var_dump($password);
-		// die();
+        $sql = "SELECT * FROM persona WHERE (pernom = :email OR peremail = :email) AND actemp = 1 LIMIT 1";
+        $sth = $this->db->prepare($sql);
+        $sth->execute(array(':email' => $malito));
+        $usuario = $sth->fetchObject();
 
+        if ($usuario && $sth->rowCount() == 1) {
+            $vpass = $usuario->perpass;
 
+            if ($password == $vpass) {
+                $result = $usuario;
+            }
+        }
+        
+        return $result;
+    }
 
-		$result=NULL;
-		if($usuario && $sth->rowCount() == 1){			
-			//$verify = password_verify($password, $usuario->perpass);
-			$vpass= $usuario->perpass;
+    // Método para verificar el email proporcionado por Google
+    public function verificarEmail($email) {
+        $result = false;
 
-			// var_dump($vpass);
-			// die();
+        if (strpos($email, '@canalcapital.gov.co') !== false) {
+            $sql = "SELECT * FROM persona WHERE peremail = :email AND actemp = 1 LIMIT 1";
+            $sth = $this->db->prepare($sql);
+            $sth->execute(array(':email' => $email));
+            $usuario = $sth->fetchObject();
 
-			if ($password == $vpass){
-				$verify=TRUE;
-				//$_SESSION['user']=$malito;
-				$_SESSION['user']=$malito;
-				$_SESSION['pass']=$this->perpass;
-				// $_SESSION['salio']=FALSE;
+            if ($usuario && $sth->rowCount() == 1) {
+                $result = $usuario;
+            }
+        }
 
-				if($verify){
-				$result = $usuario;
-				}
-			}
-
-
-			}
-			// var_dump($verify);
-			// die();
-			
-		
-		return $result;
-	}
-	
-	
-	
+        return $result;
+    }
 }

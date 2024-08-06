@@ -6,7 +6,7 @@
 			$user="userCanal";
 			$pass="4QgmfSzz!HMt]nMd";*/
 
-			$host="localhost";
+			$host="localhost:3307";
 			$db="erpc";
 			$user="root";
 			$pass="";

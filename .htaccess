@@ -7,8 +7,8 @@ ErrorDocument 404 http://localhost/erpc/
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f
 
-
-RewriteRule ^(.*)/(.*) index.php?controller=$1&action=$2
+RewriteRule ^(.*)/(.*) index.php?controller=$1&action=$2 [QSA,L]
+# RewriteRule ^(.*)/(.*) index.php?controller=$1&action=$2
 # RewriteRule ^(.*)/(.*) mod/financiera/index.php?controller=$1&action=$2
 
 </IfModule>

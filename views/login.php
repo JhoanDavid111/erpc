@@ -1,10 +1,3 @@
-<?php 
-
-// ob_start();
-//session_start();
-
- ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,13 +12,9 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="https://intranet.canalcapital.gov.co/intranet/new_security_cc/wp-content/uploads/2020/04/cropped-icocanal-32x32.png" sizes="32x32" />
-    <link rel="icon" href="https://intranet.canalcapital.gov.co/intranet/new_security_cc/wp-content/uploads/2020/04/cropped-icocanal-32x32.png" sizes="32x32" />
     <link rel="stylesheet" type="text/css" href="css/estilo.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/login.css">
-
-<!--    <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
-
 </head>
 
 <body>
@@ -72,33 +61,26 @@
     </div>
     </header>
     <main>
-        
-          
         <div class="container" id="container">
             <div class="form-container sign-up-container">
-                <form action="<?=base_url?>usuario/login" method="POST">
+                <form action="<?= base_url ?>usuario/login" method="POST">
                     <h1>Login</h1>                    
-                    
                     <input type="text" placeholder="Usuario" name="email" required="" />                  
-                    <input type="password" placeholder="Password" name="password" required=""/>
-                    <!-- <div class="mb-3">
-                        <div class="g-recaptcha" data-sitekey="6Lc6LCEfAAAAAO9Cf9DaqJsDKkaH_eN4eALomycB"> </div>
-                    </div><br> -->
+                    <input type="password" placeholder="Contraseña" name="password" required=""/>
                     <button class="btnlo">Ingresar</button>                    
                 </form>
             </div>
             <div class="form-container sign-in-container">    
-                    
-                    <button class="btnlo1" onclick="window.location.href='modulos.html'">
-                        <span>conectar con:</span> <br>
-                        <span>Canal Capital</span>
-                    </button>                
+                <!-- Botón para iniciar sesión con Google -->
+                <button class="btnlo1" onclick="window.location.href='<?= base_url ?>usuario/loginWithGoogle'">
+                    <span>Iniciar sesión con:</span> <br>
+                    <span>Google</span>
+                </button>        
             </div>
             <div class="overlay-container">
                 <div class="overlay">
                     <div class="overlay-panel overlay-left">
                         <h1>Ingreso Directo?</h1>
-                        
                         <button class="ghost btnlo" id="signIn">Regresar</button>
                     </div>
                     <div class="overlay-panel overlay-right">
@@ -109,10 +91,8 @@
                 </div>
             </div>
         </div>
-       
     </main>
     <br>
-
     <footer id="colophon" class="site-footer" role="contentinfo">
         <div class="site-info containerfooter">
             <nav role="navigation" class="col-md-6">
@@ -123,15 +103,10 @@
                 correo:  notificacionesjudiciales@canalcapital.gov.co<br>
                 Bogotá - Colombia<br>                      
             </nav>
-
             <div class="copyright col-md-6">
             </div>
-
         </div><!-- .site-info -->
-        
     </footer><!-- #colophon -->
-
-
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -145,10 +120,9 @@
     <script>
         AOS.init();
     </script>
-<!-- <?php ob_flush(); ?>
-</body> -->
-
+</body>
 </html>
+
 
 
 
