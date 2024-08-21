@@ -38,7 +38,7 @@
 		                <td><?=$ep['nomrub'];?></td>
 		                <td>
 		                <?php if($ep['actrub']==1){ ?>
-		                	<i class="fas fa-check-circle" style="color: #523178;">
+		                	<i class="fas fa-check-circle" style="color: #0071bc;">
 		                		<span style="color: rgba(255,255,255,0);">+</span>
 		                	</i>
 		                <?php }else{ ?>

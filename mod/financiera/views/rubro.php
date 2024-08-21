@@ -109,7 +109,7 @@
 		                <td><?=$ninipaa.$ru['deprub'];?></td>
 		                <td>
 		                <?php if($ru['actrub']==1){ ?>
-		                	<i class="fas fa-check-circle" style="color: #523178;">
+		                	<i class="fas fa-check-circle" style="color: #0071bc;">
 		                		<span style="color: rgba(255,255,255,0);">+</span>
 		                	</i>
 		                <?php }else{ ?>
@@ -120,7 +120,7 @@
 		                </td>
 		                <td>
 		                	<a href="<?=base_url?>rubro/edit&codrub=<?=$ru['codrub'];?>">
-		                		<i class="fas fa-edit" style="color: #523178;"></i>
+		                		<i class="fas fa-edit" style="color: #0071bc;"></i>
 		                	</a>
 		                </td>
 		            </tr>

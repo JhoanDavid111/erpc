@@ -46,8 +46,6 @@ class Usuario {
     // Método para verificar el email proporcionado por Google
     public function verificarEmail($email) {
         $result = false;
-
-        if (strpos($email, '@canalcapital.gov.co') !== false) {
             $sql = "SELECT * FROM persona WHERE peremail = :email AND actemp = 1 LIMIT 1";
             $sth = $this->db->prepare($sql);
             $sth->execute(array(':email' => $email));
@@ -56,7 +54,6 @@ class Usuario {
             if ($usuario && $sth->rowCount() == 1) {
                 $result = $usuario;
             }
-        }
 
         return $result;
     }

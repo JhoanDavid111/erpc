@@ -134,7 +134,7 @@
 						<?php if($estlib=="Pendiente"){ ?>
 							<td>
 								<a href="<?=base_url?>paa/libest&iddpa=<?=$pf['iddpa'];?>&estlib=Realizada&areSel=<?=$areSel;?>" title="Realizada">
-			                		<i class="fas fa-check-circle fa-2x" style="color: #523178;"></i>
+			                		<i class="fas fa-check-circle fa-2x" style="color: #0071bc;"></i>
 			                	</a>
 								
 								<br><br><br>

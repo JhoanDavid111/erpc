@@ -77,7 +77,7 @@ class antproyController{
 		// die();
 		$pfinan->setIdpaa($vigencia);
 		// $pfinan->setIdpaa();
-		if($areas==1016)
+		if($areas==1016 || $_SESSION['pefid']==21)
 			$pfinand = $pfinan->getAll4();
 		else
 			$pfinand = $pfinan->getAll4($areas);

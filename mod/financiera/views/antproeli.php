@@ -54,7 +54,7 @@
 	                <td><?=$pf['valnom'];?></td>              
 	                <td>
 	                	<a href="<?=base_url?>anteli/AntRes&iddpa=<?=$pf['iddpa'];?>" title="Restaurar">
-	                		<i class="fa fa-arrow-up" style="color: #523178;padding: 10px 5px;"></i>
+	                		<i class="fa fa-arrow-up" style="color: #0071bc;padding: 10px 5px;"></i>
 	                	</a>
 					</td>
 

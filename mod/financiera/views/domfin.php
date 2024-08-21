@@ -64,7 +64,7 @@
 		                <td><?=$do['doffijo'];?></td>
 		                <td>
 		                	<a href="<?=base_url?>domfin/edit&dofid=<?=$do['dofid'];?>">
-		                		<i class="fas fa-edit" style="color: #523178;"></i>
+		                		<i class="fas fa-edit" style="color: #0071bc;"></i>
 		                	</a>
 		                </td>
 		            </tr>

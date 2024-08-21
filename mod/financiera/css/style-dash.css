@@ -8192,7 +8192,7 @@ h1, h2, h3, h4, h5,
 #sidebar {
   min-width: 230px;
   max-width: 230px;
-  background: #523178;
+  background: #0071bc;
   color: #fff;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
@@ -8277,7 +8277,7 @@ h1, h2, h3, h4, h5,
           -webkit-transform: rotate(45deg);
           -ms-transform: rotate(45deg);
           transform: rotate(45deg);
-          background: #523178; }
+          background: #0071bc; }
         #sidebar .custom-menu .btn.btn-primary:hover, #sidebar .custom-menu .btn.btn-primary:focus {
           background: transparent !important;
           border-color: transparent !important; }
@@ -8320,7 +8320,7 @@ a[data-toggle="collapse"] {
 .subscribe-form .form-control {
   background: #3b4ec6; }
 .title-c{
-  color: #523178;
+  color: #0071bc;
   font-weight: 700;
   display: initial;
   text-transform: uppercase;
@@ -8400,9 +8400,9 @@ form .form-group input.form-control:focus,form .form-group select.form-control:f
   width: 100%;
   max-width: 300px;
   border-radius: 4px;
-  background: #523178;
+  background: #0071bc;
   color: white;
-  border: 1px solid #523178;
+  border: 1px solid #0071bc;
   font-size: 14px;
   font-family: "Roboto", sans-serif;
   font-weight: 600;
@@ -8444,7 +8444,7 @@ form .form-group input.form-control:focus,form .form-group select.form-control:f
   outline: none;
   border: 1px solid transparent;
   box-shadow: 0 0 0 0 transparent;
-  background:  #523178;
+  background:  #0071bc;
 }
 
 .btn-cancel-canalc{
@@ -8473,7 +8473,7 @@ table.table{
   border-radius: 10px;
 }
 table.table thead{
-  background: #523178;
+  background: #0071bc;
   color: #fff;
 }
 

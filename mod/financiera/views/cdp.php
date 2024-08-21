@@ -42,13 +42,13 @@
 					</div>
 					
 					<!-- <div class="form-group col-md-4">						
-						<span class="btn btn-primary " style="background-color: #523178 !important;" data-toggle="modal" data-target="#modalserie">
+						<span class="btn btn-primary " style="background-color: #0071bc !important;" data-toggle="modal" data-target="#modalserie">
 							<span class="fa fa-database"> </span>
 								Agregar búsqueda de proveedor
 						</span>
 					</div> -->
 					<div class="form-group col-md-4">						
-						<span class="btn btn-primary " onclick="myFunction()" style="background-color: #523178 !important;">
+						<span class="btn btn-primary " onclick="myFunction()" style="background-color: #0071bc !important;">
 							<span class="fa fa-database"> </span>
 								Agregar búsqueda de proveedor
 						</span>
@@ -147,7 +147,7 @@
 					        				 <?php endforeach ?>
 					        			</td>
 					        			<td>
-					        				<!-- <i class="fas fa-check-circle" style="color: #523178;" title="Seleccionar"></i> -->
+					        				<!-- <i class="fas fa-check-circle" style="color: #0071bc;" title="Seleccionar"></i> -->
 					        				<div class="form-check">
 											  <input class="form-check-input" type="radio" name="rad1" id="rad1" value="<?=$his['idpb'];?>">
 											  <label class="form-check-label" for="rad1">
@@ -538,7 +538,7 @@
 		<div class="row">				
 
 			<div class="form-group col-md-3">
-				<label for="vigencia">Vigencia  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #523178;"></a> --></label>
+				<label for="vigencia">Vigencia  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #0071bc;"></a> --></label>
 				<!-- <?php //$cont = date('Y'); ?> -->
 				<select id="sel1" name="vigencia" class="form-control form-control-sm" style="padding: 0px;" >	
 					<?php foreach ($pfvig as $pf){ ?>
@@ -548,7 +548,7 @@
 			</div>
 
 			<div class="form-group col-md-3">
-				<label for="nsolicitud">Número de Solicitud  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #523178;"></a> --></label>
+				<label for="nsolicitud">Número de Solicitud  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #0071bc;"></a> --></label>
 				<!-- <?php //$cont = date('Y'); ?> -->
 				<input type="number" id="nsolicitud" name="nsolicitud" class="form-control form-control-sm">
 			</div>
@@ -628,7 +628,7 @@
 		<div class="row">				
 
 			<div class="form-group col-md-3">
-				<label for="vigencia">Vigencia  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #523178;"></a> --></label>
+				<label for="vigencia">Vigencia  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #0071bc;"></a> --></label>
 				<!-- <?php //$cont = date('Y'); ?> -->
 				<select id="sel1" name="vigencia" class="form-control form-control-sm" style="padding: 0px;" >	
 					<?php foreach ($pfvig as $pf){ ?>
@@ -638,7 +638,7 @@
 			</div>
 
 			<div class="form-group col-md-3">
-				<label for="nsolicitud">Número de Solicitud  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #523178;"></a> --></label>
+				<label for="nsolicitud">Número de Solicitud  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #0071bc;"></a> --></label>
 				<!-- <?php //$cont = date('Y'); ?> -->
 				<input type="number" id="nsolicitud" name="nsolicitud" class="form-control form-control-sm">
 			</div>
@@ -967,7 +967,7 @@
 		<div class="row">				
 
 			<div class="form-group col-md-3">
-				<label for="vigencia">Vigencia  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #523178;"></a> --></label>
+				<label for="vigencia">Vigencia  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #0071bc;"></a> --></label>
 				<!-- <?php //$cont = date('Y'); ?> -->
 				<select id="sel1" name="vigencia" class="form-control form-control-sm" style="padding: 0px;" >	
 					<?php foreach ($pfvig as $pf){ ?>
@@ -977,7 +977,7 @@
 			</div>
 
 			<div class="form-group col-md-3">
-				<label for="nsolicitud">Número de Solicitud  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #523178;"></a> --></label>
+				<label for="nsolicitud">Número de Solicitud  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #0071bc;"></a> --></label>
 				<!-- <?php //$cont = date('Y'); ?> -->
 				<input type="number" id="nsolicitud" name="nsolicitud" class="form-control form-control-sm">
 			</div>
@@ -1132,7 +1132,7 @@
 		        				 <?php endforeach ?>
 		        			</td>
 		        			<td>
-		        				<!-- <i class="fas fa-check-circle" style="color: #523178;" title="Seleccionar"></i> -->
+		        				<!-- <i class="fas fa-check-circle" style="color: #0071bc;" title="Seleccionar"></i> -->
 		        				<div class="form-check">
 								  <input class="form-check-input" type="radio" name="rad1" id="rad1" value="<?=$his['idpb'];?>">
 								  <label class="form-check-label" for="rad1">

@@ -318,7 +318,7 @@
 						                </td>
 						                <td>
 						                	<a href="<?=base_url?>paa/detpaa&codrub=<?=$pf['codrub'];?>&tot=<?=$tot;?>" title="Ver Todo">
-			                					<i class="fas fa-eye" style="color: #523178;"></i>
+			                					<i class="fas fa-eye" style="color: #0071bc;"></i>
 			                				</a>
 						                </td>
 						            </tr>

@@ -37,7 +37,7 @@
 				<input type="hidden" name="areSel" value="<?=$areSel;?>">
 				<input type="hidden" name="ntipo" value="4">
 				<input type="hidden" name="idflu" value="<?=$idflu;?>">
-				<button type="submit" class="btn" style="color: #523178;" title="Imprimir total o área seleccionada">
+				<button type="submit" class="btn" style="color: #0071bc;" title="Imprimir total o área seleccionada">
 					<i class="fas fa-print fa-2x"></i>
 				</button>
 			</form>
@@ -51,7 +51,7 @@
 				<input type="hidden" name="ntipo" value="4">
 				<input type="hidden" name="idflu" value="<?=$idflu;?>">
 				<input type="hidden" name="pdf" value="1547">
-				<button type="submit" class="btn" style="color: #523178;" title="PDF total o área seleccionada">
+				<button type="submit" class="btn" style="color: #0071bc;" title="PDF total o área seleccionada">
 					<i class="fas fa-file-pdf fa-2x"></i>
 				</button>
 			</form>
@@ -64,7 +64,7 @@
 				<input type="hidden" name="areSel" value="<?=$areSel;?>">
 				<input type="hidden" name="ntipo" value="4">
 				<input type="hidden" name="idflu" value="<?=$idflu;?>">
-				<button type="submit" class="btn" style="color: #523178;" title="CSV total o área seleccionada">
+				<button type="submit" class="btn" style="color: #0071bc;" title="CSV total o área seleccionada">
 					<i class="fas fa-file-excel fa-2x"></i>
 				</button>
 			</form>
@@ -176,12 +176,12 @@
 									<td>
 										<?php if($_SESSION['pefid']==21 OR $_SESSION['pefid']==34){ ?>	
 											<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>" title="Editar">
-						                		<i class="fas fa-eye" style="color: #523178;"></i>
+						                		<i class="fas fa-eye" style="color: #0071bc;"></i>
 						                	</a>
 						                <?php } ?>
 										<br><br>
 					                	<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>&apro=1" title="Aprobar o Rechazar">
-					                		<i class="fas fa-arrow-alt-circle-right" style="color: #523178;"></i>
+					                		<i class="fas fa-arrow-alt-circle-right" style="color: #0071bc;"></i>
 					                	</a>
 					                	<br><br>
 
@@ -189,7 +189,7 @@
 
 					                	 if(($pf['idflu']>=$numflu[0]["mini"] AND $pf['idflu']<=$numflu[0]["maxi"]+1) ){ ?>	
 						                	<a href="<?=base_url?>paa/delcdp&iddpa=<?=$pf['iddpa'];?>" title="Anular y Liberar CDP" onclick="return elimObj();">
-						                		<i class="fas fa-trash-alt" style="color: #523178;"></i>
+						                		<i class="fas fa-trash-alt" style="color: #0071bc;"></i>
 						                	</a>
 						                <?php } ?>
 									</td>
@@ -336,28 +336,28 @@
 									<td>
 										<?php if($_SESSION['pefid']==21 OR $_SESSION['pefid']==34){ ?>	
 											<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>" title="Editar">
-		                		<i class="fas fa-edit" style="color: #523178;"></i>
+		                		<i class="fas fa-edit" style="color: #0071bc;"></i>
 		                	</a>
 		                <?php } ?>
 											<br><br>
 <!--		                	<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>&soli=true" title="CDP">
-		                		<i class="fas fa-eye" style="color: #523178;"></i>
+		                		<i class="fas fa-eye" style="color: #0071bc;"></i>
 		                	</a> -->
 
 
 		                	<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>&apro=1" title="Aprobar o Rechazar">
-					                		<i class="fas fa-arrow-alt-circle-right" style="color: #523178;"></i>
+					                		<i class="fas fa-arrow-alt-circle-right" style="color: #0071bc;"></i>
 					                	</a>
 
 
 		                	<br><br>
 		                	<?php if($_SESSION['depid']==1026){ ?>
 			                	<a href="<?=base_url?>paa/delcdp&iddpa=<?=$pf['iddpa'];?>" title="Anular y Liberar RP" onclick="return elimObj();">
-			                		<i class="fas fa-trash-alt" style="color: #523178;"></i>
+			                		<i class="fas fa-trash-alt" style="color: #0071bc;"></i>
 			                	</a>
 			                <?php } ?>
 		                	<!-- <a href="<?=base_url?>cdp/solicdp&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>" title="SOLICITAR">
-		                		<i class="fas fa-sign-in-alt" style="color: #523178;"></i>
+		                		<i class="fas fa-sign-in-alt" style="color: #0071bc;"></i>
 		                	</a> -->
 									</td>
 								</tr>

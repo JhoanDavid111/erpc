@@ -69,7 +69,7 @@ echo Utils::tit("Resoluciones FUTIC","fa fa-address-card ico3","futic/index","30
 				            <?php } ?>
 				            &nbsp;&nbsp;&nbsp;
 		                	<a href="<?=base_url?>futic/edit&vafid=<?=$va['vafid'];?>">
-		                		<i class="fas fa-edit" style="color: #523178;"></i>
+		                		<i class="fas fa-edit" style="color: #0071bc;"></i>
 		                	</a>
 		                </td>
 		            </tr>

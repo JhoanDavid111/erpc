@@ -59,6 +59,13 @@ class Pfinan{
 	private $cpc;
 	private $idpb;
 
+
+	private $valcdp;
+	private $anucdp;
+	private $cxccdp;
+	private $valrp;
+	private $anurp;
+	private $cxcrp;
 	
 	public function __construct() {
 		$this->db = conexion::get_conexion();
@@ -268,6 +275,25 @@ class Pfinan{
 		return $this->idpb;
 	}
 
+
+	function getValcdp(){
+		return $this->valcdp;
+	}
+	function getAnucdp(){
+		return $this->anucdp;
+	}
+	function getCxccdp(){
+		return $this->cxccdp;
+	}
+	function getValrp(){
+		return $this->valrp;
+	}
+	function getAnurp(){
+		return $this->anurp;
+	}
+	function getCxcrp(){
+		return $this->cxcrp;
+	}
 
 
 
@@ -479,6 +505,25 @@ class Pfinan{
 		$this->idpb = $idpb;
 	}
 
+
+	function setValcdp($valcdp){
+		$this->valcdp = $valcdp;
+	}
+	function setAnucdp($anucdp){
+		$this->anucdp = $anucdp;
+	}
+	function setCxccdp($cxccdp){
+		$this->cxccdp = $cxccdp;
+	}
+	function setValrp($valrp){
+		$this->valrp = $valrp;
+	}
+	function setAnurp($anurp){
+		$this->anurp = $anurp;
+	}
+	function setCxcrp($cxcrp){
+		$this->cxcrp = $cxcrp;
+	}
 
 
 	//METODOS
@@ -1951,27 +1996,20 @@ class Pfinan{
 
 	}
 
-	public function edPlanoAnt($unspsc,$objeto,$objdpa,$codigo,$rubro,$meta,$resolucion,$compromiso,$contratista,$asignacion,$comprometido,$modalidad,$codmodalidad,$fuentefinan,$codfuente,$resfutic,$fecini,$fecfin,$area,$codarea,$unidad,$ubicacion,$responsable,$telefono,$email,$ordenador,$proceso,$codproceso,$estado,$codnuevo,$nexpcdp,$nrp,$nbogdata,$ncdp,$estadofin,$iddpa,$editar,$vig){
+	public function edPlanoAnt($unspsc,$objeto,$objdpa,$codigo,$rubro,$meta,$resolucion,$compromiso,$contratista,$asignacion,$comprometido,$modalidad,$codmodalidad,$fuentefinan,$codfuente,$resfutic,$fecini,$fecfin,$area,$codarea,$unidad,$ubicacion,$responsable,$telefono,$email,$ordenador,$proceso,$codproceso,$estado,$codnuevo,$nexpcdp,$nrp,$nbogdata,$ncdp,$estadofin,$iddpa,$editar,$vig,$codimeta,$codiresol){
 
 
-		$fecini = date($format = "Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($fecini)); 
-		$fecfin = date($format = "Y-m-d", PHPExcel_Shared_Date::ExcelToPHP($fecfin));
-		error_reporting(0);
+		$fecini = date('Y-m-d H:i:s', strtotime('1899-12-30 00:00:00') + ($fecini + 1) * 24 * 60 * 60);
+		$fecfin = date('Y-m-d H:i:s', strtotime('1899-12-30 00:00:00') + ($fecfin + 1) * 24 * 60 * 60);
 
-
-		// var_dump($iddpa);
-		
-		
-		$codrub = substr($codigo, 1);
+		//$codrub = substr($codigo, 1);
+		$codrub = $codigo;
 
 		if ($iddpa>0) {			
-			$sql = "UPDATE detpaa SET unspsc='$unspsc',nobjeto='$objeto',codrub=$codrub,metadp='$meta',compro='$compromiso',nomcont='$contratista',asidpa=$asignacion,prrp=$comprometido,tipcondpa=$codmodalidad,ftefindpa=$codfuente,resoludp='$resfutic',fecinidpa='$fecini',fecfindpa='$fecfin',area=$codarea,unidad='$unidad',ubicacion='$ubicacion',resp='$responsable',celres=$telefono,mailres='$email',idpro=$codproceso ";
+			$sql = "UPDATE detpaa SET unspsc='$unspsc',nobjeto='$objeto',codrub=$codrub,metadp=$codimeta,compro='$compromiso',nomcont='$contratista',asidpa=$asignacion,prrp=$comprometido,tipcondpa=$codmodalidad,ftefindpa=$codfuente,resoludp=$codiresol,fecinidpa='$fecini',fecfindpa='$fecfin',area=$codarea,unidad='$unidad',ubicacion='$ubicacion',resp='$responsable',celres=$telefono,mailres='$email',idpro=$codproceso ";
 			$sql .= "WHERE iddpa=$iddpa;";
-
-
 		}else{
-
-			$sql2 = "SELECT MIN(idflu) As mini, MAX(idflu) As maxi FROM flujo WHERE ntipo IN (1,2,3) AND idpro=$codproceso ";	
+			$sql2 = "SELECT MIN(idflu) As mini, MAX(idflu) As maxi FROM flujo WHERE ntipo IN (1,2,3) AND idpro='$codproceso'";	
 				$execute = $this->db->query($sql2);
 				$cuot = $execute->fetchall(PDO::FETCH_ASSOC);
 
@@ -1980,8 +2018,7 @@ class Pfinan{
 				// die();
 				$idflu=$cuot[0]['mini'];
 
-			
-			$sql = "INSERT INTO detpaa (idpaa,unspsc, nobjeto,objdpa, codrub, metadp,compro,nomcont,asidpa,prrp,tipcondpa,ftefindpa,resoludp,fecinidpa,fecfindpa,area,unidad,ubicacion,resp,celres,mailres,ordgas,idpro,idflu) VALUES ($vig,'$unspsc','$objeto','$objdpa',$codrub,'$meta','$compromiso','$contratista',$asignacion,$comprometido,$codmodalidad,$codfuente,'$resfutic','$fecini','$fecfin',$codarea,'$unidad','$ubicacion','$responsable',$telefono,'$email',$ordenador,$codproceso,$idflu) ";
+			$sql = "INSERT INTO detpaa (idpaa,unspsc, nobjeto,objdpa, codrub, metadp,compro,nomcont,asidpa,prrp,tipcondpa,ftefindpa,resoludp,fecinidpa,fecfindpa,area,unidad,ubicacion,resp,celres,mailres,idpro,idflu) VALUES ($vig,'$unspsc','$objeto','$objdpa',$codrub,$codimeta,'$compromiso','$contratista',$asignacion,$comprometido,$codmodalidad,$codfuente,$codiresol,'$fecini','$fecfin',$codarea,'$unidad','$ubicacion','$responsable',$telefono,'$email',$codproceso,$idflu) ";
 
 		}		
 		
@@ -1993,9 +2030,80 @@ class Pfinan{
 		return $save;
 	}
 
-	public function vigactAntp(){
+	public function edPlanoPresu($unspsc,$objeto,$objdpa,$codigo,$rubro,$meta,$resolucion,$compromiso,$contratista,$asignacion,$comprometido,$modalidad,$codmodalidad,$fuentefinan,$codfuente,$resfutic,$fecini,$fecfin,$area,$codarea,$unidad,$ubicacion,$responsable,$telefono,$email,$ordenador,$proceso,$codproceso,$estado,$codnuevo,$nexpcdp,$nrp,$nbogdata,$ncdp,$estadofin,$iddpa,$editar,$vig,$codimeta,$codiresol){	
+
+		// var_dump($codimeta);
+		// var_dump($codiresol);
+		// var_dump($responsable);
+		// die();
+
+		date_default_timezone_set('America/Bogota');		
+
+
+		// $fecini = date('Y-m-d H:i:s', strtotime('1899-12-30 00:00:00') + ($fecini + 1) * 24 * 60 * 60);
+		// $fecfin = date('Y-m-d H:i:s', strtotime('1899-12-30 00:00:00') + ($fecfin + 1) * 24 * 60 * 60);
+
+		// var_dump($iddpa);
 		
+		
+		//$codrub = substr($codigo, 1);
+		$codrub = $codigo;
+
+		if ($iddpa>0) {			
+			$sql = "UPDATE detpaa SET unspsc='$unspsc',nobjeto='$objeto',codrub=$codrub,metadp=$codimeta,compro='$compromiso',nomcont='$contratista',asidpa=$asignacion,prrp=$comprometido,tipcondpa=$codmodalidad,ftefindpa=$codfuente,resoludp=$codiresol,fecinidpa='$fecini',fecfindpa='$fecfin',area=$codarea,unidad='$unidad',ubicacion='$ubicacion',resp='$responsable',celres=$telefono,mailres='$email',idpro=$codproceso ";
+			$sql .= "WHERE iddpa=$iddpa;";
+		}else{
+
+			$sql2 = "SELECT MIN(idflu) As mini, MAX(idflu) As maxi FROM flujo WHERE ntipo IN (1,2,3) AND idpro='$codproceso'";	
+				$execute = $this->db->query($sql2);
+				$cuot = $execute->fetchall(PDO::FETCH_ASSOC);
+
+				//var_dump($cuot[0]['mini']);
+				// var_dump($sql2);
+				// die();
+				$idflu=$cuot[0]['mini'];
+			
+			$sql = "INSERT INTO detpaa (idpaa,unspsc, nobjeto,objdpa, codrub, metadp,compro,nomcont,asidpa,prrp,tipcondpa,ftefindpa,resoludp,fecinidpa,fecfindpa,area,unidad,ubicacion,resp,celres,mailres,idpro,idflu,elidp) VALUES ($vig,'$unspsc','$objeto','$objdpa',$codrub,$codimeta,'$compromiso','$contratista',$asignacion,$comprometido,$codmodalidad,$codfuente,$codiresol,'$fecini','$fecfin',$codarea,'$unidad','$ubicacion','$responsable',$telefono,'$email',$codproceso,$idflu,4)";
+		}
+
+		// var_dump($sql);
+		// die();
+
+		$update= $this->db->prepare($sql);		
+		$save=$update->execute();
+
+	}
+
+	public function vigactAntp(){
 		$sql = "SELECT idpaa FROM paa WHERE estpaa=3";
+		$execute = $this->db->query($sql);
+		$ordgasto = $execute->fetchall(PDO::FETCH_ASSOC);
+		return $ordgasto;
+	}
+
+	public function pkCodRub($rubro){
+		$sql = "SELECT codrub FROM rubro WHERE (codrub='$rubro' OR codrub2='$rubro')";
+		$execute = $this->db->query($sql);
+		$ordgasto = $execute->fetchall(PDO::FETCH_ASSOC);
+		return $ordgasto;
+	}
+
+	public function VerCodRub($rubro){
+		$sql = "SELECT COUNT(codrub) AS can FROM rubro WHERE (codrub='$rubro' OR codrub2='$rubro') AND actrub=1;";
+		$execute = $this->db->query($sql);
+		$ordgasto = $execute->fetchall(PDO::FETCH_ASSOC);
+		return $ordgasto;
+	}
+
+	public function VerPresCargado($vig){
+		$sql = "SELECT COUNT(iddpa) AS can FROM detpaa WHERE idpaa='$vig' AND elidp=4;";
+		$execute = $this->db->query($sql);
+		$ordgasto = $execute->fetchall(PDO::FETCH_ASSOC);
+		return $ordgasto;
+	}
+
+	public function EliPresCargado($vig){
+		$sql = "DELETE FROM detpaa WHERE idpaa='$vig' AND elidp=4;";
 		$execute = $this->db->query($sql);
 		$ordgasto = $execute->fetchall(PDO::FETCH_ASSOC);
 		return $ordgasto;
@@ -2065,6 +2173,18 @@ class Pfinan{
 		$execute = $this->db->query($sql);
 		$ordgasto = $execute->fetchall(PDO::FETCH_ASSOC);		
 		return $ordgasto;
+	}
+
+	public function getIddpaxCod($idpaa, $cdg, $rubro, $objetocom){
+		$sql = "SELECT d.iddpa, d.idpaa, d.nicod, d.nobjeto, d.nomcont, d.area, d.codrub, d.objdpa, d.inidpa, d.prodpa, d.unspsc, d.fecinidpa, d.nmesdpa, d.cuodpa, d.tipcondpa, d.ftefindpa, d.asidpa, d.asirp, d.pmes, d.umes, d.valdpa, d.valvigact, d.fecfindpa, d.reqvigf, d.solivigf, d.unidad, d.ubicacion, d.resp, d.celres, d.mailres, d.ncdppc, d.fecsol, d.observaciones, d.idpro, d.idflu, d.depidd, d.nexpcdp, d.nrp, d.nbogdata, d.rutcdp, d.rutrp, d.ordgas, d.elidp, d.feclib, d.rutlib, d.estlib, d.metadp, d.resoludp, d.idmcdp, d.valid, d.compro, d.cpc, d.fondo, d.prcdp, d.prrp, d.idpb FROM detpaa AS d WHERE d.idpaa='".$idpaa."' AND d.elidp=1 AND d.codrub='".$rubro."' AND (d.nobjeto LIKE '".$cdg." %' OR TRIM(d.nobjeto) LIKE '%".$objetocom."%')";
+		try{
+			// echo $sql."<br>";
+			$execute = $this->db->query($sql);
+			$ordgasto = $execute->fetchall(PDO::FETCH_ASSOC);		
+			return $ordgasto;
+		}catch(Exception $e){
+			echo "Error en consulta: ".$e."<br><br>".$sql."<br>";
+		}
 	}
 
 	public function deleteObliga($perid,$cargo){	
@@ -2155,6 +2275,36 @@ class Pfinan{
 
 //---------- Fin Febrero 2024------------
 
+	public function saveCDPBg($iddpa,$valor,$anula,$cdpxcom){	
+		$sql = "UPDATE detpaa SET valcdp='".$valor."', anucdp='".$anula."', cxccdp='".$cdpxcom."' WHERE iddpa='".$iddpa."'";
+		$save = $this->db->query($sql);
+		$result = false;
+		if($save){
+			$result = true;
+		}
+		return $result;
+	}
+
+	public function saveRPBg($iddpa,$valor,$anula,$vlrneto,$autgir,$csagir,$nintcrp,$nintcdp,$fecent){	
+		$sql = "UPDATE detpaa SET valrp='".$valor."', anurp='".$anula."', vlrneto='".$vlrneto."',autgir='".$autgir."', csagir='".$csagir."', nintcrp='".$nintcrp."', nintcdp='".$nintcdp."', fecent='".$fecent."' WHERE iddpa='".$iddpa."'";
+		$save = $this->db->query($sql);
+		$result = false;
+		if($save){
+			$result = true;
+		}
+		return $result;
+	}
+
+	public function getAllAnaPre($codrub){
+		$sql = "SELECT distinct dt.*, rub.*, m.vafnom AS moda, f.vafnom AS fuen, a.valnom AS are, fl.actflu, fl.color, pr.nompro FROM detpaa AS dt INNER JOIN rubro AS rub ON dt.codrub = rub.codrub INNER JOIN valfin AS m ON dt.tipcondpa=m.vafid INNER JOIN valfin AS f ON dt.ftefindpa=f.vafid INNER JOIN proceso AS pr ON dt.idpro=pr.idpro INNER JOIN valor AS a ON dt.area=a.valid INNER JOIN flujo as fl ON dt.idflu=fl.idflu WHERE dt.idpaa = ".$this->idpaa." AND rub.codrub=".$codrub." AND dt.elidp=1";
+
+		// var_dump($sql);
+		// die();
+		//echo "<br><br>".$sql."<br><br>";
+		$execute = $this->db->query($sql);
+		$pfinan = $execute->fetchall(PDO::FETCH_ASSOC);
+		return $pfinan;
+	}
 }
 
 ?>

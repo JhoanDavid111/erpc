@@ -12,7 +12,7 @@
 		<div class="row">				
 
 		<div class="form-group col-md-3">
-			<label for="vigencia">Vigencia  <a href="<?=base_url?>antproy/newpfin" class="" style="color: #523178;"></a></label>
+			<label for="vigencia">Vigencia  <a href="<?=base_url?>antproy/newpfin" class="" style="color: #0071bc;"></a></label>
 			<!-- <?php //$cont = date('Y'); ?> -->
 			<select id="sel1" name="vigencia" class="form-control form-control-sm" style="padding: 0px;" >	
 				<?php foreach ($pfvig as $pf){ ?>
@@ -23,7 +23,7 @@
 		</div>
 
 		<div class="form-group col-md-3">
-			<label for="vigencia">Tipo de Reporte <a href="<?=base_url?>antproy/newpfin" class="" style="color: #523178;"></a></label>
+			<label for="vigencia">Tipo de Reporte <a href="<?=base_url?>antproy/newpfin" class="" style="color: #0071bc;"></a></label>
 			<!-- <?php //$cont = date('Y'); ?> -->
 			<select id="sel1" name="vigencia" class="form-control form-control-sm" style="padding: 0px;" >	
 				<?php foreach ($pfvig as $pf){ ?>
@@ -33,7 +33,7 @@
 		</div>
 
 		<div class="form-group col-md-3">
-			<label for="vigencia">Entidad receptora<a href="<?=base_url?>antproy/newpfin" class="" style="color: #523178;"></a></label>
+			<label for="vigencia">Entidad receptora<a href="<?=base_url?>antproy/newpfin" class="" style="color: #0071bc;"></a></label>
 			<!-- <?php //$cont = date('Y'); ?> -->
 			<select id="sel1" name="vigencia" class="form-control form-control-sm" style="padding: 0px;" >	
 				<?php foreach ($pfvig as $pf){ ?>
@@ -66,9 +66,9 @@
 </div>
 <br><br>
 
-<i class="fas fa-file-pdf fa-2x" style="color: #523178;"></i>
-<i class="fas fa-file-excel fa-2x" style="color: #523178;"></i>
-<i class="fas fa-print fa-2x" style="color: #523178;"></i>
+<i class="fas fa-file-pdf fa-2x" style="color: #0071bc;"></i>
+<i class="fas fa-file-excel fa-2x" style="color: #0071bc;"></i>
+<i class="fas fa-print fa-2x" style="color: #0071bc;"></i>
 
 
 

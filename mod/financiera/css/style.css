@@ -1,6 +1,6 @@
 .encabezado-m{
-  background:#fff;
-  background-image:  url('../img/malla.png');
+  background: #0071bc;
+    /*background-image: url(../img/malla.png);*/
   background-repeat: no-repeat;
   height: 140px;
   margin: 0 0 0 0;
@@ -15,7 +15,7 @@
 }
 
 nav a:hover{
-  background-color: #27104D;
+  background-color: #0162a2;
 }
 
 a.nav-link{
@@ -38,7 +38,7 @@ div .redesp a span i{
 }
 
 .spCanalP1{
-  background-color: #523178;
+  background-color: #0071bc;
   border-radius: 0.8em;
   -moz border-radius: 0.8em;
   -webkit-border-radius: 0.8em;
@@ -169,7 +169,7 @@ div .redesp a span i{
     width: 26px;
     left: 220px;
     bottom: 4px;
-    background-color: #523178;
+    background-color: #0071bc;
     -webkit-transition: .4s;
     transition: .4s;
 }

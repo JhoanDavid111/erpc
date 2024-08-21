@@ -102,7 +102,7 @@
 		                </td>
 		                <td>
 		                	<a href="<?=base_url?>valfin/edit&vafid=<?=$va['vafid'];?>">
-		                		<i class="fas fa-edit" style="color: #523178;"></i>
+		                		<i class="fas fa-edit" style="color: #0071bc;"></i>
 		                	</a>
 		                </td>
 		            </tr>

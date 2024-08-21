@@ -608,6 +608,13 @@ class Pfinan{
 		$ordgasto = $execute->fetchall(PDO::FETCH_ASSOC);
 		return $ordgasto;
 	}
+
+	public function getAllPre(){
+		$sql = "SELECT * FROM `detpaa` WHERE elidp = 4 AND idpaa = 2024;";            
+        $execute = $this->db->query($sql);
+        $ordgasto = $execute->fetchall(PDO::FETCH_ASSOC);
+        return $ordgasto;
+	}
 }
 
 ?>

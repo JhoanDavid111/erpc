@@ -2908,77 +2908,86 @@ class paaController{
 		require_once 'views/cargapaa.php';
 	}
 
-	public function subirPlanoAntp(){
+		public function subirPlanoAntp(){
 
-		//Utils::useraccess('masi/index',$_SESSION['pefid']);
-		require_once '../../PHPExcel/Classes/PHPExcel.php';
-	
+		//******************************
+		//NUEVA LIBRERIA DE EXCEL PhpSpreadsheet		
+		//******************************
+		
 		date_default_timezone_set('America/Bogota');
    		$fecSis = date("Y-m-d H:i:s");
    		$masi = new Masi();
    		$cexcel = new Pfinan();
-
-   		$html = NULL;
-////////////////////// Cargar archivos Inicio /////////////////////////////
-   		$arcexc = isset($_FILES['arcexc']["name"]) ? $_FILES['arcexc']["name"]:NULL;
-   		$arczip = isset($_FILES['arczip']["name"]) ? $_FILES['arczip']["name"]:NULL;
-
-   		if($arcexc){   			
-			$arcexc2 = Utils::opti($_FILES['arcexc'], date('YmdHis'),"zip","excel");
-			// var_dump($arcexc2);
-			// die();
-		}
-		if($arczip){
-			$arczip2 = Utils::opti($_FILES['arczip'], date('YmdHis'), "zip","RP");
-		}
-////////////////////// Cargar archivos Fin /////////////////////////////
-
-////////////////////// Extrae zip Inicio /////////////////////////////
-		// $extract = Utils::extract($arczip2, 'rp/');
-		// if($extract){
-		//     //echo $GLOBALS['status']['success'];
-		//     $html .= "Se descomprimio el archivo exitosamente.";
-		// }else{
-		//     $html .= $GLOBALS['status']['error'];
-		// }
-////////////////////// Extrae zip Fin /////////////////////////////
-
-////////////////////// Lee el excel, compara datos, inserta INICIO /////////////////////////////
-
-		$arcexc2=path_file.$arcexc2;
-		//var_dump($arcexc2);
-
-
-		$inputFileType = PHPExcel_IOFactory::identify($arcexc2);
-		$objReader = PHPExcel_IOFactory::createReader($inputFileType);
-
-		$objPHPExcel = $objReader->load($arcexc2);
-		$sheet = $objPHPExcel->getSheet(0); 
-		$highestRow = $sheet->getHighestRow(); 
-		$highestColumn = $sheet->getHighestColumn();
-
-		$html .= "<br><br>";
-		
+   				
 		$html2 = NULL;
 		$html3 = NULL;
 		$ae = 0;
 		$ane = 0;
 		$dr = 0;
-		// var_dump($highestRow);
-		// die();
+
+		$arcexc = isset($_FILES['arcexc']['name']) ? $_FILES['arcexc']['name'] : NULL;
+
+		if ($arcexc && $_FILES['arcexc']['error'] == UPLOAD_ERR_OK) {
+		    $ruta_temporal = $_FILES['arcexc']['tmp_name'];
+
+		    // Ahora puedes cargar el archivo directamente desde la ubicación temporal con PhpSpreadsheet
+		    $arcexc2 = IOFactory::load($ruta_temporal);
+
+		    // Aquí puedes procesar el archivo Excel según tus necesidades
+		    // Por ejemplo, acceder a las hojas de cálculo, leer celdas, etc.
+		    // $hoja = $arcexc2->getActiveSheet();
+		    $hoja = $arcexc2->getSheet(0);
+		    //$valorCeldaA1 = $hoja->getCell('A2')->getValue();
+		    //var_dump($valorCeldaA1);
+
+			$sheet =  $arcexc2->getSheet(0); 
+			$highestRow = $sheet->getHighestRow(); 
+			$highestColumn = $sheet->getHighestColumn();		   
+
+		    //echo 'Subio archivo.';
+
+		    // ... haz lo que necesites con la información del archivo Excel ...
+		} else {
+		    // Manejar el caso en que no se ha subido correctamente el archivo
+		    echo 'Error al subir el archivo.';
+		}	
+
 		for ($row = 2; $row <= $highestRow; $row++){
 			$unspsc = $sheet->getCell("a".$row)->getValue();
 			$objeto_espacios=$objeto = $sheet->getCell("b".$row)->getValue();				
 			$objeto = preg_replace('/[\r\n]+/', " ", $objeto_espacios);
+			// Aplicamos la sustitución de punto y coma por coma.
+			$objeto = preg_replace('/;/', ",", $objeto);
 			$objdpa=36;
+
 			$codigo = $sheet->getCell("c".$row)->getValue();
+			//$codigo = substr($codigo, 2);
+
+			$cadena = $codigo;
+
+			// Encontrar la posición del primer '2'
+			$posicion = strpos($cadena, '2');
+
+			// Verificar si se encontró el '2'
+			if ($posicion !== false) {
+			    // Obtener la parte de la cadena desde el primer '2' hasta el final
+			    $nuevaCadena = substr($cadena, $posicion);			   
+			    $codigo = $nuevaCadena;
+			} 
+
+
+			// var_dump($codigo);
+			// die();
+
 			$rubro = $sheet->getCell("d".$row)->getValue();
 			$meta = $sheet->getCell("e".$row)->getValue();
+
 			if ($meta>0) {
 				
 			}else{
 				$meta=0;
 			}
+
 			$resolucion = $sheet->getCell("f".$row)->getValue();
 
 			if ($resolucion>0) {
@@ -2986,16 +2995,17 @@ class paaController{
 			}else{
 				$resolucion=0;
 			}
+
 			$compromiso = $sheet->getCell("g".$row)->getValue();
 			$contratista = $sheet->getCell("h".$row)->getValue();
-			$asignacion = $sheet->getCell("i".$row)->getValue();
+			$asignacion = $sheet->getCell("i".$row)->getValue();			
 			$comprometido = $sheet->getCell("j".$row)->getValue();
-
 			if ($comprometido>0) {
 				
 			}else{
 				$comprometido=0;
 			}
+
 			$modalidad = $sheet->getCell("k".$row)->getValue();
 			$codmodalidad = $sheet->getCell("l".$row)->getValue();
 			$fuentefinan = $sheet->getCell("m".$row)->getValue();
@@ -3040,7 +3050,6 @@ class paaController{
 				$codimeta=2000;
 			}
 
-
 			$codiresol1=$cexcel->busVafid(11,$resolucion);
 			if (count($codiresol1)>0) {
 				$codiresol=$codiresol1[0]['vafid'];
@@ -3048,8 +3057,7 @@ class paaController{
 				// die();
 			}else{
 				$codiresol=2100;
-			}
-			
+			}			
 			
 			$cexcel->setMetadp($codimeta);
 			$cexcel->setResoludp($codiresol);
@@ -3070,14 +3078,9 @@ class paaController{
 		// 	var_dump($editar);
 		// die();
 
-			$cexcel->edPlanoAnt($unspsc,$objeto,$objdpa,$codigo,$rubro,$meta,$resolucion,$compromiso,$contratista,$asignacion,$comprometido,$modalidad,$codmodalidad,$fuentefinan,$codfuente,$resfutic,$fecini,$fecfin,$area,$codarea,$unidad,$ubicacion,$responsable,$telefono,$email,$ordenador,$proceso,$codproceso,$estado,$codnuevo,$nexpcdp,$nrp,$nbogdata,$ncdp,$estadofin,$iddpa,$editar,$vig);
+			$cexcel->edPlanoAnt($unspsc,$objeto,$objdpa,$codigo,$rubro,$meta,$resolucion,$compromiso,$contratista,$asignacion,$comprometido,$modalidad,$codmodalidad,$fuentefinan,$codfuente,$resfutic,$fecini,$fecfin,$area,$codarea,$unidad,$ubicacion,$responsable,$telefono,$email,$ordenador,$proceso,$codproceso,$estado,$codnuevo,$nexpcdp,$nrp,$nbogdata,$ncdp,$estadofin,$iddpa,$editar,$vig,$codimeta,$codiresol);
 			// var_dump($sheet->getCell("J".$row));
-		}//CIERRA FOR
-		//$html .= "<strong>Archivos encontrados:</strong> ";
-		//echo mb_convert_encoding($html, 'UTF-16LE', 'UTF-8');
-		
-////////////////////// Lee el excel, compara datos, inserta FIN /////////////////////////////
-		//die();
+		}//CIERRA FOR		
 
 		require_once 'views/cargaantp.php';
 	}

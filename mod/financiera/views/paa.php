@@ -227,7 +227,7 @@
 		</div>
 		<div class="form-group col-md-1" style="text-align: right;">
 			<br>
-			<button type="submit" class="btn" style="color: #523178;" title="CSV Informe mensual">
+			<button type="submit" class="btn" style="color: #0071bc;" title="CSV Informe mensual">
 				<i class="fas fa-file-excel fa-2x"></i>
 			</button>
 		</div>
@@ -280,7 +280,7 @@
 				<input type="hidden" name="tot" value="<?=$tot;?>">
 				<input type="hidden" name="areSel" value="<?=$areSel;?>">
 				<input type="hidden" name="ntipoT" value="<?=$estFin;?>">
-				<button type="submit" class="btn" style="color: #523178;" title="Imprimir total o área seleccionada">
+				<button type="submit" class="btn" style="color: #0071bc;" title="Imprimir total o área seleccionada">
 					<i class="fas fa-print fa-2x"></i>
 				</button>
 			</form>
@@ -293,7 +293,7 @@
 				<input type="hidden" name="areSel" value="<?=$areSel;?>">
 				<input type="hidden" name="ntipoT" value="<?=$estFin;?>">
 				<input type="hidden" name="pdf" value="1547">
-				<button type="submit" class="btn" style="color: #523178;" title="PDF total o área seleccionada">
+				<button type="submit" class="btn" style="color: #0071bc;" title="PDF total o área seleccionada">
 					<i class="fas fa-file-pdf fa-2x"></i>
 				</button>
 			</form>
@@ -305,7 +305,7 @@
 				<input type="hidden" name="tot" value="<?=$tot;?>">
 				<input type="hidden" name="areSel" value="<?=$areSel;?>">
 				<input type="hidden" name="ntipoT" value="<?=$estFin;?>">
-				<button type="submit" class="btn" style="color: #523178;" title="CSV total o área seleccionada">
+				<button type="submit" class="btn" style="color: #0071bc;" title="CSV total o área seleccionada">
 					<i class="fas fa-file-excel fa-2x"></i>
 				</button>
 			</form>
@@ -408,7 +408,7 @@
 					                </td>
 					                <td>
 					                	<a href="<?=base_url?>paa/detpaa&codrub=<?=$pf['codrub'];?>&tot=<?=$tot;?>" title="Ver Todo">
-		                					<i class="fas fa-eye" style="color: #523178;"></i>
+		                					<i class="fas fa-eye" style="color: #0071bc;"></i>
 		                				</a>
 					                </td>
 					            </tr>
@@ -502,7 +502,7 @@
 							                <!-- </td> -->
 							                <td>						                	     	
 							                	<!-- <a href="<?=base_url?>paa/detpaa&codrub=<?=$pf['codrub'];?>&tot=<?=$tot;?>" title="Ver Todo">
-				                					<i class="fas fa-eye" style="color: #523178;"></i>
+				                					<i class="fas fa-eye" style="color: #0071bc;"></i>
 				                				</a>		 -->
 
 				                				
@@ -525,23 +525,23 @@
 
 				                				<?php if($_SESSION['depid']==1027 AND $mcdt[$i][0]['idflu']<503){ ?>
 				                					<a href="<?=base_url?>paa/getRubMcdp&codrub=<?=$mc["codrub"];?>&iddpa=<?=$mc['iddpa'];?>&apro=1&suma=<?=$sumMCdp[$i][0]['Asig']?>" title="Aprobar o Rechazar">
-				                					<i class="fas fa-arrow-alt-circle-right" style="color: #523178;"></i>
+				                					<i class="fas fa-arrow-alt-circle-right" style="color: #0071bc;"></i>
 
 				                					<a href="<?=base_url?>paa/delMcdp<?php foreach ($mcdt[$i] as $mc){ echo'&iddpa[]='.$mc['iddpa'];}?>" title="Cancelar y Liberar CDP" >
-							                			<i class="fas fa-trash-alt" style="color: #523178;"></i>
+							                			<i class="fas fa-trash-alt" style="color: #0071bc;"></i>
 							                		</a>	
 
 
 				                				<?php } ?>
 				                				<?php if(($_SESSION['depid']==1025) AND $mcdt[$i][0]['idflu']==503){ ?>
 				                					<a href="<?=base_url?>paa/getRubMcdp&codrub=<?=$mc["codrub"];?>&iddpa=<?=$mc['iddpa'];?>&apro=1&suma=<?=$sumMCdp[$i][0]['Asig']?>" title="Aprobar o Rechazar">
-				                					<i class="fas fa-arrow-alt-circle-right" style="color: #523178;"></i>	
+				                					<i class="fas fa-arrow-alt-circle-right" style="color: #0071bc;"></i>	
 				                				<?php } ?>
 				                				<?php if($_SESSION['depid']==1026 AND $mcdt[$i][0]['idflu']>503 AND $idflu<508){ ?>
 				                					<!-- <a href="<?=base_url?>paa/getRubMcdp<?php foreach ($mcdt[$i] as $mc){ echo '&codrub[]='.$mc['codrub'].'&iddpa[]='.$mc['iddpa'];}?>&apro=1&suma=<?=$sumMCdp[$i][0]['Asig']?>" title="Aprobar3 o Rechazar"> -->
 
 				                					<a href="<?=base_url?>paa/getRubMcdp&codrub=<?=$mc["codrub"];?>&iddpa=<?=$mc['iddpa'];?>&apro=1&suma=<?=$sumMCdp[$i][0]['Asig']?>" title="Aprobar o Rechazar"> 
-				                					<i class="fas fa-arrow-alt-circle-right" style="color: #523178;"></i>	
+				                					<i class="fas fa-arrow-alt-circle-right" style="color: #0071bc;"></i>	
 				                				<?php } ?>
 
 				                				<?php  

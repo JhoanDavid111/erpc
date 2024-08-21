@@ -14,9 +14,9 @@
 				<h1><a href="index.html" class="logo"><img src="../img/logo-dash.png" alt=""></a></h1>
 				-->
 				<div class="encabezado-m">
-				<section class="encabezado-a">
+				<!--<section class="encabezado-a">
 		            <div class="encabezado-a-2">
-		                <div class="redesp">
+ 		                <div class="redesp">
 		                    <a href="https://www.facebook.com/CanalCapitalOficial" title="Facebook CanalCapitalOficial" target="_blank">
 		                        <span class="icono">
 		                            <i class="fab fa-facebook-f"></i>
@@ -39,9 +39,9 @@
 		                    </a>
 		                </div>
 		            </div>
-		        </section>
+		        </section> -->
 
-		        <section class="encabezado-b">
+		        <section class="encabezado-b" style="margin-top: 30px;">
 	                <div class="logo_entidad1">
 	                    <a href="http://www.canalcapital.gov.co/">
 	                        <img id="imaglog" src="https://intranet.canalcapital.gov.co/intranet/img/logocanal.png" alt="Logo Canal Capital">

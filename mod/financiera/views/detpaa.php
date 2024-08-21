@@ -50,7 +50,7 @@
 				<input type="hidden" name="tot" value="<?=$tot;?>">
 				<input type="hidden" name="areSel" value="<?=$areSel;?>">
 				<input type="hidden" name="ntipoT" value="<?=$estFin;?>">
-				<button type="submit" class="btn" style="color: #523178;" title="Imprimir total o área seleccionada">
+				<button type="submit" class="btn" style="color: #0071bc;" title="Imprimir total o área seleccionada">
 					<i class="fas fa-print fa-2x"></i>
 				</button>
 			</form>
@@ -63,7 +63,7 @@
 				<input type="hidden" name="areSel" value="<?=$areSel;?>">
 				<input type="hidden" name="ntipoT" value="<?=$estFin;?>">
 				<input type="hidden" name="pdf" value="1547">
-				<button type="submit" class="btn" style="color: #523178;" title="PDF total o área seleccionada">
+				<button type="submit" class="btn" style="color: #0071bc;" title="PDF total o área seleccionada">
 					<i class="fas fa-file-pdf fa-2x"></i>
 				</button>
 			</form>
@@ -75,7 +75,7 @@
 				<input type="hidden" name="tot" value="<?=$tot;?>">
 				<input type="hidden" name="areSel" value="<?=$areSel;?>">
 				<input type="hidden" name="ntipoT" value="<?=$estFin;?>">
-				<button type="submit" class="btn" style="color: #523178;" title="CSV total o área seleccionada">
+				<button type="submit" class="btn" style="color: #0071bc;" title="CSV total o área seleccionada">
 					<i class="fas fa-file-excel fa-2x"></i>
 				</button>
 			</form>
@@ -172,13 +172,13 @@
 										<td style="text-align: center;">
 											<?php if($_SESSION['pefid']==21 OR $_SESSION['pefid']==34){ ?>	
 												<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>" title="Editar">
-							                		<i class="fas fa-edit" style="color: #523178;"></i>
+							                		<i class="fas fa-edit" style="color: #0071bc;"></i>
 							                	</a>
 							                <?php } ?>
 												<br><br>
 											<?php if($dispo>0){ ?>	
 							                	<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>&soli=true" title="CDP">
-							                		<i class="fas fa-file-invoice-dollar" style="color: #523178;"></i>
+							                		<i class="fas fa-file-invoice-dollar" style="color: #0071bc;"></i>
 							                	</a>
 							                	<br><br>
 							                <?php } ?> 
@@ -330,18 +330,18 @@
 							<td>
 								<?php if($_SESSION['pefid']==34){ ?>	
 									<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>" title="Editar">
-				                		<i class="fas fa-eye" style="color: #523178;"></i>
+				                		<i class="fas fa-eye" style="color: #0071bc;"></i>
 				                	</a>
 					            <?php } ?>
 								<br><br>
 			                	<!-- <a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>&soli=true" title="CDP">
-			                		// <i class="fas fa-file-invoice-dollar" style="color: #523178;"></i>
-			                		<i class="fas fa-eye" style="color: #523178;"></i>
+			                		// <i class="fas fa-file-invoice-dollar" style="color: #0071bc;"></i>
+			                		<i class="fas fa-eye" style="color: #0071bc;"></i>
 			                	</a> -->
 
 			                	<?php if($pf['idmcdp'] == NULL){ ?>
 			                		<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>&apro=1" title="Aprobar o Rechazar">
-			                		<i class="fas fa-arrow-alt-circle-right" style="color: #523178;"></i>
+			                		<i class="fas fa-arrow-alt-circle-right" style="color: #0071bc;"></i>
 			                		</a><br><br>
 			                	<?php } ?>			                	
 			                	
@@ -355,7 +355,7 @@
 			                		if($pf['area']==$_SESSION['depid'] AND $pf['idflu']==$dtf['idflu'] AND $pf['idmcdp'] == NULL){ 
 			                	?>	
 				                		<a href="<?=base_url?>paa/delcdp&iddpa=<?=$pf['iddpa'];?>" title="Cancelar y Liberar CDP" onclick="return elimObj();">
-				                			<i class="fas fa-trash-alt" style="color: #523178;"></i>
+				                			<i class="fas fa-trash-alt" style="color: #0071bc;"></i>
 				                		</a>
 				                	<?php }
 				            	} ?>
@@ -368,7 +368,7 @@
 				            	<!-- Modal File Memorando CDP traslado  -->
 				            	<!-- <?php if($pf['idmcdp'] == NULL){ ?>
 				            		<br><br>
-				                	<i class="fas fa-truck" data-toggle="modal" data-target="#myModFil<?=$pf['iddpa'];?>" title="Traslado" style="color: #523178;"></i>
+				                	<i class="fas fa-truck" data-toggle="modal" data-target="#myModFil<?=$pf['iddpa'];?>" title="Traslado" style="color: #0071bc;"></i>
 				                	<?php 
 				                	echo Utils::modalfile("myModFil", "Solicitud Traslado", $pf['iddpa'], "Cargar archivo, memorando solicitud traslado", base_url."paa/libera",$codrub); 
 				                	?>
@@ -528,25 +528,25 @@
 							<td>
 								<?php if($_SESSION['pefid']==21 OR $_SESSION['pefid']==34){ ?>	
 									<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>" title="Editar">
-				                		<i class="fas fa-edit" style="color: #523178;"></i>
+				                		<i class="fas fa-edit" style="color: #0071bc;"></i>
 				                	</a>
 				                <?php } ?>
 <!-- 								<br><br>
 			                	<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>&soli=true" title="CDP">
-			                		<i class="fas fa-file-invoice-dollar" style="color: #523178;"></i>
-			                		<i class="fas fa-eye" style="color: #523178;"></i>
+			                		<i class="fas fa-file-invoice-dollar" style="color: #0071bc;"></i>
+			                		<i class="fas fa-eye" style="color: #0071bc;"></i>
 			                	</a> -->
 
 			                	<br><br>
 			                	<?php if(($_SESSION['pefid']==21 OR $_SESSION['pefid']==34) && $pf["idflu"]<$btnApro[0]["maxi"]){ ?>
 			                		<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>&apro=1" title="RP">
-			                		<i class="fas fa-arrow-alt-circle-right" style="color: #523178;"></i>
+			                		<i class="fas fa-arrow-alt-circle-right" style="color: #0071bc;"></i>
 			                		</a><br><br>
 			                	<?php } ?>
 			                	<br><br>
 			                	<?php if($_SESSION['depid']==1026){ ?>
 				                	<a href="<?=base_url?>paa/delcdp&iddpa=<?=$pf['iddpa'];?>" title="Anular y Liberar RP" onclick="return elimObj();">
-				                		<i class="fas fa-trash-alt" style="color: #523178;"></i>
+				                		<i class="fas fa-trash-alt" style="color: #0071bc;"></i>
 				                	</a>
 				                <?php } ?>
 
@@ -554,7 +554,7 @@
 				                <!-- Modal File Memorando CDP Traslado  -->
 				            	<?php //if($dispo>0){ ?>
 				            		<br><br>
-				                	<i class="fas fa-truck" data-toggle="modal" data-target="#myModFil<?=$pf['iddpa'];?>" title="Traslado f" style="color: #523178;"></i>
+				                	<i class="fas fa-truck" data-toggle="modal" data-target="#myModFil<?=$pf['iddpa'];?>" title="Traslado f" style="color: #0071bc;"></i>
 				                	<?php 
 				                	echo Utils::modalfile("myModFil", "Solicitud Traslado", $pf['iddpa'], "Cargar archivo, memorando solicitud traslado", base_url."paa/libera",$pf['codrub']); 
 				                	?>
@@ -563,7 +563,7 @@
 
 				                <?php if($_SESSION['depid']==1026){ ?>	
 									<a href="<?=base_url?>paa/liberarRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>" title="Liberar">
-				                		<i class="fas fa-link" style="color: #523178;"></i>
+				                		<i class="fas fa-link" style="color: #0071bc;"></i>
 				                	</a>
 				                <?php } ?>
 				                

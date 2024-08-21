@@ -110,18 +110,18 @@
 										<td>
 											<?php if($_SESSION['pefid']==21 OR $_SESSION['pefid']==34){ ?>	
 												<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>" title="Editar">
-			                		<i class="fas fa-edit" style="color: #523178;"></i>
+			                		<i class="fas fa-edit" style="color: #0071bc;"></i>
 			                	</a>
 			                <?php } ?>
 												<br><br>
 											<?php if($dispo>0){ ?>	
 			                	<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>&soli=true" title="CDP">
-			                		<i class="fas fa-file-invoice-dollar" style="color: #523178;"></i>
+			                		<i class="fas fa-file-invoice-dollar" style="color: #0071bc;"></i>
 			                	</a>
 			                	<br><br>
 			                <?php } ?>
 			                	<!-- <a href="<?=base_url?>cdp/solicdp&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>" title="SOLICITAR">
-			                		<i class="fas fa-sign-in-alt" style="color: #523178;"></i>
+			                		<i class="fas fa-sign-in-alt" style="color: #0071bc;"></i>
 			                	</a> -->
 										</td>
 									</tr>
@@ -218,24 +218,24 @@
 										<td>
 											<?php if($_SESSION['pefid']==21 OR $_SESSION['pefid']==34){ ?>	
 												<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>" title="Editar">
-			                		<i class="fas fa-eye" style="color: #523178;"></i>
+			                		<i class="fas fa-eye" style="color: #0071bc;"></i>
 			                	</a>
 			                <?php } ?>
 												<br><br>
 			                	<!-- <a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>&soli=true" title="CDP">
-			                		// <i class="fas fa-file-invoice-dollar" style="color: #523178;"></i>
-			                		<i class="fas fa-eye" style="color: #523178;"></i>
+			                		// <i class="fas fa-file-invoice-dollar" style="color: #0071bc;"></i>
+			                		<i class="fas fa-eye" style="color: #0071bc;"></i>
 			                	</a> -->
 			                	<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>&apro=1" title="Aprobar o Rechazar">
-			                		<i class="fas fa-arrow-alt-circle-right" style="color: #523178;"></i>
+			                		<i class="fas fa-arrow-alt-circle-right" style="color: #0071bc;"></i>
 			                	</a>
 			                	<br><br>
 			                	
 			                	<a href="<?=base_url?>paa/delcdp&iddpa=<?=$pf['iddpa'];?>" title="Eliminar CDP">
-			                		<i class="fas fa-trash-alt" style="color: #523178;"></i>
+			                		<i class="fas fa-trash-alt" style="color: #0071bc;"></i>
 			                	</a>
 			                	<!-- <a href="<?=base_url?>cdp/solicdp&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>" title="SOLICITAR">
-			                		<i class="fas fa-sign-in-alt" style="color: #523178;"></i>
+			                		<i class="fas fa-sign-in-alt" style="color: #0071bc;"></i>
 			                	</a> -->
 										</td>
 									</tr>
@@ -331,22 +331,22 @@
 										<td>
 											<?php if($_SESSION['pefid']==21 OR $_SESSION['pefid']==34){ ?>	
 												<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>" title="Editar">
-			                		<i class="fas fa-edit" style="color: #523178;"></i>
+			                		<i class="fas fa-edit" style="color: #0071bc;"></i>
 			                	</a>
 			                <?php } ?>
 												<br><br>
 			                	<a href="<?=base_url?>paa/getRub&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>&soli=true" title="CDP">
-			                		<!-- <i class="fas fa-file-invoice-dollar" style="color: #523178;"></i> -->
-			                		<i class="fas fa-eye" style="color: #523178;"></i>
+			                		<!-- <i class="fas fa-file-invoice-dollar" style="color: #0071bc;"></i> -->
+			                		<i class="fas fa-eye" style="color: #0071bc;"></i>
 			                	</a>
 			                	<br><br>
 			                	<?php if($_SESSION['area']==1026){ ?>
 				                	<a href="<?=base_url?>paa/delcdp&iddpa=<?=$pf['iddpa'];?>" title="Eliminar RP">
-				                		<i class="fas fa-trash-alt" style="color: #523178;"></i>
+				                		<i class="fas fa-trash-alt" style="color: #0071bc;"></i>
 				                	</a>
 				                <?php } ?>
 			                	<!-- <a href="<?=base_url?>cdp/solicdp&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>" title="SOLICITAR">
-			                		<i class="fas fa-sign-in-alt" style="color: #523178;"></i>
+			                		<i class="fas fa-sign-in-alt" style="color: #0071bc;"></i>
 			                	</a> -->
 										</td>
 									</tr>

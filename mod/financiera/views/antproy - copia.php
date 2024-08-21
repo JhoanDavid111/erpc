@@ -27,7 +27,7 @@
 			<div class="row">				
 
 				<div class="form-group col-md-3">
-					<label for="vigencia">Vigencia  <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #523178;"></a></label>
+					<label for="vigencia">Vigencia  <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #0071bc;"></a></label>
 					<!-- <?php //$cont = date('Y'); ?> -->
 
 					<input type="text" name="vigencia" class="form-control form-control-sm" style="padding: 0px;" value="<?=$pfvig[0]['idpaa'];?>" readonly>					
@@ -256,7 +256,7 @@
 						<br>
 						<input type="hidden" name="depid" value="<?=$_SESSION['depid'];?>">
 						
-						<button type="submit" class="btn" style="color: #523178;" title="CSV ANTEPROYECTO">
+						<button type="submit" class="btn" style="color: #0071bc;" title="CSV ANTEPROYECTO">
 							<i class="fas fa-file-excel fa-2x"></i>
 						</button>
 					</form>
@@ -300,7 +300,7 @@
 				                <td><?=$pf['valnom'];?></td>              
 				                <td>
 									<a href="<?=base_url?>antproy/getAntPf&codrub=<?=$pf['codrub'];?>&iddpa=<?=$pf['iddpa'];?>&area=<?=$pf['area'];?>" title="Editar">
-				                		<i class="fas fa-edit" style="color: #523178;"></i>
+				                		<i class="fas fa-edit" style="color: #0071bc;"></i>
 				                	</a>
 								</td>
 
@@ -380,7 +380,7 @@
 					                <td><?=$ep['nomrub'];?></td>
 					                <td>
 					                <?php if($ep['actrub']==1){ ?>
-					                	<i class="fas fa-check-circle" style="color: #523178;">
+					                	<i class="fas fa-check-circle" style="color: #0071bc;">
 					                		<span style="color: rgba(255,255,255,0);">+</span>
 					                	</i>
 					                <?php }else{ ?>
