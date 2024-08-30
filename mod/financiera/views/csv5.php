@@ -29,6 +29,7 @@ $pfinan = new Pfinan();
 $vig = $pfinan->vigact();
 $dat = $pfinan->getAllPre();
 
+
 $noar = 'Reporte Presupuesto ' . date("Ymd");
 
 header('Content-Type: application/vnd.ms-excel');
@@ -38,20 +39,46 @@ header('Content-Disposition: attachment; filename="' . $noar . '.csv"');
 $html = "Código;Nombre;Apropiación Inicial;Modificaciones Mes;Modificaciones Acumulado;Apropiación Vigente;Suspensión;Apropiación Disponible;CDP Mes;CDP Acumulado;Saldo Apropiación Disponible;Compromisos Mes;Compromisos Acumulados;Saldo CDP por Comprometer;Eje Presupuestal %;Giro Mes Presupuestal;Giros Acumulados Presupuesto;Saldo por Pagar;Porcentaje Ej. Giro";
 $html .= "\n";
 
-foreach ($dat as $dt) {	 
+function excelDateToPHPDate($excelDate) {
+    // La fecha base de Excel (1 de enero de 1900) en formato Unix timestamp
+    $unixDate = ($excelDate - 25569) * 86400;
+    return date('Y-m-d', $unixDate);
+}
+
+foreach ($dat as $dt) {
     $codigo = "'" . $vig[0]['ninipaa'] . $dt['codrub'] . ";";
-    $nombre = $dt['nobjeto'] . ";";
-    $apropiacionInicial = $dt['asidpa'];
-    $modificacionesMes = generateRandomValue();
-    $modificacionesAcumulado = generateRandomValue();
-    $suspension = generateRandomValue();
-    $cdpMes = generateRandomValue();
-    $dtcdp = $pfinan->sumPr("2,3",$dt['codrub']);
-    $cdpAcumulado= isset($dtcdp[0]['cdp']) ? $dtcdp[0]['cdp']:0;
-    $compromisosMes = generateRandomValue();
-    $compromisosAcumulados = generateRandomValue();
-    $giroMesPresupuestal = generateRandomValue();
-    $girosAcumuladosPresupuesto = generateRandomValue();
+    $datasi = $pfinan->getAllPreAsi($dt['codrub']);
+    if (!empty($datasi) && isset($datasi[0])) {
+        $nombre = trim($datasi[0]['nobjeto']) . ";";
+        $apropiacionInicial = $datasi[0]['asidpa'];
+    } else {
+        $nombre = "Objeto no encontrado;";
+        $apropiacionInicial = 0;
+    }
+    $modificacionesMes = 0; 
+    $modificacionesAcumulado = 0;
+    $suspension = 0;
+
+    // Convertir la fecha de Excel a fecha PHP
+    $fecentDate = excelDateToPHPDate($dt['fecent']);
+
+    // Obtener el mes actual
+    $currentMonth = date('m');
+
+    $fecentMonth = date('m', strtotime($fecentDate));
+
+    if ($fecentMonth == $currentMonth) {
+        $cdpMes = $dt['valcdp'];
+        $compromisosMes = $dt['valrp'];
+    } else {
+        $cdpMes = 0; 
+        $compromisosMes = 0;
+    }
+
+    $cdpAcumulado = $dt['total_valcdp'];
+    $compromisosAcumulados = $dt['total_valrp'];
+    $giroMesPresupuestal = 0;
+    $girosAcumuladosPresupuesto = $dt['total_autgir'];
 
     $calculatedValues = calculateValues(
         $apropiacionInicial,
@@ -80,7 +107,7 @@ foreach ($dat as $dt) {
     $html .= number_format($giroMesPresupuestal, 0, ',', '.') . ";";
     $html .= number_format($girosAcumuladosPresupuesto, 0, ',', '.') . ";";
     $html .= number_format($calculatedValues['saldoPorPagar'], 0, ',', '.') . ";";
-    $html .= number_format($calculatedValues['porcentajeEjecucionGiro'], 2, ',', '.') . ";";
+    $html .= number_format($calculatedValues['porcentajeEjecucionGiro'], 2, ',', '.') . "%;";
     $html .= "\n";
 }
 

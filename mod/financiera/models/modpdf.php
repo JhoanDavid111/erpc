@@ -609,11 +609,39 @@ class Pfinan{
 		return $ordgasto;
 	}
 
-	public function getAllPre(){
-		$sql = "SELECT * FROM `detpaa` WHERE elidp = 4 AND idpaa = 2024;";            
-        $execute = $this->db->query($sql);
-        $ordgasto = $execute->fetchall(PDO::FETCH_ASSOC);
-        return $ordgasto;
+	public function getAllPre() {
+		$sql = "
+			SELECT 
+				codrub,
+				fecent,
+				valcdp,
+				MIN(nobjeto) as nobjeto, -- Selecciona una descripción por rubro
+				SUM(asidpa) as total_asidpa, 
+				SUM(valcdp) as total_valcdp, 
+				SUM(valrp) as total_valrp, 
+				SUM(autgir) as total_autgir 
+			FROM `detpaa` 
+			WHERE idpaa = 2024 AND fecent IS NOT NULL 
+			GROUP BY codrub;
+		";             
+		$execute = $this->db->query($sql);
+		$ordgasto = $execute->fetchAll(PDO::FETCH_ASSOC);
+		return $ordgasto;
+	}
+
+	public function getAllPreAsi($rubro) {
+		$sql = "
+			SELECT 
+				asidpa,
+				nobjeto 
+			FROM `detpaa` 
+			WHERE codrub = :rubro AND elidp = 4 AND idpaa = 2024;
+		";             
+		$execute = $this->db->prepare($sql);
+		$execute->bindParam(':rubro', $rubro, PDO::PARAM_INT);
+		$execute->execute();
+		$ordgasto = $execute->fetchAll(PDO::FETCH_ASSOC);
+		return $ordgasto;
 	}
 }
 

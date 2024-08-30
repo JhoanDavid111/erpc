@@ -523,7 +523,7 @@ class Plamej{
 		return $rub;
 	}
 
-	public function getCSV($valid){
+	public function getCSV($valid = 3051) {
 		$sql = "SELECT 
 					m.nopla, m.fsolpla, m.fuepla, m.detfue, m.fobspla, m.cappla, m.obspla, 
 					m.areapla, m.estpla, m.carlmej, m.actpla, m.porpla, m.ocpla, m.feciepla, 
@@ -545,14 +545,13 @@ class Plamej{
 					plaava AS v ON t.noact = v.noact 
 				LEFT JOIN 
 					plaseg AS s ON v.noava = s.noava 
-				WHERE";
-	
-		// Añade la condición
-		if ($valid == 3051) {
-			$sql .= " m.valid = 3051";
-		} else {
-			$sql .= " m.valid != 3051";
+				WHERE m.valid = 3051";
+
+
+		if ($this->getFil1() && $this->getFil2()) {
+			$sql .= " AND date(s.fecseg) BETWEEN '".$this->getFil1()."' AND '".$this->getFil2()."'";
 		}
+	
 	
 		// Ejecuta la consulta
 		$execute = $this->db->query($sql);
@@ -1567,6 +1566,28 @@ class Plamej{
 				return false;
 			}
 		}
-		
+
+		public function getValNomById($valid) {
+			// Query para obtener el nombre del valor basado en el 'valid'
+			$sql = "SELECT valnom FROM valor WHERE valid = :valid LIMIT 1";
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(':valid', $valid, PDO::PARAM_INT);
+			$stmt->execute();
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
+			
+			return $result ? $result['valnom'] : null;
+		}
+
+		public function getNomPer($perid) {
+			// Query para obtener el nombre del valor basado en el 'valid'
+			$sql = "SELECT pernom FROM persona WHERE perid = :perid LIMIT 1";
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(':perid', $perid, PDO::PARAM_INT);
+			$stmt->execute();
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
+			
+			return $result ? $result['pernom'] : null;
+		}
+
 
 }

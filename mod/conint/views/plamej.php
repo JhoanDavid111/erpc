@@ -90,6 +90,7 @@
 						<option value="0" >Seleccione</option>
 						<option value="mensual">Mensual</option>
 						<option value="trimestral">Trimestral</option>
+						<option value="cuatrimestral">Cuatrimestral</option>
 						<option value="semestral">Semestral</option>
 					</select>
 			</div>
