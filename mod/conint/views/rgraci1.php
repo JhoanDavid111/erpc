@@ -68,10 +68,6 @@
 	    <div id="container"></div>
 	    <p class="highcharts-description"></p>
 	</figure>
-	<figure class="highcharts-figure" style="display: inline-block;width: 30%;">
-	    <div id="container2"></div>
-	    <p class="highcharts-description"></p>
-	</figure>
 </center>
 
 <!-- Gráfica 1 Inicio  -->
@@ -144,104 +140,14 @@
 	</script>
 <!-- Gráfica 1 Fin  -->
 
-<!-- Gráfica 2 Inicio  -->
-<script type="text/javascript">
-	Highcharts.chart('container2', {
-	    chart: {
-	        type: 'pie',
-	        options3d: {
-	            enabled: true,
-	            alpha: 45
-	        }
-	    },
-	    title: {
-	        text: 'Planes de mejora',
-	        align: 'center'
-	    },
-	    subtitle: {
-	        text: 'Gráfico en dona',
-	        align: 'center'
-	    },
-	    plotOptions: {
-	        pie: {
-	            innerSize: 100,
-	            depth: 45
-	        }
-	    },
-	    series: [{
-	        name: 'Cantidad',
-	        data: [
-		        <?php
-		        $con=0; 
-		        foreach ($AC as $f){
-		        ?>
-		            ['<?=strtoupper($f['tipo'])." (".strtoupper($f['tot']).")";?>', <?=strtoupper($f['tot']);?>]
-		            <?php 
-		            	if($con<(count($AC)-1)) echo ", ";
-		           		$con++;
-		           	?>
-		        <?php } ?>
-	        ]
-	    }]
-	});
-	</script>
-<!-- Gráfica 2 Fin  -->
 
-
-<strong>Planes de mejora por Estado</strong><br>
+<strong>Planes de mejora por Tipo</strong><br>
 <center>
-	<figure class="highcharts-figure" style="display: inline-block;width: 30%;">
-	    <div id="container3"></div>
-	    <p class="highcharts-description"></p>
-	</figure>
 	<figure class="highcharts-figure" style="display: inline-block;width: 30%;">
 	    <div id="container4"></div>
 	    <p class="highcharts-description"></p>
 	</figure>
 </center>
-
-<!-- Gráfica 3 Inicio  -->
-<script type="text/javascript">
-	Highcharts.chart('container3', {
-	    chart: {
-	        type: 'pie',
-	        options3d: {
-	            enabled: true,
-	            alpha: 45
-	        }
-	    },
-	    title: {
-	        text: 'Origen',
-	        align: 'center'
-	    },
-	    subtitle: {
-	        text: 'Gráfico en dona',
-	        align: 'center'
-	    },
-	    plotOptions: {
-	        pie: {
-	            innerSize: 100,
-	            depth: 45
-	        }
-	    },
-	    series: [{
-	        name: 'Cantidad',
-	        data: [
-		        <?php
-		        $con=0; 
-		        foreach ($EI as $f){
-		        ?>
-		            ['<?=strtoupper($f['tipo'])." (".strtoupper($f['tot']).")";?>', <?=strtoupper($f['tot']);?>]
-		            <?php 
-		            	if($con<(count($EI)-1)) echo ", ";
-		           		$con++;
-		           	?>
-		        <?php } ?>
-	        ]
-	    }]
-	});
-	</script>
-<!-- Gráfica 3 Fin  -->
 
 <!-- Gráfica 4 Inicio  -->
 <script type="text/javascript">
@@ -325,50 +231,6 @@
 	    <p class="highcharts-description"></p>
 	</figure>
 </center>
-
-<!-- Gráfica 5 Inicio  -->
-<script type="text/javascript">
-	Highcharts.chart('container5', {
-	    chart: {
-	        type: 'pie',
-	        options3d: {
-	            enabled: true,
-	            alpha: 45
-	        }
-	    },
-	    title: {
-	        text: 'Planes de mejora por Estados',
-	        align: 'center'
-	    },
-	    subtitle: {
-	        text: 'Gráfico en dona',
-	        align: 'center'
-	    },
-	    plotOptions: {
-	        pie: {
-	            innerSize: 100,
-	            depth: 45
-	        }
-	    },
-	    series: [{
-	        name: 'Cantidad',
-	        data: [
-		        <?php
-		        $con=0; 
-		        foreach ($pmj as $f){
-		        ?>
-		            ['<?=strtoupper($f['valnom'])." (".strtoupper($f['tot']).")";?>', <?=strtoupper($f['tot']);?>]
-		            <?php 
-		            	if($con<(count($pmj))) echo ", ";
-		           		$con++;
-		           	?>
-		        <?php } ?>
-	        ]
-	    }]
-	});
-	</script>
-<!-- Gráfica 5 Fin  -->
-
 <!-- Gráfica 6 Inicio  -->
 <script type="text/javascript">
 	Highcharts.chart('container6', {
@@ -451,7 +313,7 @@
 <!-- Gráfica 6 Fin  -->
 
 
-<strong>Planes de mejora Internos y Externos</strong><br>
+<strong>Planes de mejora Internos y Externos por estados</strong><br>
 <center>
 	<figure class="highcharts-figure" style="display: inline-block;width: 30%;">
 	    <div id="container7"></div>
@@ -627,55 +489,77 @@
 
 
 <div class="table-responsive">
-	<?php if($pmj){ 
-		$ctnCnt = 0;
-		$ctnPor = 0;
-	?>
-	<table id="example" class="table table-striped table-bordered dterpce" style="width:100%;">
-		<thead>
-			<tr>
-				<th>Estado</th>
-				<th style="text-align: center;">Cantidad</th>
-				<th style="text-align: center;">Porcentaje</th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php foreach ($pmj as $f){ ?>
-				<tr>
-					<td>
-						<span style="font-size: 0px;"><?=$f['tot'];?></span>
-						<small><?=strtoupper($f['valnom']);?></small>
-					</td>
-					<td style="text-align: center;">
-						<?=$f['tot'];?>&nbsp;&nbsp;&nbsp;&nbsp;
-						<?php $ctnCnt += $f['tot']; ?>
-					</td>
-					<td style="text-align: center;">
-						<?php
-							if($CanPlan){
-								echo round($f['tot']*100/$CanPlan[0]['tot'],0)." %";
-								$ctnPor += round($f['tot']*100/$CanPlan[0]['tot'],0);
-							}
-						?>
-					</td>
-				</tr>
-			<?php } ?>
-		</tbody>
-		<thead>
-			<tr>
-				<th>
-					Total
-				</th>
-				<th style="text-align: center;">
-					<?=$ctnCnt;?>
-				</th>
-				<th style="text-align: center;">
-					<?=$ctnPor;?> %
-				</th>
-			</tr>
-		</thead>
-	</table>
-	<?php }else{ ?>
-		<center><h5>No existen resultados</h5></center><br><br>
-	<?php } ?>
+    <?php if ($pmj1 || $pmj2) { 
+        $ctnCntTotal = 0;
+        $ctnPorTotal = 0;
+    ?>
+    <h4>Planes Clasificados por Tipo</h4>
+    <table id="example" class="table table-striped table-bordered dterpce" style="width:100%;">
+        <thead>
+            <tr>
+                <th>Tipo de Plan</th>
+                <th>Estado</th>
+                <th style="text-align: center;">Cantidad</th>
+                <th style="text-align: center;">Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Planes Externos -->
+            <?php foreach ($pmj1 as $f) { ?>
+                <tr>
+                    <td>Externo</td>
+                    <td>
+                        <span style="font-size: 0px;"><?= $f['tot']; ?></span>
+                        <small><?= strtoupper($f['valnom']); ?></small>
+                    </td>
+                    <td style="text-align: center;">
+                        <?= $f['tot']; ?>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <?php $ctnCntTotal += $f['tot']; ?>
+                    </td>
+                    <td style="text-align: center;">
+                        <?php
+                            if ($CanPlan) {
+                                echo round($f['tot'] * 100 / $CanPlan[0]['tot'], 0) . " %";
+                                $ctnPorTotal += round($f['tot'] * 100 / $CanPlan[0]['tot'], 0);
+                            }
+                        ?>
+                    </td>
+                </tr>
+            <?php } ?>
+            <!-- Planes Internos -->
+            <?php foreach ($pmj2 as $f) { ?>
+                <tr>
+                    <td>Interno</td>
+                    <td>
+                        <span style="font-size: 0px;"><?= $f['tot']; ?></span>
+                        <small><?= strtoupper($f['valnom']); ?></small>
+                    </td>
+                    <td style="text-align: center;">
+                        <?= $f['tot']; ?>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <?php $ctnCntTotal += $f['tot']; ?>
+                    </td>
+                    <td style="text-align: center;">
+                        <?php
+                            if ($CanPlan) {
+                                echo round($f['tot'] * 100 / $CanPlan[0]['tot'], 0) . " %";
+                                $ctnPorTotal += round($f['tot'] * 100 / $CanPlan[0]['tot'], 0);
+                            }
+                        ?>
+                    </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+        <thead>
+            <tr>
+                <th colspan="2">Total</th>
+                <th style="text-align: center;"><?= $ctnCntTotal; ?></th>
+                <th style="text-align: center;"><?= $ctnPorTotal; ?> %</th>
+            </tr>
+        </thead>
+    </table>
+    <?php } else { ?>
+        <center><h5>No existen resultados</h5></center><br><br>
+    <?php } ?>
 </div>
+
+

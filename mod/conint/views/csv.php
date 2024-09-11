@@ -36,38 +36,41 @@ if (!empty($data)) {
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment;filename="' . $filename . '"');
 
+    // Agregar la marca BOM para UTF-8
+    echo "\xEF\xBB\xBF";
+
     // Abrir la salida estándar como archivo (para descargar el CSV)
     $output = fopen('php://output', 'w');
 
     // Definir los nombres de las columnas en el orden correcto
     $renamedHeader = [
-        'Numero del plan',
+        'Número del plan',
+        'Fuente de observación',
         'Fecha de solicitud',
-        'Fuente de observacion',
         'Detalle de la fuente',
-        'Codigo o capitulo',
-        'Observacion plan',
-        'Area',
-        'Estado plan',
-        'Cargo del lider',
-        'Activo o inactivo',
+        'Código o capítulo',
+        'Observación plan',
+        'Área',
+        'Causa de la acción',
+        'Nombre de actividad',
+        'Tipo de acción propuesta',
+        'Indicador',
+        'Alcance de la meta',
+        'Fecha inicio de la acción',
+        'Fecha final de la acción',
+        'Cargo del líder',
+        'Cargo del responsable',
+        'Fecha de seguimiento',
+        'Comentario actividad',
+        'Análisis de seguimiento',
+        'Porcentaje de ejecución',
+        'Tipo de alerta seguimiento',
+        'Auditoría seguimiento',
         'Porcentaje plan',
+        'Estado plan',
         'Comentario cierre',
         'Fecha cierre plan',
-        'Causa de la accion',
-        'Nombre de actividad',
-        'Tipo de accion propuesta',
-        'Alcance de la meta',
-        'Fecha inicio de la accion',
-        'Fecha final de la accion',
-        'Cargo del responsable',
-        'Indicador',
-        'Comentario actividad',
-        'Fecha de seguimiento',
-        'Analisis de seguimiento',
-        'Porcentaje de ejecucion',
-        'Tipo de alerta seguimiento',
-        'Auditoria seguimiento'
+        'Activo o inactivo',
     ];
 
     // Escribir la fila de cabecera con los nuevos nombres
@@ -75,35 +78,42 @@ if (!empty($data)) {
 
     // Escribir los datos en el orden correcto usando las llaves proporcionadas
     foreach ($data as $row) {
+        // Formatear las fechas para que se muestren solo con el formato Y-m-d
+        $fsolpla = isset($row['fsolpla']) ? date('Y-m-d', strtotime($row['fsolpla'])) : '';
+        $feciepla = isset($row['feciepla']) ? date('Y-m-d', strtotime($row['feciepla'])) : '';
+        $finimej = isset($row['finimej']) ? date('Y-m-d', strtotime($row['finimej'])) : '';
+        $ffinmej = isset($row['ffinmej']) ? date('Y-m-d', strtotime($row['ffinmej'])) : '';
+        $fecseg = isset($row['fecseg']) ? date('Y-m-d', strtotime($row['fecseg'])) : '';
+
         // Reconstruir cada fila de acuerdo al orden de las llaves proporcionadas
         $orderedRow = [
             $row['nopla'] ?? '',       // Numero del plan
-            $row['fsolpla'] ?? '',     // Fecha de solicitud
             isset($row['fuepla']) ? $plamej->getValNomById($row['fuepla']) : '',      // Fuente de observacion
+            $fsolpla,                  // Fecha de solicitud formateada
             $row['detfue'] ?? '',      // Detalle de la fuente
             $row['cappla'] ?? '',      // Codigo o capitulo
             $row['obspla'] ?? '',      // Observacion plan
             isset($row['areapla']) ? $plamej->getValNomById($row['areapla']) : '',     // Area
-            isset($row['estpla']) ? $plamej->getValNomById($row['estpla']) : '',  // Estado plan
-            isset($row['carlmej']) ? $plamej->getValNomById($row['carlmej']) : '',  // Cargo del líder
-            isset($row['actpla']) ? ($row['actpla'] == 1 ? 'Activo' : 'Inactivo') : '',  // Activo o inactivo
-            isset($row['porpla']) ? $row['porpla'] . '%' : '',      // Porcentaje plan
-            $row['acpla'] ?? '',       // Comentario cierre
-            $row['feciepla'] ?? '',    // Fecha cierre plan
             $row['caumej'] ?? '',      // Causa de la accion
             $row['accmej'] ?? '',      // Nombre de actividad
             isset($row['tapmej']) ? $plamej->getValNomById($row['tapmej']) : '',  // Tipo de accion propuesta
-            $row['alcmej'] ?? '',      // Alcance de la meta
-            $row['finimej'] ?? '',     // Fecha inicio de la accion
-            $row['ffinmej'] ?? '',     // Fecha final de la accion
-            isset($row['carrmej']) ? $plamej->getValNomById($row['carrmej']) : '',  // Cargo del responsable
             $row['foract'] ?? '',      // Indicador
+            $row['alcmej'] ?? '',      // Alcance de la meta
+            $finimej,                  // Fecha inicio de la accion formateada
+            $ffinmej,                  // Fecha final de la accion formateada
+            isset($row['carlmej']) ? $plamej->getValNomById($row['carlmej']) : '',  // Cargo del líder
+            isset($row['carrmej']) ? $plamej->getValNomById($row['carrmej']) : '',  // Cargo del responsable
+            $fecseg,                   // Fecha de seguimiento formateada
             $row['comava'] ?? '',      // Comentario actividad
-            $row['fecseg'] ?? '',      // Fecha de seguimiento
             $row['anaseg'] ?? '',      // Analisis de seguimiento
             isset($row['ejesep']) ? $row['ejesep'] . '%' : '',      // Porcentaje de ejecucion
             isset($row['aleseg']) ? $plamej->getValNomById($row['aleseg']) : '',  // Tipo de alerta seguimiento
             isset($row['audseg']) ? $plamej->getNomPer($row['audseg']) : '',  // Auditoria seguimiento
+            isset($row['porpla']) ? $row['porpla'] . '%' : '',      // Porcentaje plan
+            isset($row['estpla']) ? $plamej->getValNomById($row['estpla']) : '',  // Estado plan
+            $row['acpla'] ?? '',       // Comentario cierre
+            $feciepla,                 // Fecha cierre plan formateada
+            isset($row['actpla']) ? ($row['actpla'] == 1 ? 'Activo' : 'Inactivo') : '',  // Activo o inactivo
         ];
 
         // Escribir la fila procesada en el CSV
@@ -118,6 +128,7 @@ if (!empty($data)) {
     echo "No data found.";
 }
 ?>
+
 
 
 
