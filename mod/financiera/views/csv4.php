@@ -1,5 +1,6 @@
 <?php
 include'../models/modpdf.php';
+include'../models/pfinan.php';
 // ini_set('memory_limit', '512M');
 // require_once '../../../dompdf/autoload.inc.php';
 // use Dompdf\Dompdf;

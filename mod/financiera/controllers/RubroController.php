@@ -28,14 +28,16 @@ class rubroController{
 			$nomrub = isset($_POST['nomrub']) ? $_POST['nomrub'] : false;
 			$deprub = isset($_POST['deprub']) ? $_POST['deprub'] : false;
 			$actrub = isset($_POST['actrub']) ? $_POST['actrub'] : false;
+			$intrub = isset($_POST['intrub']) ? $_POST['intrub'] : false;
 			
-			if($codrub && $nomrub && $actrub){
+			if($codrub && $nomrub && $actrub && $intrub){
 				$rubro = new Rubro();
 				$rubro->setCodrub($codrub);
 				$rubro->setCodrub2($codrub2);
 				$rubro->setNomrub($nomrub);
 				$rubro->setDeprub($deprub);
 				$rubro->setActrub($actrub);
+				$rubro->setIntrub($intrub);
 
 				$rubros = $rubro->getAll();
 

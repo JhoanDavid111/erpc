@@ -1,18 +1,23 @@
 <?php
 include '../models/modpdf.php';
 
+$rubroSel = isset($_POST['rubroSel']) ? $_POST['rubroSel'] : null;
+$nobjetoSel = isset($_POST['nobjetoSel']) ? $_POST['nobjetoSel'] : null;
+
+// Función para generar valores aleatorios
 function generateRandomValue($min = 1000, $max = 100000) {
     return rand($min, $max);
 }
 
+// Función para calcular los valores de presupuesto
 function calculateValues($apropiacionInicial, $modificacionesAcumulado, $suspension, $cdpAcumulado, $compromisosAcumulados, $girosAcumuladosPresupuesto) {
     $apropiacionVigente = $apropiacionInicial + $modificacionesAcumulado;
     $apropiacionDisponible = $apropiacionVigente - $suspension;
     $saldoApropiacionDisponible = $apropiacionDisponible - $cdpAcumulado;
     $saldoCDPPorComprometer = $cdpAcumulado - $compromisosAcumulados;
-    $ejePresupuestal = ($apropiacionDisponible != 0) ? ($compromisosAcumulados / $apropiacionDisponible) * 100 : 0;
+    $ejePresupuestal = ($apropiacionVigente != 0) ? ($compromisosAcumulados / $apropiacionVigente) * 100 : 0;
     $saldoPorPagar = $compromisosAcumulados - $girosAcumuladosPresupuesto;
-    $porcentajeEjecucionGiro = ($apropiacionDisponible != 0) ? ($girosAcumuladosPresupuesto / $apropiacionDisponible) * 100 : 0;
+    $porcentajeEjecucionGiro = ($apropiacionVigente != 0) ? ($girosAcumuladosPresupuesto / $apropiacionVigente) * 100 : 0;
 
     return [
         'apropiacionVigente' => $apropiacionVigente,
@@ -25,10 +30,9 @@ function calculateValues($apropiacionInicial, $modificacionesAcumulado, $suspens
     ];
 }
 
-$pfinan = new Pfinan();
-$vig = $pfinan->vigact();
-$dat = $pfinan->getAllPre();
-
+$modpdf = new Modpdf();
+$vig = $modpdf->vigact();
+$dat = $modpdf->getAllPre($rubroSel, $nobjetoSel);
 
 $noar = 'Reporte Presupuesto ' . date("Ymd");
 
@@ -39,15 +43,16 @@ header('Content-Disposition: attachment; filename="' . $noar . '.csv"');
 $html = "Código;Nombre;Apropiación Inicial;Modificaciones Mes;Modificaciones Acumulado;Apropiación Vigente;Suspensión;Apropiación Disponible;CDP Mes;CDP Acumulado;Saldo Apropiación Disponible;Compromisos Mes;Compromisos Acumulados;Saldo CDP por Comprometer;Eje Presupuestal %;Giro Mes Presupuestal;Giros Acumulados Presupuesto;Saldo por Pagar;Porcentaje Ej. Giro";
 $html .= "\n";
 
+// Función para convertir la fecha de Excel a PHP
 function excelDateToPHPDate($excelDate) {
-    // La fecha base de Excel (1 de enero de 1900) en formato Unix timestamp
     $unixDate = ($excelDate - 25569) * 86400;
     return date('Y-m-d', $unixDate);
 }
 
+// Ciclo para la primera parte del reporte
 foreach ($dat as $dt) {
     $codigo = "'" . $vig[0]['ninipaa'] . $dt['codrub'] . ";";
-    $datasi = $pfinan->getAllPreAsi($dt['codrub']);
+    $datasi = $modpdf->getAllPreAsi($dt['codrub']);
     if (!empty($datasi) && isset($datasi[0])) {
         $nombre = trim($datasi[0]['nobjeto']) . ";";
         $apropiacionInicial = $datasi[0]['asidpa'];
@@ -59,21 +64,12 @@ foreach ($dat as $dt) {
     $modificacionesAcumulado = 0;
     $suspension = 0;
 
-    // Convertir la fecha de Excel a fecha PHP
     $fecentDate = excelDateToPHPDate($dt['fecent']);
-
-    // Obtener el mes actual
     $currentMonth = date('m');
-
     $fecentMonth = date('m', strtotime($fecentDate));
 
-    if ($fecentMonth == $currentMonth) {
-        $cdpMes = $dt['valcdp'];
-        $compromisosMes = $dt['valrp'];
-    } else {
-        $cdpMes = 0; 
-        $compromisosMes = 0;
-    }
+    $cdpMes = ($fecentMonth == $currentMonth) ? $dt['valcdp'] : 0;
+    $compromisosMes = ($fecentMonth == $currentMonth) ? $dt['valrp'] : 0;
 
     $cdpAcumulado = $dt['total_valcdp'];
     $compromisosAcumulados = $dt['total_valrp'];
@@ -113,3 +109,4 @@ foreach ($dat as $dt) {
 
 echo mb_convert_encoding($html, 'UTF-16LE', 'UTF-8');
 ?>
+

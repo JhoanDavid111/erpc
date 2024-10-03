@@ -8,7 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'phpseclib3\\' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'ZipStream\\' => array($vendorDir . '/maennchen/zipstream-php/src'),
-    'Symfony\\Polyfill\\Php72\\' => array($vendorDir . '/symfony/polyfill-php72'),
     'Symfony\\Polyfill\\Intl\\Normalizer\\' => array($vendorDir . '/symfony/polyfill-intl-normalizer'),
     'Symfony\\Polyfill\\Intl\\Idn\\' => array($vendorDir . '/symfony/polyfill-intl-idn'),
     'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),

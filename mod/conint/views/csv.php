@@ -49,28 +49,28 @@ if (!empty($data)) {
         'Fecha de solicitud',
         'Detalle de la fuente',
         'Código o capítulo',
-        'Observación plan',
+        'Observación',
         'Área',
         'Causa de la acción',
-        'Nombre de actividad',
+        'Acción',
         'Tipo de acción propuesta',
         'Indicador',
         'Alcance de la meta',
-        'Fecha inicio de la acción',
-        'Fecha final de la acción',
+        'Fecha inicio',
+        'Fecha terminación',
         'Cargo del líder',
-        'Cargo del responsable',
+        'Área responsable',
         'Fecha de seguimiento',
-        'Comentario actividad',
+        'Soportes de ejecución',
         'Análisis de seguimiento',
         'Porcentaje de ejecución',
-        'Tipo de alerta seguimiento',
-        'Auditoría seguimiento',
+        'Alerta',
+        'Auditor que realiza el seguimiento',
         'Porcentaje plan',
         'Estado plan',
         'Comentario cierre',
         'Fecha cierre plan',
-        'Activo o inactivo',
+        'Cierre de la observación',
     ];
 
     // Escribir la fila de cabecera con los nuevos nombres
@@ -113,7 +113,7 @@ if (!empty($data)) {
             isset($row['estpla']) ? $plamej->getValNomById($row['estpla']) : '',  // Estado plan
             $row['acpla'] ?? '',       // Comentario cierre
             $feciepla,                 // Fecha cierre plan formateada
-            isset($row['actpla']) ? ($row['actpla'] == 1 ? 'Activo' : 'Inactivo') : '',  // Activo o inactivo
+            isset($row['actpla']) ? ($row['actpla'] == 1 ? 'Abierta' : 'Cerrada') : '',  // Activo o inactivo
         ];
 
         // Escribir la fila procesada en el CSV

@@ -54,6 +54,13 @@
 	                <option value="2" <?=isset($rub) && 2==$rub[0]['actrub'] ? ' selected ' : ''; ?> >No</option>
 		        </select>
 			</div>
+			<div class="form-group col-md-6">
+				<label for="intrub">Rubro Interno</label>
+				<select class="form-control form-control-sm" style="padding: 0px;" id="intrub" name="intrub">
+	                <option value="1" <?=isset($rub) && 1==$rub[0]['intrub'] ? ' selected ':'';?>>Si</option>
+	                <option value="2" <?=isset($rub) && 2==$rub[0]['intrub'] ? ' selected ':'';?>>No</option>
+		        </select>
+			</div>
 		
 			<div class="form-group col-md-6">
 				<?php if(isset($edit) && isset($rub)){ ?>
@@ -87,6 +94,7 @@
 					<th>Rubro</th>								
 					<th>Depende</th>
 					<th>Act</th>
+					<th>Rubro Interno</th>
 					<th></th>
 	            </tr>
 	        </thead>
@@ -118,6 +126,14 @@
 							</i>
 						<?php } ?>
 		                </td>
+		                <td style="text-align: center;">
+		                	<?php if($ru['intrub']==1){ ?>
+			                	<i class="fa fa-arrow-circle-left" style="color: #0071bc;"></i>
+			                	<small style="font-size: 0px;opacity: 0;">Rubro Interno</small>
+			                <?php }else{ ?>
+								<i class="fa fa-arrow-circle-right" style="color: #888888;"></i>
+							<?php } ?>
+		                </td>
 		                <td>
 		                	<a href="<?=base_url?>rubro/edit&codrub=<?=$ru['codrub'];?>">
 		                		<i class="fas fa-edit" style="color: #0071bc;"></i>
@@ -133,6 +149,7 @@
 					<th>Rubro</th>								
 					<th>Depende</th>
 					<th>Act</th>
+					<th>Rubro Interno</th>
 					<th></th>
 	            </tr>
 	        </tfoot>

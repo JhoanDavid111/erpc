@@ -10,57 +10,70 @@ require __DIR__ . '/../../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
-class presuController{
+class presuController {
 	
-	public function index(){
-		Utils::useraccess('paa/index',$_SESSION['pefid']);
-
-		$ari = isset($_POST['areas']) ? $_POST['areas']:NULL;
+	public function index() {
+		Utils::useraccess('paa/index', $_SESSION['pefid']);
+	
+		// Obtener filtros
+		$ari = isset($_POST['areas']) ? $_POST['areas'] : NULL;
 		$pfinan = new Pfinan();
 		$vig = $pfinan->vigact();
-		$tot = isset($_GET['tot']) ? $_GET['tot']:NULL;
+		$tot = isset($_GET['tot']) ? $_GET['tot'] : NULL;
 		$dpd = $_SESSION['depid'];
-		$areSel = isset($_POST['areSel']) ? $_POST['areSel']:NULL;
-
-		if($tot==1012) $dpd = 1012;
-
+		$areSel = $_POST['areSel'] ?? null;
+		$rubroSel = $_POST['rubroSel'] ?? null;
+		$nobjetoSel = $_POST['nobjetoSel'] ?? null;
+	
+		// Agregar "4" al inicio del rubro
+		if (!empty($rubroSel)) {
+			$rubroSel = substr($rubroSel, 1);
+		}
+	
+		// Si tot es 1012, asignar 1012 a dpd
+		if ($tot == 1012) $dpd = 1012;
+	
+		// Obtener áreas
 		$areas = $this->dparea($dpd);
-		$areas = $dpd.",".$areas;
-		$areas = substr($areas,0,strlen($areas)-1);
+		$areas = $dpd . "," . $areas;
+		$areas = substr($areas, 0, strlen($areas) - 1);
 		$areas2 = $pfinan->depareas($areas);
-		$pfinan->setIdpaa($vig[0]['idpaa']);
-
+		$pfinan->setIdpaa($vig[0]['idpaa']); // Asegúrate de establecer idpaa
+	
+		// Filtros para áreas
 		if (isset($_POST['areas'])) {
 			$area = $_POST['areas'];
-			$_SESSION['area']=$area;
+			$_SESSION['area'] = $area;
 			$pfinan->setArea($area);
 			$subareas = $pfinan->getSubAreas();
-			$conta=count($subareas);	
-		}else{
+			$conta = count($subareas);
+		} else {
 			$area = $_SESSION['depid'];
 		}
-
+	
 		if($ari) $areas = $ari;
 		$idpaa = $vig[0]['idpaa'];
-		$pfcdp = $pfinan->getAll7($areSel,$idpaa);
-
-		// echo "<pre>";
-		// 	var_dump($pfinand);
-		// echo "</pre>";
-		// die();
+		// Obtener datos filtrados
+		$pfcdp = $pfinan->getAll7($areSel, $vig[0]['idpaa'], $rubroSel, $nobjetoSel);
+	
+		// Inicializar sumas
 		$sumasi = 0;
 		$sumdis = 0;
 		$sumcdp = 0;
 		$sumrp = 0;
-
-		//AREAS
-		$areasutil=Utils::areasu($vig[0]['idpaa']);
-		$_SESSION['vigP']=$vig[0]['idpaa'];
-
-		$rubro = new Rubro();		
+	
+		// Obtener áreas
+		$areasutil = Utils::areasu($vig[0]['idpaa']);
+		$_SESSION['vigP'] = $vig[0]['idpaa'];
+	
+		$rubro = new Rubro();
 		$num = $rubro->getNum();
 		$ninipaa = $num[0]['ninipaa'];
-
+	
+		// Asegúrate de que idpaa está definido
+		//$idpaa = $vig[0]['idpaa'];
+	
+		// Pasar a la vista
 		require_once 'views/presu.php';
 	}
 
@@ -514,6 +527,8 @@ class presuController{
 
 		echo "<h3>Conciliando los datos ".$tip."</h3><br>";
 
+		echo $this->btnVolver();
+
 		if ($arcexc && $_FILES['arch']['error'] == UPLOAD_ERR_OK) {
 		    $ruta_temporal = $_FILES['arch']['tmp_name'];
 
@@ -542,10 +557,11 @@ class presuController{
 		$cregn = 0;
 		$crgf200 = 0;
 		$ctot = 0;
+		$reganu = 0;
 
 		echo "<table class='table table-striped table-bordered dterpc dataTable'>";
 			echo "<thead><tr>";
-				echo "<th style='text-align: center;' colspan='4'>DATOS NO REGISTRADOS</th>";
+				echo "<th style='text-align: center;' colspan='6'>DATOS NO REGISTRADOS</th>";
 			echo "</tr></thead>";
 			echo "<tbody>";
 				echo "<tr>";
@@ -553,6 +569,8 @@ class presuController{
 					echo "<th>Fila Excel o CSV</th>";
 					echo "<th>Código</th>";
 					echo "<th>Rubro</th>";
+					echo "<th>No. CDP Bogdata</th>";
+					echo "<th>Objeto</th>";
 				echo "</tr>";
 		for ($row = 2; $row <= $highestRow; $row++){
 			$vigarc = $sheet->getCell("a".$row)->getValue();
@@ -628,27 +646,47 @@ class presuController{
 				//echo "<strong>".$codigo." - ".$rubro." - ".$objetocom."</strong><br>";
 				//echo "<strong>".$codigo." - ".$rubro."</strong><br>";
 
+				if($valor==$anula){
+					$regDt=2; 
+					$reganu++;
+				}else $regDt=1;
 
-				$resenc = $cexcel->getIddpaxCod($vig, $codigo, $rubro, $objetocom);
-				if($resenc){
-					$creg++;
-					if($tip=="CDP"){
-						$cexcel->saveCDPBg($resenc[0]['iddpa'],$valor,$anula,$cdpxcom);
+				if($objetocom)
+					$resenc = $cexcel->getIddpaxCod($vig, $codigo, $rubro, $objetocom, $ncdp);
+				else
+					$resenc = NULL;
+				
+				if(!$resenc){
+					$mrubro = new Rubro();
+					$rubroT = $mrubro->getRubDep($rubro);
+					if($rubroT && $rubroT[0]['codrub']){
+						$cexcel->setCodrub($rubroT[0]['codrub']);
+						$resenc = $cexcel->getIddpaxCod($vig, $codigo, $rubroT[0]['codrub'], $objetocom, $ncdp);
 					}
-					if($tip=="RP"){
-						$cexcel->saveRPBg($resenc[0]['iddpa'],$valor,$anula,$cdpxcom);
-					}
-					
-				}else{
-					$cregn++;
-					echo "<tr>";
-						echo "<td>".$cregn."</td>";
-						echo "<td>".($ctot+2)."</td>";
-						echo "<td>".$codigo."</td>";
-						echo "<td>".$rubro."</td>";
-					echo "</tr>";
 				}
 
+				if($regDt==1){
+					if($resenc){
+						$creg++;
+						if($tip=="CDP"){
+							$cexcel->saveCDPBg($resenc[0]['iddpa'],$valor,$anula,$cdpxcom);
+						}
+						if($tip=="RP"){
+							$cexcel->saveRPBg($resenc[0]['iddpa'],$valor,$anula,$cdpxcom);
+						}
+						
+					}else{
+						$cregn++;
+						echo "<tr>";
+							echo "<td>".$cregn."</td>";
+							echo "<td>".($ctot+2)."</td>";
+							echo "<td>".$codigo."</td>";
+							echo "<td>".$rubro."</td>";
+							echo "<td>".intval($ncdp)."</td>";
+							echo "<td>".substr($objetocom,0,50)."...</td>";
+						echo "</tr>";
+					}
+				}
 				// echo $vigarc." - ".$mes." - ".$fecini." - ".$fecfin." - ".$cege." - ".$rubro." - ".$descrip." - ".$ncdp." - ".$fecreg." - ".$codigo." - ".$objeto." - ".$fondo." - ".$desfue." - ".$codcongas." - ".$descongas." - ".$codelepep." - ".$deselepep." - ".$valor." - ".$anula." - ".$reint." - ".$cdpxcom." - ".$cdpxcom." - ".$nintcdp." - ".$nposcdp." - ".$nofi." - ".$fecofi." - ".$idsol." - ".$nomsol." - ".$idres." - ".$nomres." - ".$fecreg." - ".$codcuecon." - ".$descuecon."<BR><br>";
 
 			}else{
@@ -679,15 +717,22 @@ class presuController{
 				echo "<td style='text-align: right;'>".number_format($cregn, 0, '.', ',')."</td>";
 			echo "</tr>";
 			echo "<tr>";
+				echo "<th>Anulaciones (Valor asignado = Valor anulación): </th>";
+				echo "<td style='text-align: right;'>".number_format($reganu, 0, '.', ',')."</td>";
+			echo "</tr>";
+			echo "<tr>";
 				echo "<th>3-200-F002: </th>";
 				echo "<td style='text-align: right;'>".number_format($crgf200, 0, '.', ',')."</td>";
 			echo "</tr>";
+			
 			echo "<tr>";
 				echo "<th>TOTAL sumado / leídos: </th>";
-				echo "<th style='text-align: right;'>".number_format(($creg+$cregn+$crgf200), 0, '.', ',')." / ".number_format($ctot, 0, '.', ',')."</th>";
+				echo "<th style='text-align: right;'>".number_format(($creg+$cregn+$crgf200+$reganu), 0, '.', ',')." / ".number_format($ctot, 0, '.', ',')."</th>";
 			echo "</tr>";
 			echo "<tr></tbody>";
 		echo "</table>";
+
+		echo $this->btnVolver();
 		//header("Location:".base_url.'presu/index&tot=1012');
 	}
 
@@ -712,6 +757,8 @@ class presuController{
 		$arcexc = isset($_FILES['arch']['name']) ? $_FILES['arch']['name'] : NULL;
 
 		echo "<h3>Conciliando los datos ".$tip."</h3><br>";
+
+		echo $this->btnVolver();
 
 		if ($arcexc && $_FILES['arch']['error'] == UPLOAD_ERR_OK) {
 		    $ruta_temporal = $_FILES['arch']['tmp_name'];
@@ -741,10 +788,11 @@ class presuController{
 		$cregn = 0;
 		$crgf200 = 0;
 		$ctot = 0;
+		$reganu = 0;
 
 		echo "<table class='table table-striped table-bordered dterpc dataTable'>";
 			echo "<thead><tr>";
-				echo "<th style='text-align: center;' colspan='4'>DATOS NO REGISTRADOS</th>";
+				echo "<th style='text-align: center;' colspan='6'>DATOS NO REGISTRADOS</th>";
 			echo "</tr></thead>";
 			echo "<tbody>";
 				echo "<tr>";
@@ -752,6 +800,8 @@ class presuController{
 					echo "<th>Fila Excel o CSV</th>";
 					echo "<th>Código</th>";
 					echo "<th>Rubro</th>";
+					echo "<th>No. CDP Bogdata</th>";
+					echo "<th>Objeto</th>";
 				echo "</tr>";
 		for ($row = 2; $row <= $highestRow; $row++){
 			$ejer = $sheet->getCell("a".$row)->getValue();
@@ -830,28 +880,48 @@ class presuController{
 				//echo "<strong>".$codigo." - ".$rubro." - ".$objetocom."</strong><br>";
 				//echo "<strong>".$codigo." - ".$rubro."</strong><br>";
 
+				if($valor==$anula){
+					$regDt=2; 
+					$reganu++;
+				}else $regDt=1;
 
-				$resenc = $cexcel->getIddpaxCod($vig, $codigo, $rubro, $objetocom);
-				if($resenc){
-					$creg++;
-					if($tip=="CDP"){
-						$cexcel->saveCDPBg($resenc[0]['iddpa'],$valor,$anula,$cdpxcom);
+				if($objetocom)
+					$resenc = $cexcel->getIddpaxCod($vig, $codigo, $rubro, $objetocom, $ncdp);
+				else
+					$resenc = NULL;
+
+				if(!$resenc){
+					$mrubro = new Rubro();
+					$rubroT = $mrubro->getRubDep($rubro);
+					if($rubroT && $rubroT[0]['codrub']){
+						$cexcel->setCodrub($rubroT[0]['codrub']);
+						$resenc = $cexcel->getIddpaxCod($vig, $codigo, $rubroT[0]['codrub'], $objetocom, $ncdp);
 					}
-					if($tip=="RP"){
-						//echo $fecent."<br>";
-						$cexcel->saveRPBg($resenc[0]['iddpa'],$valor,$anula,$valnet,$autgiro,$csagiro,$nintcrp,$nintcdp,$fecent);
-					}
-					
-				}else{
-					$cregn++;
-					echo "<tr>";
-						echo "<td>".$cregn."</td>";
-						echo "<td>".($ctot+2)."</td>";
-						echo "<td>".$codigo."</td>";
-						echo "<td>".$rubro."</td>";
-					echo "</tr>";
 				}
 
+				if($regDt==1){
+					if($resenc){
+						$creg++;
+						if($tip=="CDP"){
+							$cexcel->saveCDPBg($resenc[0]['iddpa'],$valor,$anula,$cdpxcom);
+						}
+						if($tip=="RP"){
+							//echo $fecent."<br>";
+							$cexcel->saveRPBg($resenc[0]['iddpa'],$valor,$anula,$valnet,$autgiro,$csagiro,$nintcrp,$nintcdp,$fecent);
+						}
+						
+					}else{
+						$cregn++;
+						echo "<tr>";
+							echo "<td>".$cregn."</td>";
+							echo "<td>".($ctot+2)."</td>";
+							echo "<td>".$codigo."</td>";
+							echo "<td>".$rubro."</td>";
+							echo "<td>".intval($ncdp)."</td>";
+							echo "<td>".substr($objetocom,0,50)."...</td>";
+						echo "</tr>";
+					}
+				}
 				// echo $vigarc." - ".$mes." - ".$fecini." - ".$fecfin." - ".$cege." - ".$rubro." - ".$descrip." - ".$ncdp." - ".$fecreg." - ".$codigo." - ".$objeto." - ".$fondo." - ".$desfue." - ".$codcongas." - ".$descongas." - ".$codelepep." - ".$deselepep." - ".$valor." - ".$anula." - ".$reint." - ".$cdpxcom." - ".$cdpxcom." - ".$nintcdp." - ".$nposcdp." - ".$nofi." - ".$fecofi." - ".$idsol." - ".$nomsol." - ".$idres." - ".$nomres." - ".$fecreg." - ".$codcuecon." - ".$descuecon."<BR><br>";
 
 			}else{
@@ -882,15 +952,29 @@ class presuController{
 				echo "<td style='text-align: right;'>".number_format($cregn, 0, '.', ',')."</td>";
 			echo "</tr>";
 			echo "<tr>";
+				echo "<th>Anulaciones (Valor asignado = Valor anulación): </th>";
+				echo "<td style='text-align: right;'>".number_format($reganu, 0, '.', ',')."</td>";
+			echo "</tr>";
+			echo "<tr>";
 				echo "<th>3-200-F002: </th>";
 				echo "<td style='text-align: right;'>".number_format($crgf200, 0, '.', ',')."</td>";
 			echo "</tr>";
 			echo "<tr>";
 				echo "<th>TOTAL sumado / leídos: </th>";
-				echo "<th style='text-align: right;'>".number_format(($creg+$cregn+$crgf200), 0, '.', ',')." / ".number_format($ctot, 0, '.', ',')."</th>";
+				echo "<th style='text-align: right;'>".number_format(($creg+$cregn+$crgf200+$reganu), 0, '.', ',')." / ".number_format($ctot, 0, '.', ',')."</th>";
 			echo "</tr>";
 			echo "<tr></tbody>";
 		echo "</table>";
+
+		echo $this->btnVolver();
 		//header("Location:".base_url.'presu/index&tot=1012');
+	}
+
+	public function btnVolver(){
+		$btnVol = '';
+		$btnVol .= '<a href="https://intranet.canalcapital.gov.co/erpc/mod/financiera/presu/index&tot=1012">';
+			$btnVol .= '<button id="mos" class="btn-primary-ccapital" style="display: block;margin-bottom: 20px;" title="Volver a Presupuesto"><i class="fas fa-dollar-sign ico3"></i> Volver a presupuesto</button>';
+		$btnVol .= '</a>';
+		return $btnVol;
 	}
 }

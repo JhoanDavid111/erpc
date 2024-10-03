@@ -6,6 +6,7 @@ $ids =isset($_SESSION['pefid']) ? $_SESSION['pefid']:NULL;
 Utils::useraccess('paa/index',$ids,"Exter");
 
 
+
 include'../models/modpdf.php';
 include'../models/rubro.php';
 ini_set('memory_limit', '4096M');
@@ -16,7 +17,7 @@ use Dompdf\Dompdf;
 
 $pdf = isset($_GET['pdf']) ? $_GET['pdf']:NULL;
 $iddpa = isset($_GET["iddpa"]) ? $_GET["iddpa"]:NULL;
-$pfinan = new Pfinan();
+$pfinan = new Modpdf();
 $pfinan->setIddpa($iddpa);
 $dat = $pfinan->getOne();
 $flu = $pfinan->getFlujo();
@@ -147,9 +148,10 @@ $html .="<body>";
 			$html .= "<td><strong>";
 				$html .= "Firma de quien solicita:";
 				$ruta = "../../../firma/fir_".$dat[0]['resp'].".png";
+
 				//$html .= $ruta;
 				if (file_exists($ruta)){
-					$html .= "<br><img src='".$ruta."' height='70px'><br>";
+					$html .= firdig($dat[0]['resp'], "", "", $dat[0]['resp'], $flu[0]['iddpa'], $flu[0]['fec'],3);
 				}else{
 					$html .= "<br>";
 					$html .= "<br>";
@@ -280,7 +282,9 @@ $html .="<body>";
 				$html .= "Aprobación del ordenador del gasto";
 				$ruta = "../../../firma/fir_".$dat[0]['ordgas'].".png";
 				if (file_exists($ruta)){
-					$html .= "<br><img src='".$ruta."' height='100px'><br>";
+					//$html .= "<br><img src='".$ruta."' height='100px'><br>";
+
+					$html .= firdig($dat[0]['ordg'], "", "", $dat[0]['ordgas'], $flu[count($flu)-1]['idtdp'], $flu[count($flu)-1]['fec'],1);
 				}else{
 					$html .= "<br>";
 					$html .= "<br>";
@@ -298,9 +302,7 @@ $html .="<body>";
 			$html .= "<td><small>";
 				$html .= "Proyectó:";
 				if($flu){
-					$html .= $flu[0]['pernom']." ".$flu[0]['perape']." - ".$flu[0]['valnom']." ";
-					$ruta = "../../../firma/fir_".$flu[0]['perid'].".png";
-					if (file_exists($ruta)) $html .= "<img src='".$ruta."' height='30px'>";
+					$html .= firdig($flu[0]['pernom'], $flu[0]['perape'], $flu[0]['valnom'], $flu[0]['perid'], $flu[0]['idtdp'], $flu[0]['fec'],2);
 				}
 				// $html .= "Carolina Vargas García– Técnico de Recursos Humanos";
 				$html .= "<br>";
@@ -308,9 +310,7 @@ $html .="<body>";
 				if($flu){
 					for($i=1;$i<count($flu)-1;$i++) {
 						if($flu[$i]['depid']<>1026){
-							$html .= $flu[$i]['pernom']." ".$flu[$i]['perape']." - ".$flu[$i]['valnom']." ";
-							$ruta = "../../../firma/fir_".$flu[$i]['perid'].".png";
-							if (file_exists($ruta)) $html .= "<img src='".$ruta."' height='25px'>";
+							$html .= firdig($flu[$i]['pernom'], $flu[$i]['perape'], $flu[$i]['valnom'], $flu[$i]['perid'], $flu[$i]['idtdp'], $flu[$i]['fec'],2);
 							$html .= "<br>";
 						}
 					}
@@ -364,6 +364,60 @@ if($pdf==1547){
 
 
 <?php
+
+function firdig($pernom, $perape, $valnom, $perid, $idtdp, $fec, $tip){
+	$html = "";
+	if($tip==1){
+		$html .= "<table border='0' cellspacing='0' cellpadding='2' style='user-select: none;background-image: url(\"../img/fonfircc3.png\");margin: 0px auto;'><tr>";
+			$ruta = "../../../firma/fir_".$perid.".png";
+			
+			if (file_exists($ruta)){
+				$html .= "<td width='150px'>";
+					$html .= "<img src='".$ruta."' width='150px'>";
+				$html .= "</td><td width='128px' style='border-left: 1px dashed #000;font-size: 8px;'>";
+					$html .= "Firmado Digitalmente ";
+					$html .= "No.: ".str_pad($idtdp,6,"0", STR_PAD_LEFT)."<br>";
+					$html .= "Fecha: ".substr($fec,0,10)."<br>";
+					$html .= "Hora: ".substr($fec,11,8);
+				$html .= "</td>";
+			}
+		$html .= "</tr></table>";
+	}elseif($tip==2){
+		$html .= "<table border='0' cellspacing='0' cellpadding='2' style='user-select: none;background-image: url(\"../img/fonfircc2.png\");background-size: cover;'><tr><td width='200px'>";
+			$html .= $pernom." ".$perape."<br>".$valnom." ";
+			$ruta = "../../../firma/fir_".$perid.".png";
+			
+			if (file_exists($ruta)){
+				$html .= "</td><td width='56px'>";
+					$html .= "<img src='".$ruta."' height='25px'>";
+				$html .= "</td><td width='128px' style='border-left: 1px dashed #000;font-size: 8px;'>";
+					$html .= "Firmado Digitalmente ";
+					$html .= "No.: ".str_pad($idtdp,6,"0", STR_PAD_LEFT)."<br>";
+					$html .= "Fecha: ".substr($fec,0,10)."<br>";
+					$html .= "Hora: ".substr($fec,11,8);
+				
+			}
+		$html .= "</td></tr></table>";
+	}elseif($tip==3){
+		$html .= "<table border='0' cellspacing='0' cellpadding='2' style='user-select: none;background-image: url(\"../img/fonfircc3.png\");'><tr>";
+			$ruta = "../../../firma/fir_".$perid.".png";
+			
+			if (file_exists($ruta)){
+				$html .= "<td width='150px'>";
+					$html .= "<img src='".$ruta."' width='150px'>";
+				$html .= "</td><td width='128px' style='border-left: 1px dashed #000;font-size: 8px;'>";
+					$html .= "Firmado Digitalmente ";
+					$html .= "No.: ".str_pad($idtdp,6,"0", STR_PAD_LEFT)."<br>";
+					$html .= "Fecha: ".substr($fec,0,10)."<br>";
+					$html .= "Hora: ".substr($fec,11,8);
+				$html .= "</td>";
+			}
+		$html .= "</tr></table>";
+	}
+	return $html;
+}
+
+
 //Numeros en letras
 
 function basico($numero) {

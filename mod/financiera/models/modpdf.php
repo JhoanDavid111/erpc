@@ -1,7 +1,7 @@
 <?php 
 //detpaa
 require_once '../../../config/db.php';
-class Pfinan{
+class Modpdf{
 
 	private $iddpa;
 	private $idpaa;
@@ -609,7 +609,7 @@ class Pfinan{
 		return $ordgasto;
 	}
 
-	public function getAllPre() {
+	public function getAllPre($rubroSel = null, $nobjetoSel = null) {
 		$sql = "
 			SELECT 
 				codrub,
@@ -620,12 +620,37 @@ class Pfinan{
 				SUM(valcdp) as total_valcdp, 
 				SUM(valrp) as total_valrp, 
 				SUM(autgir) as total_autgir 
-			FROM `detpaa` 
-			WHERE idpaa = 2024 AND fecent IS NOT NULL 
-			GROUP BY codrub;
-		";             
-		$execute = $this->db->query($sql);
-		$ordgasto = $execute->fetchAll(PDO::FETCH_ASSOC);
+			FROM detpaa 
+			WHERE idpaa = 2024 
+			AND fecent IS NOT NULL
+		";
+	
+		// Añadir condiciones según los filtros
+		if ($rubroSel) {
+			$rubroSel = "%" . $rubroSel . "%";
+			$sql .= " AND CAST(codrub AS CHAR) LIKE :rubroSel";
+		}
+		if ($nobjetoSel) {
+			$nobjetoSel = "%" . $nobjetoSel . "%";
+			$sql .= " AND CAST(nobjeto AS CHAR) LIKE :nobjetoSel";
+		}
+	
+		$sql .= " GROUP BY codrub;";
+	
+		// Preparar y ejecutar la consulta con parámetros
+		$stmt = $this->db->prepare($sql);
+		
+		// Pasar parámetros si existen
+		if ($rubroSel) {
+			$stmt->bindParam(':rubroSel', $rubroSel, PDO::PARAM_STR);
+		}
+		if ($nobjetoSel) {
+			$stmt->bindParam(':nobjetoSel', $nobjetoSel, PDO::PARAM_STR);
+		}
+	
+		$stmt->execute();
+		$ordgasto = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	
 		return $ordgasto;
 	}
 
@@ -634,7 +659,7 @@ class Pfinan{
 			SELECT 
 				asidpa,
 				nobjeto 
-			FROM `detpaa` 
+			FROM detpaa 
 			WHERE codrub = :rubro AND elidp = 4 AND idpaa = 2024;
 		";             
 		$execute = $this->db->prepare($sql);

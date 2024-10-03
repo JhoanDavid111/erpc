@@ -7,6 +7,7 @@ include'models/newpaa.php';
 include'models/antproy.php';
 include'models/masi.php';
 include'models/detpaadoc.php';
+include'models/traslado.php';
 
 require __DIR__ . '/../../../vendor/autoload.php';		
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -173,6 +174,105 @@ class paaController{
 
 		require_once 'views/paa.php';
 	}
+
+	public function realizarMovimiento() {
+		error_log("Función realizarMovimiento llamada");
+	
+		// Asegúrate de que $iddpa esté definido
+		if (!isset($_GET['iddpa'])) {
+			error_log("Error: iddpa no está definido.");
+			// Manejo de error, podrías redirigir o mostrar un mensaje
+			return;
+		}
+	
+		$iddpa = $_GET['iddpa']; // Asigna el valor de iddpa desde la URL
+	
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			error_log("Datos recibidos: " . print_r($_POST, true));
+	
+			$tptrs = $_POST['tipoMovimiento'];
+			$monto = $_POST['monto'];
+			$perid = $_SESSION['perid'];
+		
+			// Configurar la fecha/hora en UTC-5
+			$timezone = new DateTimeZone('America/Bogota'); // UTC-5
+			$datetime = new DateTime('now', $timezone);
+			$fhtrs = $datetime->format('Y-m-d H:i:s'); // Generar el formato adecuado
+		
+			$idpro = 5004;
+			$idflu = 301;
+	
+			// Configura el objeto Traslado
+			$traslado = new Traslado();
+			$traslado->setIddpa($iddpa);
+			$traslado->setTptrs($tptrs);
+			$traslado->setMonto($monto);
+			$traslado->setPerid($perid);
+			$traslado->setFhtrs($fhtrs);
+			$traslado->setIdpro($idpro);
+			$traslado->setIdflu($idflu);
+	
+			// Verifica que el monto del movimiento no supere el saldo disponible
+			$pfinan = new Pfinan();
+			$asignado = $pfinan->getDetpaaById($iddpa);
+	
+			// Asegúrate de que 'asidpa' no esté vacío o nulo
+			/*
+			if (isset($asignado['asidpa']) && !empty($asignado['asidpa'])) {
+				$saldoAsignado = $asignado['asidpa'];
+				
+				// Log para verificar el valor del saldo asignado
+				error_log("El saldo asignado es: " . $saldoAsignado);
+	
+				if ($_POST['monto'] > $saldoAsignado) {
+					error_log("Error: El monto del movimiento supera el saldo disponible.");
+					$_SESSION['mensaje'] = "Error: El monto del movimiento supera el saldo disponible.";
+					return;
+				}
+			} else {
+				error_log("Error: No se pudo obtener el saldo asignado.");
+				$_SESSION['mensaje'] = "Error: No se pudo obtener el saldo asignado.";
+				return;
+			}
+				*/
+	
+			// Guarda el movimiento
+			if ($traslado->create()) {
+				$_SESSION['mensaje'] = "Movimiento registrado correctamente.";
+				$_SESSION['tipoMovimiento'] = $tptrs; // Almacena el tipo de movimiento
+				$_SESSION['monto'] = $monto; // Almacena el monto
+			} else {
+				$_SESSION['mensaje'] = "Error al registrar el movimiento.";
+			}
+	
+			// Redirecciona
+			header("Location: " . base_url . "paa/index");
+			exit();
+		}
+	
+		// Carga la vista
+		require_once 'views/realizarMovimiento.php';
+	}
+	
+	public function detallesMovimientos() {
+		// Obtiene el ID de la petición
+		$iddpa = $_GET['iddpa'];
+		error_log("ID DPA recibido: " . $iddpa); // Para verificar si se recibe el ID
+	
+		// Consulta a la base de datos
+		$trasladoModel = new Traslado();
+		$traslados = $trasladoModel->getMovimientosPorIdDpa($iddpa); // Guardar el resultado
+	
+		if (empty($traslados)) {
+			error_log("No se encontraron movimientos para ID DPA: " . $iddpa);
+		}
+	
+		// Cargar la vista
+		require_once 'views/detallesMovimientos.php';
+	}
+	
+	
+	
 
 	public function detpaa(){
 		Utils::useraccess('paa/index',$_SESSION['pefid']);

@@ -137,6 +137,9 @@ class ProjectsLocationsBackupVaults extends \Google\Service\Resource
    * the format
    * 'projects/{project_id}/locations/{location}/backupVaults/{resource_name}'
    * @param array $optParams Optional parameters.
+   *
+   * @opt_param string view Optional. Reserved for future use to provide a BASIC &
+   * FULL view of Backup Vault
    * @return BackupVault
    * @throws \Google\Service\Exception
    */
@@ -165,6 +168,8 @@ class ProjectsLocationsBackupVaults extends \Google\Service\Resource
    * default.
    * @opt_param string pageToken Optional. A token identifying a page of results
    * the server should return.
+   * @opt_param string view Optional. Reserved for future use to provide a BASIC &
+   * FULL view of Backup Vault.
    * @return ListBackupVaultsResponse
    * @throws \Google\Service\Exception
    */
@@ -177,10 +182,12 @@ class ProjectsLocationsBackupVaults extends \Google\Service\Resource
   /**
    * Updates the settings of a BackupVault. (backupVaults.patch)
    *
-   * @param string $name Output only. The resource name.
+   * @param string $name Output only. Identifier. The resource name.
    * @param BackupVault $postBody
    * @param array $optParams Optional parameters.
    *
+   * @opt_param bool force Optional. If set to true, will not check plan duration
+   * against backup vault enforcement duration.
    * @opt_param string requestId Optional. An optional request ID to identify
    * requests. Specify a unique request ID so that if you must retry your request,
    * the server will know to ignore the request if it has already been completed.

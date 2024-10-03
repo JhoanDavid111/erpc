@@ -7,6 +7,7 @@ class Rubro{
 	private $nomrub;
 	private $deprub;
 	private $actrub;
+	private $intrub;
 	private $db;
 	//SELECT codrub, nomrub, deprub, actrub FROM rubro
 	public function __construct() {
@@ -33,6 +34,10 @@ class Rubro{
 		return $this->actrub;
 	}
 
+	function getIntrub(){
+		return $this->intrub;
+	}
+
 //Metodos Set Guardan el dato
 	function setCodrub($codrub) {
 		$this->codrub = $codrub;
@@ -52,6 +57,10 @@ class Rubro{
 
 	function setActrub($actrub) {
 		$this->actrub = $actrub;
+	}
+
+	function setIntrub($intrub){
+		$this->intrub = $intrub;
 	}
 
 //Metodos CRUD
@@ -84,6 +93,13 @@ class Rubro{
 		return $save;
 	}
 
+	public function getRubDep($depende){
+		$sql ="SELECT codrub, codrub2, nomrub FROM rubro WHERE actrub=1 AND intrub=1 AND deprub='".$depende."'";
+		$execute = $this->db->query($sql);
+		$save = $execute->fetchall(PDO::FETCH_ASSOC);
+		return $save;
+	}
+
 	public function getNumAnteP($consultado){
 		//$sql ="SELECT idpaa, ninipaa FROM paa WHERE estpaa=3";
 		$sql ="SELECT idpaa, ninipaa FROM paa WHERE idpaa=$consultado";
@@ -101,22 +117,22 @@ class Rubro{
 
 
 	public function save(){
-		$sql= "INSERT INTO rubro(codrub,codrub2,nomrub, deprub, actrub) VALUES (?,?,?,?,?)";
+		$sql= "INSERT INTO rubro(codrub,codrub2,nomrub, deprub, actrub, $intrub) VALUES (?,?,?,?,?,?)";
 		$insert = $this->db->prepare($sql);
-		$arrdata = array($this->getCodrub(),$this->getCodrub2(),$this->getNomrub(), $this->getDeprub(), $this->getActrub());
+		$arrdata = array($this->getCodrub(),$this->getCodrub2(),$this->getNomrub(), $this->getDeprub(), $this->getActrub(), $this->getIntrub());
 		$save = $insert->execute($arrdata);
 	}
 
 	public function edit(){		
 
-		$sql = "UPDATE rubro SET codrub2=?,nomrub=?,deprub=?,actrub=? ";
+		$sql = "UPDATE rubro SET codrub2=?,nomrub=?,deprub=?,actrub=?, intrub=? ";
 		$sql .= " WHERE codrub={$this->codrub};";	
 
 		// var_dump($sql);
 		// die();
 
 		$update= $this->db->prepare($sql);
-		$arrdata = array($this->getCodrub2(),$this->getNomrub(), $this->getDeprub(), $this->getActrub());
+		$arrdata = array($this->getCodrub2(),$this->getNomrub(), $this->getDeprub(), $this->getActrub(), $this->getIntrub());
 		$save=$update->execute($arrdata);
 		
 		

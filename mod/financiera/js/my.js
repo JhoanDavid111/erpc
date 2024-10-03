@@ -971,3 +971,49 @@ function elimObj(){
     var v = confirm("¿Está seguro de desea Anular y Liberar este registro? \n\n El monto asignado será devuelto al registro inicial.");
     return v;
 }
+
+// febrero 2024------------------
+
+
+function formatearNumero(numero) {
+    var numeroSinFormato = numero.replace(/\D/g, '');
+    var numeroFormateado = parseInt(numeroSinFormato);
+
+    if (isNaN(numeroFormateado)) {
+      return "";
+    }
+
+    var parteEntera = numeroFormateado.toLocaleString('es-ES');
+    var parteDecimal = numeroSinFormato.slice(parteEntera.length);
+
+    if (parteDecimal.length > 0) {
+      parteDecimal = "," + parteDecimal;
+    }
+
+    return "$ " + parteEntera + parteDecimal;
+}
+
+$(document).ready(function() {
+    $("#valorAsignado2").on("input", function() {
+      var valorConFormato = $(this).val();
+      var valorSinFormato = valorConFormato.replace(/\D/g, '');
+      var valorNumerico = parseInt(valorSinFormato);
+
+      if (isNaN(valorNumerico)) {
+        return;
+      }
+
+      // Convertir el valor numérico a letras
+      //var valorEnLetras = convertirNumeroALetras(valorNumerico);
+
+      // Mostrar el valor en letras en el segundo input
+      //$("#valorEnLetras").val(valorEnLetras + " PESOS M/CTE");
+
+      // Formatear el valor numérico original con el signo pesos y separador de miles
+      var valorFormateado = formatearNumero(valorConFormato);
+      $(this).val(valorFormateado);
+      $("#valorAsignado").val(valorNumerico);
+
+        
+    });
+  });

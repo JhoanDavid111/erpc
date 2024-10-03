@@ -747,6 +747,7 @@ class Pfinan{
 		return $edpf;
 	}
 
+
 	public function selgrPie(){
 		// $sql = "SELECT * FROM detpaa WHERE codrub =".$this->codrub;		
 		// $execute = $this->db->query($sql);
@@ -1664,17 +1665,77 @@ class Pfinan{
 		return $pfinan;
 	}
 
-	public function getAll7($area, $idpaa=0){
-		$sql = "SELECT distinct dt.*, rub.*, m.vafnom AS moda, f.vafnom AS fuen, a.valnom AS are, concat(p.pernom,' ', p.perape) AS rspn, p.peremail, p.pertel, concat(og.pernom,' ', og.perape) AS ordg, fl.actflu, ob.vafnom AS obj, ii.vafnom AS ini, pr.vafnom AS pro, tc.vafnom AS tco, ft.vafnom AS fte, pc.nompro, fi.vafnom AS resolu, fn.vafnom AS pro, fo.vafnom AS meta, fo.vafnom AS comp, ef.vafnom AS estfin FROM detpaa dt INNER JOIN rubro rub ON dt.codrub = rub.codrub INNER JOIN valfin AS m ON dt.tipcondpa=m.vafid INNER JOIN valfin AS f ON dt.ftefindpa=f.vafid INNER JOIN valor AS a ON dt.area=a.valid LEFT JOIN persona as p ON dt.resp=p.perid LEFT JOIN persona as og ON dt.ordgas=og.perid INNER JOIN flujo as fl ON dt.idflu=fl.idflu INNER JOIN valfin AS ef ON (ef.dofid=12 AND fl.ntipo=ef.vaffijo) INNER JOIN valfin AS ob ON dt.objdpa=ob.vafid INNER JOIN valfin AS ii ON dt.inidpa=ii.vafid INNER JOIN valfin AS pr ON dt.prodpa=pr.vafid INNER JOIN valfin AS tc ON dt.tipcondpa=tc.vafid INNER JOIN valfin AS ft ON dt.ftefindpa=ft.vafid INNER JOIN proceso AS pc ON dt.idpro=pc.idpro LEFT JOIN valfin AS fi ON dt.resoludp=fi.vafid LEFT JOIN valfin AS fn ON dt.prodpa=fn.vafid LEFT JOIN valfin AS fo ON dt.inidpa=fo.vafid LEFT JOIN valfin AS fc ON dt.compro=fc.vafid WHERE dt.elidp=4 AND dt.idpaa='$idpaa'";
-
-		if ($area) {
-			$sql .= " AND a.valid IN ($area)";
+	public function getAll7($areSel, $idpaa = 0, $rubroSel = null, $nobjetoSel = null) {
+		// Iniciar la consulta SQL
+		$sql = "SELECT DISTINCT dt.*, rub.*, m.vafnom AS moda, f.vafnom AS fuen, a.valnom AS are,
+				CONCAT(p.pernom, ' ', p.perape) AS rspn, p.peremail, p.pertel, 
+				CONCAT(og.pernom, ' ', og.perape) AS ordg, fl.actflu, ob.vafnom AS obj, 
+				ii.vafnom AS ini, pr.vafnom AS pro, tc.vafnom AS tco, 
+				ft.vafnom AS fte, pc.nompro, fi.vafnom AS resolu, 
+				fn.vafnom AS pro, fo.vafnom AS meta, fo.vafnom AS comp, 
+				ef.vafnom AS estfin 
+				FROM detpaa dt 
+				INNER JOIN rubro rub ON dt.codrub = rub.codrub 
+				INNER JOIN valfin AS m ON dt.tipcondpa = m.vafid 
+				INNER JOIN valfin AS f ON dt.ftefindpa = f.vafid 
+				INNER JOIN valor AS a ON dt.area = a.valid 
+				LEFT JOIN persona AS p ON dt.resp = p.perid 
+				LEFT JOIN persona AS og ON dt.ordgas = og.perid 
+				INNER JOIN flujo AS fl ON dt.idflu = fl.idflu 
+				INNER JOIN valfin AS ef ON (ef.dofid = 12 AND fl.ntipo = ef.vaffijo) 
+				INNER JOIN valfin AS ob ON dt.objdpa = ob.vafid 
+				INNER JOIN valfin AS ii ON dt.inidpa = ii.vafid 
+				INNER JOIN valfin AS pr ON dt.prodpa = pr.vafid 
+				INNER JOIN valfin AS tc ON dt.tipcondpa = tc.vafid 
+				INNER JOIN valfin AS ft ON dt.ftefindpa = ft.vafid 
+				INNER JOIN proceso AS pc ON dt.idpro = pc.idpro 
+				LEFT JOIN valfin AS fi ON dt.resoludp = fi.vafid 
+				LEFT JOIN valfin AS fn ON dt.prodpa = fn.vafid 
+				LEFT JOIN valfin AS fo ON dt.inidpa = fo.vafid 
+				LEFT JOIN valfin AS fc ON dt.compro = fc.vafid 
+				WHERE dt.elidp = 4 AND dt.idpaa = :idpaa";
+		
+		// Agregar filtros
+		if ($areSel) {
+			$sql .= " AND dt.area = :areSel";
 		}
-			
-		$execute = $this->db->query($sql);
-		$pfinan = $execute->fetchall(PDO::FETCH_ASSOC);
-		return $pfinan;
-	}
+		if ($rubroSel) {
+			$rubroSel = "%" . $rubroSel . "%";
+			$sql .= " AND CAST(dt.codrub AS CHAR) LIKE :rubroSel";
+		}
+		if ($nobjetoSel) {
+			$nobjetoSel = "%" . $nobjetoSel . "%";
+			$sql .= " AND CAST(dt.nobjeto AS CHAR) LIKE :nobjetoSel";
+		}
+	
+		// Registrar la consulta y los parámetros
+		error_log("Consulta SQL: " . $sql);
+		error_log("Parámetros: idpaa=" . $idpaa . ", areSel=" . $areSel . ", rubroSel=" . $rubroSel . ", nobjetoSel=" . $nobjetoSel);
+	
+		// Preparar la consulta
+		$stmt = $this->db->prepare($sql);
+	
+		// Vincular los parámetros
+		$stmt->bindValue(':idpaa', $idpaa, PDO::PARAM_INT);
+		if ($areSel) {
+			$stmt->bindValue(':areSel', $areSel, PDO::PARAM_INT);
+		}
+		if ($rubroSel) {
+			$stmt->bindValue(':rubroSel', $rubroSel, PDO::PARAM_STR); 
+		}
+		if ($nobjetoSel) {
+			$stmt->bindValue(':nobjetoSel', $nobjetoSel, PDO::PARAM_STR);
+		}
+	
+		// Ejecutar la consulta
+		$stmt->execute();
+	
+		// Log de los resultados de la consulta
+		$resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		error_log("Resultados de la consulta: " . print_r($resultados, true));
+		
+		return $resultados;
+	}	
 
 	public function sumPr($ntipo, $codrub){
 		$sql = "SELECT sum(dt.asidpa) AS cdp FROM detpaa AS dt INNER JOIN flujo AS fl ON dt.idflu=fl.idflu WHERE dt.depidd IS NOT NULL AND dt.elidp=1 AND fl.ntipo IN ($ntipo) AND dt.codrub=$codrub";
@@ -2175,10 +2236,24 @@ class Pfinan{
 		return $ordgasto;
 	}
 
-	public function getIddpaxCod($idpaa, $cdg, $rubro, $objetocom){
-		$sql = "SELECT d.iddpa, d.idpaa, d.nicod, d.nobjeto, d.nomcont, d.area, d.codrub, d.objdpa, d.inidpa, d.prodpa, d.unspsc, d.fecinidpa, d.nmesdpa, d.cuodpa, d.tipcondpa, d.ftefindpa, d.asidpa, d.asirp, d.pmes, d.umes, d.valdpa, d.valvigact, d.fecfindpa, d.reqvigf, d.solivigf, d.unidad, d.ubicacion, d.resp, d.celres, d.mailres, d.ncdppc, d.fecsol, d.observaciones, d.idpro, d.idflu, d.depidd, d.nexpcdp, d.nrp, d.nbogdata, d.rutcdp, d.rutrp, d.ordgas, d.elidp, d.feclib, d.rutlib, d.estlib, d.metadp, d.resoludp, d.idmcdp, d.valid, d.compro, d.cpc, d.fondo, d.prcdp, d.prrp, d.idpb FROM detpaa AS d WHERE d.idpaa='".$idpaa."' AND d.elidp=1 AND d.codrub='".$rubro."' AND (d.nobjeto LIKE '".$cdg." %' OR TRIM(d.nobjeto) LIKE '%".$objetocom."%')";
+	public function getIddpaxCod($idpaa, $cdg, $rubro, $objetocom, $ncdp){
+		/*Revisando con rubro*/
+		$sql = "SELECT d.iddpa, d.idpaa, d.nicod, d.nobjeto, d.nomcont, d.area, d.codrub, d.objdpa, d.inidpa, d.prodpa, d.unspsc, d.fecinidpa, d.nmesdpa, d.cuodpa, d.tipcondpa, d.ftefindpa, d.asidpa, d.asirp, d.pmes, d.umes, d.valdpa, d.valvigact, d.fecfindpa, d.reqvigf, d.solivigf, d.unidad, d.ubicacion, d.resp, d.celres, d.mailres, d.ncdppc, d.fecsol, d.observaciones, d.idpro, d.idflu, d.depidd, d.nexpcdp, d.nrp, d.nbogdata, d.rutcdp, d.rutrp, d.ordgas, d.elidp, d.feclib, d.rutlib, d.estlib, d.metadp, d.resoludp, d.idmcdp, d.valid, d.compro, d.cpc, d.fondo, d.prcdp, d.prrp, d.idpb FROM detpaa AS d WHERE d.idpaa='".$idpaa."' AND d.elidp=1 AND ";
+		$sql .=  "d.codrub='".$rubro."' AND (";
+		if($ncdp) $sql .= "trim(d.nbogdata)=trim(CAST('".$ncdp."' AS INTEGER)) OR (";
+		$sql .=  "(d.nobjeto LIKE '".$cdg." %' OR TRIM(d.nobjeto) LIKE '%".$objetocom."%'))";
+		$sql .= ")";
+		
+		/*Revisando sin rubro
+		$sql = "SELECT d.iddpa, d.idpaa, d.nicod, d.nobjeto, d.nomcont, d.area, d.codrub, d.objdpa, d.inidpa, d.prodpa, d.unspsc, d.fecinidpa, d.nmesdpa, d.cuodpa, d.tipcondpa, d.ftefindpa, d.asidpa, d.asirp, d.pmes, d.umes, d.valdpa, d.valvigact, d.fecfindpa, d.reqvigf, d.solivigf, d.unidad, d.ubicacion, d.resp, d.celres, d.mailres, d.ncdppc, d.fecsol, d.observaciones, d.idpro, d.idflu, d.depidd, d.nexpcdp, d.nrp, d.nbogdata, d.rutcdp, d.rutrp, d.ordgas, d.elidp, d.feclib, d.rutlib, d.estlib, d.metadp, d.resoludp, d.idmcdp, d.valid, d.compro, d.cpc, d.fondo, d.prcdp, d.prrp, d.idpb FROM detpaa AS d WHERE d.idpaa='".$idpaa."' AND d.elidp=1 AND (";
+		if($ncdp) $sql .= "d.nbogdata=CAST('".$ncdp."' AS INTEGER) OR (";
+		$sql .=  "d.codrub='".$rubro."' AND ";
+		$sql .=  "(d.nobjeto LIKE '".$cdg." %' OR TRIM(d.nobjeto) LIKE '%".$objetocom."%'))";
+		$sql .= ")";*/
+
+
 		try{
-			// echo $sql."<br>";
+			//echo $sql."<br>";
 			$execute = $this->db->query($sql);
 			$ordgasto = $execute->fetchall(PDO::FETCH_ASSOC);		
 			return $ordgasto;
@@ -2296,15 +2371,150 @@ class Pfinan{
 	}
 
 	public function getAllAnaPre($codrub){
-		$sql = "SELECT distinct dt.*, rub.*, m.vafnom AS moda, f.vafnom AS fuen, a.valnom AS are, fl.actflu, fl.color, pr.nompro FROM detpaa AS dt INNER JOIN rubro AS rub ON dt.codrub = rub.codrub INNER JOIN valfin AS m ON dt.tipcondpa=m.vafid INNER JOIN valfin AS f ON dt.ftefindpa=f.vafid INNER JOIN proceso AS pr ON dt.idpro=pr.idpro INNER JOIN valor AS a ON dt.area=a.valid INNER JOIN flujo as fl ON dt.idflu=fl.idflu WHERE dt.idpaa = ".$this->idpaa." AND rub.codrub=".$codrub." AND dt.elidp=1";
+		//$sql = "SELECT distinct dt.*, rub.*, m.vafnom AS moda, f.vafnom AS fuen, a.valnom AS are, fl.actflu, fl.color, pr.nompro FROM detpaa AS dt INNER JOIN rubro AS rub ON dt.codrub = rub.codrub INNER JOIN valfin AS m ON dt.tipcondpa=m.vafid INNER JOIN valfin AS f ON dt.ftefindpa=f.vafid INNER JOIN proceso AS pr ON dt.idpro=pr.idpro INNER JOIN valor AS a ON dt.area=a.valid INNER JOIN flujo as fl ON dt.idflu=fl.idflu WHERE dt.idpaa=".$this->idpaa." AND rub.codrub=".$codrub." AND dt.elidp=1";
+
+		$sql = "SELECT SUM(dt.valcdp) AS valcdpM, SUM(dt.anucdp) AS anucdpM, SUM(dt.csagir) AS csagirM, SUM(dt.autgir) AS autgirM, SUM(dt.valrp) AS valrpM, SUM(dt.anurp) AS anurpM, SUM(dt.vlrneto) AS vlrnetoM FROM detpaa AS dt INNER JOIN rubro AS rub ON dt.codrub = rub.codrub INNER JOIN valfin AS m ON dt.tipcondpa=m.vafid INNER JOIN valfin AS f ON dt.ftefindpa=f.vafid INNER JOIN proceso AS pr ON dt.idpro=pr.idpro INNER JOIN valor AS a ON dt.area=a.valid INNER JOIN flujo as fl ON dt.idflu=fl.idflu WHERE dt.idpaa=".$this->idpaa." AND rub.codrub=".$codrub." AND dt.elidp=1";
 
 		// var_dump($sql);
 		// die();
-		//echo "<br><br>".$sql."<br><br>";
+		// echo "<br><br>".$sql."<br><br>";
 		$execute = $this->db->query($sql);
 		$pfinan = $execute->fetchall(PDO::FETCH_ASSOC);
 		return $pfinan;
 	}
+
+
+	public function getAllPre(){
+		$sql = "
+			SELECT 
+				codrub,
+				fecent,
+				valcdp,
+				MIN(nobjeto) as nobjeto, -- Selecciona una descripción por rubro
+				SUM(asidpa) as total_asidpa, 
+				SUM(valcdp) as total_valcdp, 
+				SUM(valrp) as total_valrp, 
+				SUM(autgir) as total_autgir 
+			FROM detpaa 
+			WHERE idpaa = 2024 AND fecent IS NOT NULL 
+			GROUP BY codrub;
+		";             
+		$execute = $this->db->query($sql);
+		$ordgasto = $execute->fetchAll(PDO::FETCH_ASSOC);
+		return $ordgasto;
+	}
+
+	public function getAllPreAsi($rubro) {
+		$sql = "
+			SELECT 
+				asidpa,
+				nobjeto 
+			FROM detpaa 
+			WHERE codrub = :rubro AND elidp = 4 AND idpaa = 2024;
+		";             
+		$execute = $this->db->prepare($sql);
+		$execute->bindParam(':rubro', $rubro, PDO::PARAM_INT);
+		$execute->execute();
+		$ordgasto = $execute->fetchAll(PDO::FETCH_ASSOC);
+		return $ordgasto;
+	}
+
+	public function getPersonName($perid) {
+
+		$sql = "
+			SELECT 
+				pernom 
+			FROM persona 
+			WHERE perid = :perid;
+		";             
+		$execute = $this->db->prepare($sql);
+		$execute->bindParam(':perid', $perid, PDO::PARAM_INT);
+		$execute->execute();
+		$persona = $execute->fetch(PDO::FETCH_ASSOC);
+		return $persona ? $persona['pernom'] : null;
+
+	}
+
+	public function getDetpaaById($iddpa) {
+		$sql = "SELECT asidpa FROM detpaa WHERE iddpa = ? AND elidp = 4 AND idpaa = 2024";
+		$select = $this->db->prepare($sql);
+		$select->execute(array($iddpa));
+		$record = $select->fetch(PDO::FETCH_ASSOC);
+	
+		return $record;
+	}
+
+	public function getRubro($iddpa) {
+		$sql = "SELECT codrub FROM detpaa WHERE iddpa = :iddpa";
+
+		$execute = $this->db->prepare($sql);
+		$execute->bindParam(':iddpa', $iddpa, PDO::PARAM_INT);
+		$execute->execute();
+		$rubro = $execute->fetch(PDO::FETCH_ASSOC);
+		return $rubro ? $rubro['codrub'] : null;
+
+	}
+
+
+	public function getFlujo($idflu) {
+		$sql = "SELECT actflu FROM flujo WHERE idflu = :idflu";
+
+		$execute = $this->db->prepare($sql);
+		$execute->bindParam(':idflu', $idflu, PDO::PARAM_INT);
+		$execute->execute();
+		$flujo = $execute->fetch(PDO::FETCH_ASSOC);
+		return $flujo ? $flujo['actflu'] : null;
+
+	}
+
+	public function getProceso($idpro) {
+		$sql = "SELECT nompro FROM proceso WHERE idpro = :idpro";
+
+		$execute = $this->db->prepare($sql);
+		$execute->bindParam(':idpro', $idpro, PDO::PARAM_INT);
+		$execute->execute();
+		$proceso = $execute->fetch(PDO::FETCH_ASSOC);
+		return $proceso ? $proceso['nompro'] : null;
+
+	}
+
+    public function getAllFiltered($areSel, $rubroSel, $nobjetoSel) {
+        $sql = "SELECT * FROM detpaa WHERE elidp = 4 and idpaa = 2024"; // Cambia 'tu_tabla' por el nombre real de la tabla.
+
+        // Filtrar por área
+        if (!empty($areSel)) {
+            $sql .= " AND area = :areSel";
+        }
+
+        // Filtrar por rubro utilizando LIKE
+        if (!empty($rubroSel)) {
+            $sql .= " AND codrub LIKE :rubroSel"; // Usa LIKE para buscar coincidencias parciales
+        }
+
+        // Filtrar por iddpa utilizando LIKE
+        if (!empty($nobjetoSel)) {
+            $sql .= " AND iddpa LIKE :nobjetoSel"; // Usa LIKE para buscar coincidencias parciales
+        }
+
+        $stmt = $this->db->prepare($sql);
+
+        // Vincular parámetros
+        if (!empty($areSel)) {
+            $stmt->bindValue(':areSel', $areSel);
+        }
+        if (!empty($idpaa)) {
+            $stmt->bindValue(':idpaa', $idpaa);
+        }
+        if (!empty($rubroSel)) {
+            $stmt->bindValue(':rubroSel', '%' . $rubroSel . '%'); // Agrega '%' para búsqueda parcial
+        }
+        if (!empty($nobjetoSel)) {
+            $stmt->bindValue(':nobjetoSel', '%' . $nobjetoSel . '%'); // Agrega '%' para búsqueda parcial
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
 ?>

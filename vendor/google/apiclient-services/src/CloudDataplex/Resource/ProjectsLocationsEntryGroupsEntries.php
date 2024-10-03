@@ -76,7 +76,10 @@ class ProjectsLocationsEntryGroupsEntries extends \Google\Service\Resource
     return $this->call('delete', [$params], GoogleCloudDataplexV1Entry::class);
   }
   /**
-   * Gets an Entry. (entries.get)
+   * Gets an Entry.Caution: The BigQuery metadata that is stored in Dataplex
+   * Catalog is changing. For more information, see Changes to BigQuery metadata
+   * stored in Dataplex Catalog (https://cloud.google.com/dataplex/docs/biqquery-
+   * metadata-changes). (entries.get)
    *
    * @param string $name Required. The resource name of the Entry: projects/{proje
    * ct}/locations/{location}/entryGroups/{entry_group}/entries/{entry}.
@@ -135,9 +138,9 @@ class ProjectsLocationsEntryGroupsEntries extends \Google\Service\Resource
   /**
    * Updates an Entry. (entries.patch)
    *
-   * @param string $name Identifier. The relative resource name of the Entry, of
-   * the form: projects/{project}/locations/{location}/entryGroups/{entry_group}/e
-   * ntries/{entry}.
+   * @param string $name Identifier. The relative resource name of the entry, in
+   * the format projects/{project_id_or_number}/locations/{location_id}/entryGroup
+   * s/{entry_group_id}/entries/{entry_id}.
    * @param GoogleCloudDataplexV1Entry $postBody
    * @param array $optParams Optional parameters.
    *

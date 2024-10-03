@@ -1,6 +1,27 @@
 <script src="../js/futic.js"></script>
 <script src="../js/cdpaux.js"></script>
 <script src="../js/cdpmultr.js"></script>
+<script src="../js/buscarEmpleado.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="../js/sweetalert.min.js"></script>
+
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#btnsavegrup').click(function(){			
+			savePerfil();
+		});
+
+	});
+</script>
 
 <?php 
 //********************
@@ -10,7 +31,7 @@
 //********************
  ?>
 
-
+ 
 <?php if(!isset($_SESSION['newpfin'])&&($solicitud==true)):  ?>
 	<h2 class="title-c"> Solicitud CDP </h2><br><br>
 	<!-- 	<form class="m-tb-40" action="" method="POST"> -->	
@@ -24,7 +45,8 @@
 				<input type="hidden" name="iddpa" id="iddpa" value="<?=$pf2['iddpa'];?>">
 				<input type="hidden" name="idpaa" id="idpaa" value="<?=$pf2['idpaa'];?>">
 				<!-- <input type="text" name="idflu" id="idflu" value="<?=$pf2['idflu'];?>"> -->
-				<input type="hidden" class="form-control" id="idpro" name="idpro" value="<?=$pf2['idpro'];?>">
+				<input type="hidden" class="form-control" name="idpro" value="<?=$pf2['idpro'];?>">
+				<input type="hidden" name="tipper" id="tipper" value="0">
 				<div class="row">
 					<div class="form-group col-md-6">
 						<label for="codUNSPSC">Cod. UNSPSC</label>
@@ -42,16 +64,321 @@
 					</div>
 					
 					<!-- <div class="form-group col-md-4">						
-						<span class="btn btn-primary " style="background-color: #0071bc !important;" data-toggle="modal" data-target="#modalserie">
+						<span class="btn btn-primary " style="background-color: #523178 !important;" data-toggle="modal" data-target="#modalserie">
 							<span class="fa fa-database"> </span>
 								Agregar búsqueda de proveedor
 						</span>
 					</div> -->
-					<div class="form-group col-md-4">						
-						<span class="btn btn-primary " onclick="myFunction()" style="background-color: #0071bc !important;">
+
+
+					<!-- <div class="form-group col-md-12">						
+						<span class="btn btn-primary btn-block " onclick="myFunction()" style="background-color: #523178 !important;">
 							<span class="fa fa-database"> </span>
 								Agregar búsqueda de proveedor
 						</span>
+					</div> -->
+
+					<div class="form-group col-md-6">						
+						<span class="btn btn-primary btn-block" onclick="myFunction2()" style="background-color: #0071bc !important;">
+							<span class="fa fa-user-plus"> </span>
+								Agregar contratista persona natural
+						</span>
+					</div>
+
+					<div class="form-group col-md-6">						
+						<span class="btn btn-primary btn-block" onclick="myFunction3()" style="background-color: #0071bc !important;">
+							<span class="fa fa-user-plus"> </span>
+								Agregar contratista persona jurídica
+						</span>
+					</div>
+					<br>
+					<div class="form-group col-md-12 " style="display:none; background-color:#f8f6f6 !important;" id="myDIV2">
+						<br>
+						<h4 class="title-c m-tb-40">Persona Natural</h4>
+						<br><br>
+
+						<div class="form-row">
+			                <!-- <div class="col-md-4 form-group">
+			                    <label for="area">Área</label>
+			                    <input type="text" class="form-control" id="area" name="area" readonly>
+			                </div> -->
+			                <div class="col-md-4 form-group">
+			                    <label for="num_documento">Número de documento</label>
+			                    <input type="number" class="form-control" id="num_documento" name="num_documento">
+			                </div>
+
+			                <div class="col-md-4 form-group">
+			                    <button type="button" class="btn-secondary-canalc " onclick="buscarEmpleado(1)">Buscar</button>
+			                </div>
+			                <div class="col-md-4 form-group">
+			                    
+			                </div>
+			            </div>
+
+			            <div  id="dataFuturoCont" style="background-color:#f0ebeb; display:none; width:100%">
+			            	<br>
+			            	<div class="row">
+			            		<div class="col-md-6 ">
+					                <label for="nomcontNew">Nombres futuro contratista</label>
+					                <input type="text" class="form-control" id="nomcontNew" name="nomcontNew">
+					            </div>
+
+					            <div class="col-md-6 ">
+					                <label for="apecontNew">Apellidos futuro contratista</label>
+					                <input type="text" class="form-control" id="apecontNew" name="apecontNew">
+					                <input type="hidden" id="peridNew" name="peridNew">
+					                <input type="hidden" id="nodocemp" name="nodocemp">
+					            </div>
+			            	</div>
+
+			            	<div class="row" id="datosmail">
+			            		<div class="col-md-6 form-group">
+					                <label for="mailcontNew">Correo Electrónico</label>
+					                <input type="text" class="form-control" id="mailcontNew" name="mailcontNew">
+					            </div>
+
+					            <div class="col-md-6 form-group">
+					                <label for="contracontNew">Contraseña temporal</label>
+					                <input type="text" class="form-control" id="contracontNew" name="contracontNew">
+					            </div>
+			            	</div>		            	
+				            
+				            <br>
+			            </div>
+			            
+			            <div class="form-group">
+			                <br>			                
+			                <h6 class="title-c"> Obligaciones:</h6>
+			                <br><br>
+			                <div class="form-group row">       
+						        <div class="col-md-8">
+						        	 <label for="obligagen" class="col-form-label">Palabras Clave:</label>
+						            <select id="obligagen" name="obligagen" class="form-control" onchange="mostrarObligaciones(this.value);" style="padding: 0px;">
+						            	<option value="">Seleccione...</option>
+						                <?php foreach ($obligagen as $og) { ?>
+						                    <option value="<?= $og['idobliga']; ?>"><?= $og['nom']; ?></option>
+						                <?php } ?>
+						            </select>
+						        </div>
+
+						        <div class="col-md-1" style="margin-top: 10px !important;">
+				                    <button type="button" class="btn-secondary-canalc" id="btnguardarserie" data-toggle="modal" data-target="#modalserie2" >+</button> 
+				                </div>				               
+						    </div>						    
+
+						    <?php 						  
+						    	//var_dump($_SESSION['depid']);						    	
+						     ?>
+
+
+
+						    <!-- <table id="example" class="table table-striped table-bordered driverrhh " style="width:100%;">		
+							    <thead>
+									<tr style="text-align: center !important;">	
+										<th></th>
+										<th>Nombre</th>						
+										<th>Fecha Creación</th>	
+										<th>Acción</th>										
+									</tr>			
+								</thead>				
+
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>									
+									</tr>
+										
+									
+
+								<tbody>
+								</tbody>
+							</table> -->
+
+
+
+
+
+						    <div id="obligaciones-container1"></div>
+						    <br>
+						    <button type="button" class="btn btn-primary" id="agregar-obligacion-general" style="display: none;">Agregar obligación General</button>
+						    <br><br>
+						    <h6 class="title-c"> Obligaciones Anteriores:</h6>
+			                <br><br>
+
+							<button type="button" id="botonAgregar" class="btn btn-primary" onclick="obligacionesAnt()">Agregar Obligaciones Anteriores</button>
+							<br><br>
+							<input type="hidden" id="oblicargo" name="oblicargo" value="0">			                
+						    <div id="obligaciones-container2"></div>
+
+						    <br>
+						    <h6 class="title-c"> Obligaciones Nuevas:</h6>
+						    <br><br>
+			                <div id="obligaciones-container">
+			                    <div class="input-group mb-2">
+			                        <input type="text" class="form-control" name="obligacionNew[]">
+			                        <div class="input-group-append">
+			                            <button type="button" class="btn btn-danger eliminar-obligacion">Eliminar</button>
+			                        </div>
+			                    </div>
+			                </div>
+			                <button type="button" class="btn btn-primary" id="agregar-obligacion">Agregar obligación</button>
+			            </div>
+
+			            <div class="form-group">
+			                <label>Estudios</label>
+			                <div id="estudios-container">
+			                    <div class="input-group mb-2">
+			                        <input type="text" class="form-control" name="estudioc[]">
+			                        <div class="input-group-append">                           
+			                            <button type="button" class="btn btn-danger eliminar-estudio">Eliminar</button>
+			                        </div>
+			                    </div>
+			                </div>
+			                <button type="button" class="btn btn-primary" id="agregar-estudio">Agregar estudio</button>
+			            </div>
+
+			            <div class="form-group">
+			                <label for="experiencia">Experiencia</label>
+			                <textarea class="form-control" id="experienciaPN" name="experiencia" rows="3"></textarea>
+			            </div>
+
+			            
+
+			            <div class="form-group" style="display: none;">
+			            	<h4>Listado de Documentos para Contratar</h4>
+						    <div class="row">
+						    	<?php if($pernat){ foreach ($pernat as $pnt) { ?>
+						    		<div class="form-group col-md-6" style="margin-bottom: 5px;">
+							        	<input type="checkbox" name="docpernat[]" value="<?=$pnt['valid'];?>" checked> <small><?=$pnt['valnom'];?></small>
+							      	</div>
+						    	<?php }} ?>
+						    </div>
+			            </div>
+
+			            <script>
+					        $(document).ready(function() {
+					        	// Agregar obligacion general al cargo del area
+					        	$("#agregar-obligacion-general").click(function() {
+					                $("#obligaciones-container1").append('<div class="input-group mb-2"><input type="text" class="form-control" name="obligacionCargo[]"><div class="input-group-append"><button type="button" class="btn btn-danger eliminar-obligacion-general">Eliminar</button></div></div>');
+					            });
+					             // Eliminar obligación General
+					            $(document).on("click", ".eliminar-obligacion-general", function() {
+					                $(this).closest(".input-group").remove();
+					            });
+					            // Agregar nueva obligación
+					            $("#agregar-obligacion").click(function() {
+					                $("#obligaciones-container").append('<div class="input-group mb-2"><input type="text" class="form-control" name="obligacionNew[]"><div class="input-group-append"><button type="button" class="btn btn-danger eliminar-obligacion">Eliminar</button></div></div>');
+					            });
+
+					            // Eliminar obligación
+					            $(document).on("click", ".eliminar-obligacion", function() {
+					                $(this).closest(".input-group").remove();
+					            });
+
+					            // Agregar nuevo estudio con soporte
+					            $("#agregar-estudio").click(function() {
+					                $("#estudios-container").append('<div class="input-group mb-2"><input type="text" class="form-control" name="estudioc[]"><div class="input-group-append"><button type="button" class="btn btn-danger eliminar-estudio">Eliminar</button></div></div>');
+					            });
+
+					            // Eliminar estudio
+					            $(document).on("click", ".eliminar-estudio", function() {
+					                $(this).closest(".input-group").remove();
+					            });
+					        });
+					    </script>
+					</div>
+
+					<br>
+
+					<div class="form-group col-md-12 " style="display:none;background-color:#f8f6f6 !important;" id="myDIV3" >
+						<br>
+						<h4 class="title-c m-tb-40">Persona Jurídica</h4>
+						<br><br>
+
+
+
+						<div class="form-row">		               
+			                <div class="col-md-4 form-group">
+			                    <label for="num_documento">NIT:</label>
+			                    <input type="number" class="form-control" id="nit" name="nit">
+			                </div>
+
+			                <div class="col-md-4 form-group">
+			                    <button type="button" class="btn-secondary-canalc " onclick="buscarEmpleado(2)">Buscar</button>
+			                </div>
+			                <div class="col-md-4 form-group">
+			                    
+			                </div>
+			            </div>
+
+			             <div class="form-group" id="divrazon" style="display: none;">
+			                <label for="nombre_contratista">Razon Social - Contratista</label>
+			                <input type="text" class="form-control" id="razsocial" name="razsocial">
+			            </div>
+
+
+
+
+			            <div class="row" id="datosmailpj" style="display: none;">
+		            		<div class="col-md-6 form-group">
+				                <label for="mailcontNewpj">Correo Electrónico</label>
+				                <input type="text" class="form-control" id="mailcontNewpj" name="mailcontNewpj">
+				            </div>
+
+				            <div class="col-md-6 form-group">
+				                <label for="contracontNewpj">Contraseña temporal</label>
+				                <input type="text" class="form-control" id="contracontNewpj" name="contracontNewpj">
+				            </div>
+		            	</div>	
+
+			            <div class="form-group">
+			                <label>Obligaciones</label>			               
+			                <div id="obligaciones-container">
+			                    <div class="input-group mb-2">
+			                        <input type="text" class="form-control" name="obligacion">
+			                        <div class="input-group-append">
+			                            <button type="button" class="btn btn-danger eliminar-obligacion">Eliminar</button>
+			                        </div>
+			                    </div>
+			                </div>
+			                <button type="button" class="btn btn-primary" id="agregar-obligacionPJ">Agregar obligación</button>
+			            </div>
+
+			            <div class="form-group">
+			                <label>Estudios</label>
+			                <div id="estudios-container">
+			                    <div class="input-group mb-2">
+			                        <input type="text" class="form-control" name="estudio">
+			                        <div class="input-group-append">
+			                            <input type="file" class="form-control-file" name="soporte">
+			                            <button type="button" class="btn btn-danger eliminar-estudio">Eliminar</button>
+			                        </div>
+			                    </div>
+			                </div>
+			                <button type="button" class="btn btn-primary" id="agregar-estudioPJ">Agregar estudio</button>
+			            </div>
+
+			            <div class="form-group">
+			                <label for="experiencia">Experiencia</label>
+			                <textarea class="form-control" id="experiencia" name="experiencia" rows="3"></textarea>
+			            </div>
+
+			            <div class="form-group">
+			                <label for="honorarios">Honorarios</label>
+			                <input type="text" class="form-control" id="honorarios" name="honorarios">
+			            </div>
+
+						<div class="form-group">
+			            	<h4>Listado de Documentos para Contratar</h4>
+						    <div class="row">
+						    	<?php if($perjur){ foreach ($perjur as $pnt) { ?>
+						    		<div class="form-group col-md-6" style="margin-bottom: 5px;">
+							        	<input type="checkbox" name="docperjur[]" value="<?=$pnt['valid'];?>" checked> <small><?=$pnt['valnom'];?></small>
+							      	</div>
+						    	<?php }} ?>
+						    </div>
+			            </div>
 					</div>
 					
 					<br>
@@ -147,7 +474,7 @@
 					        				 <?php endforeach ?>
 					        			</td>
 					        			<td>
-					        				<!-- <i class="fas fa-check-circle" style="color: #0071bc;" title="Seleccionar"></i> -->
+					        				<!-- <i class="fas fa-check-circle" style="color: #523178;" title="Seleccionar"></i> -->
 					        				<div class="form-check">
 											  <input class="form-check-input" type="radio" name="rad1" id="rad1" value="<?=$his['idpb'];?>">
 											  <label class="form-check-label" for="rad1">
@@ -182,21 +509,94 @@
 					<script>
 						function myFunction() {
 						    var x = document.getElementById("myDIV");
+						    var y = document.getElementById("myDIV2");
+						    var z = document.getElementById("myDIV3");
+						    y.style.display = "none";
+						    z.style.display = "none";
 						    if (x.style.display === "none") {
 						        x.style.display = "block";
 						    } else {
 						        x.style.display = "none";
 						    }
 						}
+
+						function myFunction2() {
+							var x = document.getElementById("myDIV");
+						    var y = document.getElementById("myDIV2");
+						    var z = document.getElementById("myDIV3");
+
+						    var divnomcont = document.getElementById("divnomcont");
+
+						    x.style.display = "none";
+						    z.style.display = "none";
+						    document.getElementById("tipper").value = "2";
+						    if (y.style.display === "none") {
+						        y.style.display = "block";
+						        divnomcont.style.display="none";
+						        var nomcontNewVal = $("#nomcontNew").val();
+							    var apecontNewVal = $("#apecontNew").val();
+
+							    if (nomcontNewVal && apecontNewVal) {
+							        $("#nomcont").val(nomcontNewVal + " " + apecontNewVal);
+							    }
+						    } else {
+						        y.style.display = "none";
+						        divnomcont.style.display="block";
+						        var nomcontNewVal = $("#nomcontNew").val();
+							    var apecontNewVal = $("#apecontNew").val();
+
+							    if (nomcontNewVal && apecontNewVal) {
+							        $("#nomcont").val(nomcontNewVal + " " + apecontNewVal);
+							    }
+						    }
+						}
+
+						function myFunction3() {
+							var x = document.getElementById("myDIV");
+							var y = document.getElementById("myDIV2");
+						    var z = document.getElementById("myDIV3");
+
+						    var divnomcont = document.getElementById("divnomcont");
+
+						    x.style.display = "none";
+						    y.style.display = "none";
+						    document.getElementById("tipper").value = "3";
+						    if (z.style.display === "none") {
+						        z.style.display = "block";
+						        divnomcont.style.display="none";
+						        var nomcontNewVal = $("#nomcontNew").val();
+							    var apecontNewVal = $("#apecontNew").val();
+
+							    if (nomcontNewVal && apecontNewVal) {
+							        $("#nomcont").val(nomcontNewVal + " " + apecontNewVal);
+							    }
+						    } else {
+						        z.style.display = "none";
+						        divnomcont.style.display="block";
+						        var nomcontNewVal = $("#nomcontNew").val();
+							    var apecontNewVal = $("#apecontNew").val();
+
+							    if (nomcontNewVal && apecontNewVal) {
+							        $("#nomcont").val(nomcontNewVal + " " + apecontNewVal);
+							    }
+
+						    }
+						}
 					</script>				
 
-					<div class="form-group col-md-12">
+					<div class="form-group col-md-12" id="divnomcont">
 						<label for="nomcont">Nombre Contratista</label>
 						<input type="text" class="form-control" id="nomcont" name="nomcont" value="<?=$pf2['nomcont'];?>">
 					</div>
 					<div class="form-group col-md-12">
 						<label for="objeto">Objeto/Descripción</label>
 						<textarea class="form-control" id="objeto" name="objeto" rows="4"><?=$pf2['nobjeto'];?></textarea>
+
+					</div>
+
+					<div class="form-group col-md-12">
+						<label for="obobjeto">Observación Objeto</label>
+						<textarea class="form-control" id="obobjeto" name="obobjeto" rows="4" style="background-color: #fbf2f5;"></textarea>
 
 					</div>
 
@@ -215,13 +615,18 @@
 					</div>
 
 					<div class="form-group col-md-4">
-						<label for="valorAsignado">Valor Asignado</label>
-						<input type="number" class="form-control" id="valorAsignado" name="valorAsignado" onkeyup="asigmes()" onchange="asigmes()" value="<?=$pf2['asidpa'];?>">
+						<label for="valorAsignado2">Valor Asignado</label>
+						<input type="text" class="form-control" id="valorAsignado2" name="valorAsignado2" onkeyup="asigmes()" onchange="asigmes()" value="<?=$numeroFormateado;?>">
 					</div>
 					<div class="form-group col-md-4">
-						<label for="valorVigencia" style="color:green; font-weight: bolder;">Valor Disponible</label>
-						<input type="text" class="form-control" id="valorVigencia" name="valorVigencia" style="color:green; font-weight: bolder;" value="<?=$pf2['asidpa'];?>" readonly="">
+						<label for="valorVigencia2" style="color:green; font-weight: bolder;">Valor Disponible</label>
+						<input type="text" class="form-control" id="valorVigencia2" name="valorVigencia2" style="color:green; font-weight: bolder;" value="<?=$numeroFormateado;?>" readonly="">
 					</div>
+
+					<input type="hidden" name="valorAsignado" id="valorAsignado" value="<?=$pf2['asidpa'];?>">	
+					<input type="hidden" name="valorVigencia" id="valorVigencia" value="<?=$pf2['asidpa'];?>">	
+
+
 					<div class="col-md-4">
 						<label for="#">Requiere vigencia Futura</label>
 						<div class="form-check">
@@ -538,7 +943,7 @@
 		<div class="row">				
 
 			<div class="form-group col-md-3">
-				<label for="vigencia">Vigencia  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #0071bc;"></a> --></label>
+				<label for="vigencia">Vigencia  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #523178;"></a> --></label>
 				<!-- <?php //$cont = date('Y'); ?> -->
 				<select id="sel1" name="vigencia" class="form-control form-control-sm" style="padding: 0px;" >	
 					<?php foreach ($pfvig as $pf){ ?>
@@ -548,7 +953,7 @@
 			</div>
 
 			<div class="form-group col-md-3">
-				<label for="nsolicitud">Número de Solicitud  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #0071bc;"></a> --></label>
+				<label for="nsolicitud">Número de Solicitud  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #523178;"></a> --></label>
 				<!-- <?php //$cont = date('Y'); ?> -->
 				<input type="number" id="nsolicitud" name="nsolicitud" class="form-control form-control-sm">
 			</div>
@@ -628,7 +1033,7 @@
 		<div class="row">				
 
 			<div class="form-group col-md-3">
-				<label for="vigencia">Vigencia  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #0071bc;"></a> --></label>
+				<label for="vigencia">Vigencia  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #523178;"></a> --></label>
 				<!-- <?php //$cont = date('Y'); ?> -->
 				<select id="sel1" name="vigencia" class="form-control form-control-sm" style="padding: 0px;" >	
 					<?php foreach ($pfvig as $pf){ ?>
@@ -638,7 +1043,7 @@
 			</div>
 
 			<div class="form-group col-md-3">
-				<label for="nsolicitud">Número de Solicitud  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #0071bc;"></a> --></label>
+				<label for="nsolicitud">Número de Solicitud  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #523178;"></a> --></label>
 				<!-- <?php //$cont = date('Y'); ?> -->
 				<input type="number" id="nsolicitud" name="nsolicitud" class="form-control form-control-sm">
 			</div>
@@ -967,7 +1372,7 @@
 		<div class="row">				
 
 			<div class="form-group col-md-3">
-				<label for="vigencia">Vigencia  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #0071bc;"></a> --></label>
+				<label for="vigencia">Vigencia  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #523178;"></a> --></label>
 				<!-- <?php //$cont = date('Y'); ?> -->
 				<select id="sel1" name="vigencia" class="form-control form-control-sm" style="padding: 0px;" >	
 					<?php foreach ($pfvig as $pf){ ?>
@@ -977,7 +1382,7 @@
 			</div>
 
 			<div class="form-group col-md-3">
-				<label for="nsolicitud">Número de Solicitud  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #0071bc;"></a> --></label>
+				<label for="nsolicitud">Número de Solicitud  <!-- <a href="<?=base_url?>antproy/newpfin" class="fas fa-plus-square" style="color: #523178;"></a> --></label>
 				<!-- <?php //$cont = date('Y'); ?> -->
 				<input type="number" id="nsolicitud" name="nsolicitud" class="form-control form-control-sm">
 			</div>
@@ -1132,7 +1537,7 @@
 		        				 <?php endforeach ?>
 		        			</td>
 		        			<td>
-		        				<!-- <i class="fas fa-check-circle" style="color: #0071bc;" title="Seleccionar"></i> -->
+		        				<!-- <i class="fas fa-check-circle" style="color: #523178;" title="Seleccionar"></i> -->
 		        				<div class="form-check">
 								  <input class="form-check-input" type="radio" name="rad1" id="rad1" value="<?=$his['idpb'];?>">
 								  <label class="form-check-label" for="rad1">
@@ -1173,6 +1578,107 @@
     </div>
   </div>
 </div>
+
+
+<!-- Modal 2-->
+<div  class="modal fade" id="modalserie2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content" >
+      <div class="modal-header">
+        <h5 class="title-c" id="exampleModalLabel">Nombre Grupo Contractual</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      		<form id="frmSavePerfil" class="" enctype="multipart/form-data">
+      			
+				<?php 
+					date_default_timezone_set('America/Bogota');
+						//$fecSis = date("Y-m-d H:i:s");
+						$fecSis = date("d-m-Y");
+							//echo $btnAgregar;
+				 ?>      
+
+				<div class="form-group row">
+						<input type="hidden" class="form-control" id="oldcat" name="oldcat">						   	
+				    <label for="perfilcon" class="col-sm-2 col-form-label">Nombre</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="perfilcon" name="perfilcon">
+				    </div>
+				</div> 
+
+      		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary-canalc col-sm-4" data-dismiss="modal" >Cancelar</button>
+        <button type="button" class="btn-primary-ccapital col-sm-4" id="btnsavegrup" >Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL2 FIN -->
+
+<script>
+	function savePerfil() {
+	    var perfilcon = $('#perfilcon').val();                  
+	    var formData = new FormData(document.getElementById('frmSavePerfil'));   
+	    if (perfilcon == "") {
+	        swal("", "Campo nombre vacío", "warning");
+	        return false;
+	    } else {                    
+	        $.ajax({
+	            type: "POST",
+	            url: "<?php echo base_raiz; ?>mod/financiera/views/vsaveperfil.php",
+	            dataType: "html",
+	            data: formData,
+	            cache: false,
+	            contentType: false,
+	            processData: false,
+	            success: function(respuesta) {
+	                respuesta = respuesta.trim();
+	                console.log(respuesta);
+	                if (respuesta > 0) {
+	                    swal("", "Registro agregado correctamente", "success");
+	                    // Llamar a la función para actualizar el select
+	                    actualizarSelect();
+	                    $('#modalserie2').modal('hide'); 
+	                } else {
+	                    swal(":(", "Fallo al agregar", "error");
+	                }
+	            }
+	        });
+	    }
+	}
+
+	function actualizarSelect() {
+	    $.ajax({	        
+	        url: '<?php echo base_raiz; ?>mod/financiera/views/vActualizaperfiles.php', // Ruta al archivo PHP que obtiene las nuevas opciones
+	        type: 'GET',
+	        dataType: 'json',
+	        success: function(response) {
+	            // Limpiar las opciones actuales del select
+	            $('#obligagen').empty();
+	            // Agregar las nuevas opciones al select
+	            $.each(response, function(key, value) {
+	            	console.log(response);
+	                $('#obligagen').append('<option value="' + value.idobliga + '">' + value.nom + '</option>');
+	            });
+	        },
+	        error: function(xhr, status, error) {
+	            console.error('Error al obtener nuevas opciones:', status, error);
+	        }
+	    });
+	}
+
+	$('#modalserie2').on('hidden.bs.modal', function () {
+	    // Llamar a la función para actualizar el select cuando se cierra la ventana modal
+	    actualizarSelect();
+	});
+
+</script>
+
+
 
 
 

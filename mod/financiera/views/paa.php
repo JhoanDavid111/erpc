@@ -273,9 +273,8 @@
 			&nbsp;
 		</div>
 		<!-- <div class="mestCDP" style="display: block;margin-top: -100px;text-align: end;"> -->
-		<div class="form-group col-md-1" style="text-align: right;">
+		<div class="form-group col-md-0.5" style="text-align: right;">
 			<form class="m-tb-40" action="<?=base_url;?>views/pdf2.php" target="_blank" method="POST">
-				<br>
 				<input type="hidden" name="depid" value="<?=$_SESSION['depid'];?>">
 				<input type="hidden" name="tot" value="<?=$tot;?>">
 				<input type="hidden" name="areSel" value="<?=$areSel;?>">
@@ -285,9 +284,8 @@
 				</button>
 			</form>
 		</div>
-		<div class="form-group col-md-1" style="text-align: right;">
+		<div class="form-group col-md-0.5" style="text-align: right;">
 			<form class="m-tb-40" action="<?=base_url;?>views/pdf2.php" target="_blank" method="POST">
-				<br>
 				<input type="hidden" name="depid" value="<?=$_SESSION['depid'];?>">
 				<input type="hidden" name="tot" value="<?=$tot;?>">
 				<input type="hidden" name="areSel" value="<?=$areSel;?>">
@@ -298,9 +296,8 @@
 				</button>
 			</form>
 		</div>
-		<div class="form-group col-md-1" style="text-align: right;">
+		<div class="form-group col-md-0.5" style="text-align: right;">
 			<form class="m-tb-40" action="<?=base_url;?>views/csv.php" target="_blank" method="POST">
-				<br>
 				<input type="hidden" name="depid" value="<?=$_SESSION['depid'];?>">
 				<input type="hidden" name="tot" value="<?=$tot;?>">
 				<input type="hidden" name="areSel" value="<?=$areSel;?>">
@@ -310,124 +307,106 @@
 				</button>
 			</form>
 		</div>
+		<div class="form-group col-md-0.5" style="text-align: right;">
+			<form class="m-tb-40" action="<?=base_url;?>views/csv8.php" target="_blank" method="POST">
+				<button type="submit" class="btn" style="color: #0071bc;" title="CSV total de modificaciones">
+					<i class="fas fa-file-excel fa-2x"></i>
+				</button>
+			</form>
+		</div>
 	</div>
 <!-- Fin Selección área Reportes ///////////////////////////////////////////////// -->
 <?php } ?>
 
-		<?php if(!isset($pfinandOne)): ?>
-				<?php if(isset($dxyc)): ?>
-			 		<!-- <br><br><br> -->
-					<div class="table-responsive">
-							<table id="example" class="table table-striped table-bordered dterpc" style="width:100%;">
-					        <thead>
-					            <tr>
-					            	<th>Código</th>
-									<th>Nombre</th>							
-									<th>Asignación&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-									<th>Disponible&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-									<th>CDP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-									<th>RP's&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-									<th></th>
-					            </tr>
-					        </thead>
-					        <tbody>
-
-					        	<?php  //x|var_dump($dxyc); ?>
-
-			        			<?php foreach ($dxyc as $pf){ ?>
-
-					            <tr>
-					            	<?php 
-					            		// var_dump($pf['idpaa']);
-					            		
-					            	 ?>
-					            	<?php
-						            	$dtcdp = $pfinan->sumcdpR($pf['codrub'],$areas,$pf['idpaa'],$_SESSION['vig']);
-						            	
-										$dtrp = $pfinan->sumrpR($pf['codrub'],$areas,$pf['idpaa'],$_SESSION['vig']);
-										$calCDP = $pfinan->contcdpR($pf['codrub'], $areas,$pf['idpaa'],$_SESSION['vig']);
-										$calRP = $pfinan->contrpR($pf['codrub'], $areas,$pf['idpaa'],$_SESSION['vig']);
-										$cdp= isset($dtcdp[0]['cdp']) ? $dtcdp[0]['cdp']:0;
-										$rp= isset($dtrp[0]['rp']) ? $dtrp[0]['rp']:0;
-										$dispo = ($pf['Asig']-$cdp-$rp);
-									?>
-					                <td>
-					                	<?=$ninipaa.$pf['codrub'];?>
-					                	<?php if($pf['codrub2']!=""): ?>
-					                		<br><br><span>Nuevo rubro:</span><br>
-					                		<?=$ninipaa.$pf['codrub2'];?>
-
-					                	<?php endif; ?>
-					                	<br><span>idpaa:</span><br>
-					                	<?=$pf['idpaa'];?>
-					                	<br><span>iddpa:</span><br>
-					                	<?=$pf['iddpa'];?>
-					                	
-
-					                	
-					                </td>
-					                <td>
-					                	<?=$pf['nomrub'];?>
-					                	<br><br>
-					                	<small><small>
-					                		<strong>Proceso:                	
-					                		<?=$pf['nompro'];?>
-					                		</strong>
-					                	</small></small>				                	
-					                </td>				                
-					                <td>$ <?=number_format($pf['Asig'], 0, ',', '.');?></td>
-					                <td>
-					                	$ <?=number_format($dispo, 0, ',', '.');?>
-					                	<br><br>
-					                	<a href="<?=base_url?>paa/detpaa&codrub=<?=$pf['codrub'];?>&tip=1&tot=<?=$tot;?>" class="btn-primary-ccapital btable" title="Ver Disponible">
-		                					<i class="fas fa-eye"></i> Disponible 
-		                				</a> 
-		                				<!-- <div class="contspan"><span class="spCanalPT1">9</span></div> -->
-					                </td>
-					                <td>
-					                	$ <?=number_format($cdp, 0, ',', '.');?>
-					                	<br><br>
-					                	<a href="<?=base_url?>paa/detpaa&codrub=<?=$pf['codrub'];?>&tip=2&tot=<?=$tot;?>" class="btn-primary-ccapital btable" title="Ver CP's">
-		                					<i class="fas fa-eye" ></i> CP's
-		                				</a> 
-		                				
-		                				<?php if($calCDP[0]['alerta']>0){ ?>
-		                					<div class="contspan"><span class="spCanalPT1"><?=$calCDP[0]['alerta'];?></span></div>
-		                				<?php } ?>
-					                </td>
-					                <td>
-					                	$ <?=number_format($rp, 0, ',', '.');?>
-					                	<br><br>
-					                	<a href="<?=base_url?>paa/detpaa&codrub=<?=$pf['codrub'];?>&tip=3&tot=<?=$tot;?>" class="btn-primary-ccapital btable" title="Ver RP's">
-		                					<i class="fas fa-eye"></i> RP's
-		                				</a> 
-
-		                				<?php if($calRP[0]['alerta']>0){ ?>
-		                					<div class="contspan"><span class="spCanalPT1"><?=$calRP[0]['alerta'];?></span></div>
-		                				<?php } ?>
-					                </td>
-					                <td>
-					                	<a href="<?=base_url?>paa/detpaa&codrub=<?=$pf['codrub'];?>&tot=<?=$tot;?>" title="Ver Todo">
-		                					<i class="fas fa-eye" style="color: #0071bc;"></i>
-		                				</a>
-					                </td>
-					            </tr>
-					              	   
-			           		<?php } ?>
-					        </tbody>
-					        <tfoot>
-					             <tr>
-					                <th>Código</th>
-									<th>Nombre</th>
-									<th>Asignación</th>
-									<th>Disponible</th>
-									<th>CDP</th>
-									<th>RPs</th>
-									<th></th>
-					            </tr>
-					        </tfoot>
-					    </table>						
-					</div>
+<?php if(!isset($pfinandOne)): ?>
+    <?php if(isset($dxyc)): ?>
+        <div class="table-responsive">
+            <table id="example" class="table table-striped table-bordered dterpc" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>							
+                        <th>Asignación&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th>Disponible&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th>CDP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th>RP's&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($dxyc as $pf): ?>
+                        <tr>
+                            <td>
+                                <?=$ninipaa.$pf['codrub'];?>
+                                <?php if($pf['codrub2']!=""): ?>
+                                    <br><br><span>Nuevo rubro:</span><br>
+                                    <?=$ninipaa.$pf['codrub2'];?>
+                                <?php endif; ?>
+                                <br><span>idpaa:</span><br>
+                                <?=$pf['idpaa'];?>
+                                <br><span>iddpa:</span><br>
+                                <?=$pf['iddpa'];?>
+                            </td>
+                            <td>
+                                <?=$pf['nomrub'];?>
+                                <br><br>
+                                <small><small>
+                                    <strong>Proceso:                	
+                                    <?=$pf['nompro'];?>
+                                    </strong>
+                                </small></small>				                	
+                            </td>				                
+                            <td>$ <?=number_format($pf['Asig'], 0, ',', '.');?></td>
+                            <td>
+                                $ <?=number_format($dispo, 0, ',', '.');?>
+                                <br><br>
+                                <a href="<?=base_url?>paa/detpaa&codrub=<?=$pf['codrub'];?>&tip=1&tot=<?=$tot;?>" class="btn-primary-ccapital btable" title="Ver Disponible">
+                                    <i class="fas fa-eye"></i> Disponible 
+                                </a> 
+                            </td>
+                            <td>
+                                $ <?=number_format($cdp, 0, ',', '.');?>
+                                <br><br>
+                                <a href="<?=base_url?>paa/detpaa&codrub=<?=$pf['codrub'];?>&tip=2&tot=<?=$tot;?>" class="btn-primary-ccapital btable" title="Ver CP's">
+                                    <i class="fas fa-eye"></i> CP's
+                                </a> 
+                            </td>
+                            <td>
+                                $ <?=number_format($rp, 0, ',', '.');?>
+                                <br><br>
+                                <a href="<?=base_url?>paa/detpaa&codrub=<?=$pf['codrub'];?>&tip=3&tot=<?=$tot;?>" class="btn-primary-ccapital btable" title="Ver RP's">
+                                    <i class="fas fa-eye"></i> RP's
+                                </a> 
+                            </td>
+                            <td>
+                                <a href="<?=base_url?>paa/detpaa&codrub=<?=$pf['codrub'];?>&tot=<?=$tot;?>" title="Ver Todo">
+                                    <i class="fas fa-eye" style="color: #0071bc;"></i>
+                                </a>
+                                <a href="<?= base_url ?>paa/realizarMovimiento&iddpa=<?= $pf['iddpa']; ?>" class="btn-primary-ccapital btable" title="Realizar Movimiento">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+								<br>
+								<br>
+								<a href="<?=base_url?>paa/detallesMovimientos&iddpa=<?=$pf['iddpa'];?>" title="Ver Detalle Movimientos">
+									<i class="fas fa-list" style="color: #0071bc;"></i>
+								</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Asignación</th>
+                        <th>Disponible</th>
+                        <th>CDP</th>
+                        <th>RPs</th>
+                        <th>Acciones</th>
+                    </tr>
+                </tfoot>
+            </table>						
+        </div>
 
 					
 					<br><br>
